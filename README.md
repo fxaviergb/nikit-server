@@ -1,2 +1,2 @@
 # WiseDroid-Server
-WiseDroid es una plataforma web impulsada por inteligencia artificial que transforma contenido en cuestionarios, tarjetas de memoria y herramientas de aprendizaje personalizadas, optimizando el estudio y facilitando el dominio del conocimiento.
+WiseDroid is an AI-powered web platform that transforms content into quizzes, flashcards, and personalized learning tools, optimizing study sessions and facilitating knowledge mastery.
