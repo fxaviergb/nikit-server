@@ -66,8 +66,8 @@ The server will be available at: `http://localhost:8080`
 
 ## 🔗 API Documentation
 
-- **Swagger UI**: `http://localhost:8080/swagger-ui/index.html`
-- **OpenAPI JSON**: `http://localhost:8080/v3/api-docs`
+- **Swagger UI**: `http://localhost:8080/swagger-ui`
+- **OpenAPI JSON**: `http://localhost:8080/api-docs`
 
 ---
 

@@ -1,132 +1,115 @@
 package com.teamdroid.wise.config;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.teamdroid.wise.entity.SessionToken;
+import com.teamdroid.wise.service.SessionTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+class JwtUtilTest {
 
-public class JwtUtilTest {
+    @Mock private SessionTokenService tokenService;
 
-    private JwtUtil jwtUtil;
+    @InjectMocks private JwtUtil jwtUtil;
+
+    private static final String SECRET_KEY = "mysecretkey";
+    private static final long EXPIRATION_SECONDS = 1800; // 30 minutes
+    private static final String USERNAME = "testuser";
 
     @BeforeEach
-    public void setUp() {
-        jwtUtil = new JwtUtil();
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        // Inject mock values for @Value fields
+        jwtUtil = new JwtUtil(tokenService);
+        jwtUtil.setSecretKey(SECRET_KEY);
+        jwtUtil.setTokenExpirationSeconds(EXPIRATION_SECONDS);
+        jwtUtil.init(); // Manually call @PostConstruct method to initialize the algorithm
     }
 
     @Test
-    public void testGenerateToken() {
-        // Arrange
-        String username = "testuser";
-
+    void testGenerateToken() {
         // Act
-        String token = jwtUtil.generateToken(username);
+        SessionToken sessionToken = jwtUtil.generateToken(USERNAME);
 
         // Assert
-        assertNotNull(token, "Generated token should not be null");
-        String extractedUsername = jwtUtil.extractUsername(token);
-        assertEquals(username, extractedUsername, "Extracted username should match the original");
+        assertNotNull(sessionToken, "SessionToken should not be null");
+        assertNotNull(sessionToken.getToken(), "Token should not be null");
+        assertNotNull(sessionToken.getExpiresAt(), "Expiration date should not be null");
+        verify(tokenService, times(1)).saveToken(eq(USERNAME), any(SessionToken.class));
     }
 
     @Test
-    public void testValidateToken_ValidToken() {
+    void testValidateToken_ValidToken() {
         // Arrange
-        String username = "testuser";
-        String token = jwtUtil.generateToken(username);
+        SessionToken sessionToken = jwtUtil.generateToken(USERNAME);
+        when(tokenService.getToken(USERNAME)).thenReturn(sessionToken);
 
         // Act
-        boolean isValid = jwtUtil.validateToken(token);
+        boolean isValid = jwtUtil.validateToken(sessionToken.getToken());
 
         // Assert
-        assertTrue(isValid, "Token should be valid");
+        assertTrue(isValid, "Valid token should return true");
     }
 
     @Test
-    public void testValidateToken_InvalidToken() {
+    void testValidateToken_InvalidToken() {
         // Arrange
         String invalidToken = "invalid.token.string";
+        when(tokenService.getToken(USERNAME)).thenReturn(null);
 
         // Act
         boolean isValid = jwtUtil.validateToken(invalidToken);
 
         // Assert
-        assertFalse(isValid, "Invalid token should not be valid");
+        assertFalse(isValid, "Invalid token should return false");
     }
 
     @Test
-    public void testValidateToken_ExpiredToken() throws InterruptedException {
+    void testValidateToken_ExpiredToken() throws InterruptedException {
         // Arrange
-        JwtUtil jwtUtil = new JwtUtil() {
-            private final Algorithm algorithm = Algorithm.HMAC256("mysecretkey"); // Inicializar el algoritmo
+        jwtUtil.setTokenExpirationSeconds(1); // Set short expiration for the test
+        jwtUtil.init();
+        SessionToken sessionToken = jwtUtil.generateToken(USERNAME);
 
-            @Override
-            public String generateToken(String username) {
-                return JWT.create()
-                        .withSubject(username)
-                        .withIssuedAt(new Date())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 1000)) // Expira en 1 segundo
-                        .sign(algorithm);
-            }
-        };
-
-        String username = "testuser";
-        String token = jwtUtil.generateToken(username);
-
-        // Esperar para que el token expire
+        // Simulate token expiration
         Thread.sleep(2000);
+        when(tokenService.getToken(USERNAME)).thenReturn(sessionToken);
 
         // Act
-        boolean isValid = jwtUtil.validateToken(token);
+        boolean isValid = jwtUtil.validateToken(sessionToken.getToken());
 
         // Assert
-        assertFalse(isValid, "Expired token should not be valid");
-    }
-
-
-    @Test
-    public void testExtractUsername() {
-        // Arrange
-        String username = "testuser";
-        String token = jwtUtil.generateToken(username);
-
-        // Act
-        String extractedUsername = jwtUtil.extractUsername(token);
-
-        // Assert
-        assertEquals(username, extractedUsername, "Extracted username should match the original");
+        assertFalse(isValid, "Expired token should return false");
     }
 
     @Test
-    public void testInvalidateToken() {
+    void testExtractUsername() {
         // Arrange
-        String username = "testuser";
-        String token = jwtUtil.generateToken(username);
+        SessionToken sessionToken = jwtUtil.generateToken(USERNAME);
 
         // Act
-        jwtUtil.invalidateToken(username);
-        boolean isValid = jwtUtil.validateToken(token);
+        String extractedUsername = jwtUtil.extractUsername(sessionToken.getToken());
 
         // Assert
-        assertFalse(isValid, "Token should be invalid after explicit invalidation");
+        assertEquals(USERNAME, extractedUsername, "Extracted username should match the original");
     }
 
     @Test
-    public void testGenerateToken_ReplacesOldToken() {
-        // Arrange
-        String username = "testuser";
-        String oldToken = jwtUtil.generateToken(username);
-
+    void testInvalidateToken() {
         // Act
-        String newToken = jwtUtil.generateToken(username);
-        boolean isOldTokenValid = jwtUtil.validateToken(oldToken);
-        boolean isNewTokenValid = jwtUtil.validateToken(newToken);
+        jwtUtil.invalidateToken(USERNAME);
 
         // Assert
-        assertFalse(isOldTokenValid, "Old token should be invalid after generating a new one");
-        assertTrue(isNewTokenValid, "New token should be valid");
+        verify(tokenService, times(1)).invalidateToken(USERNAME);
     }
 }
