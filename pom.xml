@@ -8,10 +8,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.teamdroid</groupId>
-	<artifactId>WiseDroid-Server</artifactId>
+	<artifactId>nikit-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>WiseDroid-Server</name>
-	<description>Wise Droid Server - Knowledge Generator</description>
+	<name>nikit-server</name>
+	<description>NikIT Server - Knowledge Generator</description>
 
 	<properties>
 		<!-- Versión de dependencias -->
