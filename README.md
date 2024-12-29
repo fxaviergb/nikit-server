@@ -1,6 +1,6 @@
-# 📚 WiseDroid-Server
+# 📚 nikit-server
 
-WiseDroid-Server is an AI-powered platform that processes content to create quizzes, flashcards, and personalized learning tools, optimizing study sessions and improving knowledge retention.
+NikIT (Now I Know IT) Server is an AI-powered platform that processes content to create quizzes, flashcards, and personalized learning tools, optimizing study sessions and improving knowledge retention.
 
 ---
 
