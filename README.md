@@ -102,6 +102,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 🛡️ Author
 
-**WiseDroid-Server** is maintained by the **TeamDroid** team.
+**NikIT-Server** is maintained by the **TeamDroid** team.
 
 ---
