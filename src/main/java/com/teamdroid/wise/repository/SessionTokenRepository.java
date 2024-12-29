@@ -12,6 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class SessionTokenRepository {
 
+    /**
+     * Base de datos en memoria
+     */
     private final Map<String, SessionToken> activeTokens = new ConcurrentHashMap<>();
 
     /**

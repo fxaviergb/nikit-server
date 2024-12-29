@@ -10,6 +10,9 @@ import java.util.Optional;
 @Repository
 public class UserRepository {
 
+    /**
+     * Base de datos en memoria
+     */
     private final Map<String, String> userDatabase = new HashMap<>();
 
     public UserRepository() {
