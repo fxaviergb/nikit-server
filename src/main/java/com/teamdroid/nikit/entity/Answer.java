@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,15 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "knowledge")
-public class Knowledge {
+@Document(collection = "answer")
+public class Answer {
 
     @Id
     private String id;
-    private String name;
-    private Audit audit;
-    private List<String> topicIds = new ArrayList<>();
-
-    private List<Topic> topics;
+    private boolean isCorrect;
+    private String justification;
+    private List<String> extras;
 
 }

@@ -12,15 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "knowledge")
-public class Knowledge {
+@Document(collection = "question")
+public class Question {
 
     @Id
     private String id;
-    private String name;
-    private Audit audit;
-    private List<String> topicIds = new ArrayList<>();
+    private String question;
+    private List<String> optionIds = new ArrayList<>();
 
-    private List<Topic> topics;
+    private List<Option> options;
 
 }

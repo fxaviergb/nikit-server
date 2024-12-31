@@ -2,6 +2,8 @@ package com.teamdroid.nikit.controller;
 
 import com.teamdroid.nikit.dto.KnowledgeCreateDTO;
 import com.teamdroid.nikit.dto.KnowledgeDTO;
+import com.teamdroid.nikit.entity.Knowledge;
+import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.KnowledgeMapper;
 import com.teamdroid.nikit.service.KnowledgeService;
 import lombok.AllArgsConstructor;
@@ -57,5 +59,17 @@ public class KnowledgeController {
     public ResponseEntity<Void> deleteKnowledge(@PathVariable String id) {
         knowledgeService.deleteKnowledge(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/full")
+    public ResponseEntity<Knowledge> createFullKnowledge(@RequestBody Knowledge knowledge) {
+        var createdKnowledge = knowledgeService.createFullKnowledge(knowledge);
+        return ResponseEntity.ok(createdKnowledge);
+    }
+
+    @PostMapping("/{knowledgeId}/topics")
+    public ResponseEntity<Knowledge> addTopicsToKnowledge(@PathVariable String knowledgeId, @RequestBody List<Topic> topics) {
+        var knowledge = knowledgeService.addTopicsToKnowledge(knowledgeId, topics);
+        return ResponseEntity.ok(knowledge);
     }
 }
