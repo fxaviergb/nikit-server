@@ -19,11 +19,11 @@ public class QuizController {
 
     @PostMapping("/{topicId}")
     public Quiz createQuizForTopic(@PathVariable String topicId, @RequestBody Quiz quiz) {
-        return quizService.createQuizForTopic(topicId, quiz);
+        return quizService.createFullForTopic(topicId, quiz);
     }
 
     @PostMapping("/{quizId}/questions")
     public Quiz addQuestionsToQuiz(@PathVariable String quizId, @RequestBody List<Question> questions) {
-        return quizService.addQuestionsToQuiz(quizId, questions);
+        return quizService.addTransientQuestions(quizId, questions);
     }
 }

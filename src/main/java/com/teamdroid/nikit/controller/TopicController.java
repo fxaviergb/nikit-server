@@ -21,13 +21,13 @@ public class TopicController {
 
     @PostMapping("/{knowledgeId}")
     public ResponseEntity<Topic> createTopicForKnowledge(@PathVariable String knowledgeId, @RequestBody Topic topic) {
-        var createdTopic = topicService.createTopicForKnowledge(knowledgeId, topic);
+        var createdTopic = topicService.createFullForKnowledge(knowledgeId, topic);
         return ResponseEntity.ok(createdTopic);
     }
 
     @PostMapping("/{topicId}/quizzes")
     public ResponseEntity<Topic> addQuizzesToTopic(@PathVariable String topicId, @RequestBody List<Quiz> quizzes) {
-        var topic = topicService.addQuizzesToTopic(topicId, quizzes);
+        var topic = topicService.addTransientQuizzes(topicId, quizzes);
         return ResponseEntity.ok(topic);
     }
 }

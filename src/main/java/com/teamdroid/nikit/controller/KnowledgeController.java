@@ -26,7 +26,7 @@ public class KnowledgeController {
 
     @GetMapping
     public ResponseEntity<List<KnowledgeDTO>> getAllKnowledge() {
-        List<KnowledgeDTO> knowledgeDTOs = knowledgeService.getAllKnowledge()
+        List<KnowledgeDTO> knowledgeDTOs = knowledgeService.getAll()
                 .stream()
                 .map(knowledgeMapper::toDTO)
                 .collect(Collectors.toList());
@@ -35,7 +35,7 @@ public class KnowledgeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<KnowledgeDTO> getKnowledgeById(@PathVariable String id) {
-        return knowledgeService.getKnowledgeById(id)
+        return knowledgeService.getById(id)
                 .map(knowledgeMapper::toDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -44,32 +44,32 @@ public class KnowledgeController {
     @PostMapping
     public ResponseEntity<KnowledgeDTO> createKnowledge(@RequestBody KnowledgeCreateDTO knowledgeCreateDTO) {
         var knowledge = knowledgeMapper.toEntityCreation(knowledgeCreateDTO);
-        var createdKnowledge = knowledgeService.createKnowledge(knowledge);
+        var createdKnowledge = knowledgeService.create(knowledge);
         return ResponseEntity.ok(knowledgeMapper.toDTO(createdKnowledge));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<KnowledgeDTO> updateKnowledge(@PathVariable String id, @RequestBody KnowledgeDTO knowledgeDTO) {
         var knowledge = knowledgeMapper.toEntity(knowledgeDTO);
-        var updatedKnowledge = knowledgeService.updateKnowledge(id, knowledge);
+        var updatedKnowledge = knowledgeService.update(id, knowledge);
         return ResponseEntity.ok(knowledgeMapper.toDTO(updatedKnowledge));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteKnowledge(@PathVariable String id) {
-        knowledgeService.deleteKnowledge(id);
+        knowledgeService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/full")
     public ResponseEntity<Knowledge> createFullKnowledge(@RequestBody Knowledge knowledge) {
-        var createdKnowledge = knowledgeService.createFullKnowledge(knowledge);
+        var createdKnowledge = knowledgeService.createFull(knowledge);
         return ResponseEntity.ok(createdKnowledge);
     }
 
     @PostMapping("/{knowledgeId}/topics")
     public ResponseEntity<Knowledge> addTopicsToKnowledge(@PathVariable String knowledgeId, @RequestBody List<Topic> topics) {
-        var knowledge = knowledgeService.addTopicsToKnowledge(knowledgeId, topics);
+        var knowledge = knowledgeService.addTransientTopics(knowledgeId, topics);
         return ResponseEntity.ok(knowledge);
     }
 }

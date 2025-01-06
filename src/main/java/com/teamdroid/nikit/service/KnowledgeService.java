@@ -5,106 +5,66 @@ import com.teamdroid.nikit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class KnowledgeService {
 
     @Autowired
     private KnowledgeRepository knowledgeRepository;
 
     @Autowired
-    private TopicRepository topicRepository;
-
-    @Autowired
-    private QuizRepository quizRepository;
-
-    @Autowired
-    private QuestionRepository questionRepository;
-
-    @Autowired
-    private OptionRepository optionRepository;
-
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private AuditRepository auditRepository;
+    private TopicService topicService;
 
 
-    public List<Knowledge> getAllKnowledge() {
+    public List<Knowledge> getAll() {
         return knowledgeRepository.findAll();
     }
 
-    public Optional<Knowledge> getKnowledgeById(String id) {
+    public Optional<Knowledge> getById(String id) {
         return knowledgeRepository.findById(id);
     }
 
-    public Knowledge createKnowledge(Knowledge knowledge) {
+    public Knowledge create(Knowledge knowledge) {
         return knowledgeRepository.save(knowledge);
     }
 
-    public Knowledge updateKnowledge(String id, Knowledge knowledge) {
+    public Knowledge update(String id, Knowledge knowledge) {
         knowledge.setId(id);
         return knowledgeRepository.save(knowledge);
     }
 
-    public void deleteKnowledge(String id) {
+    public void delete(String id) {
         knowledgeRepository.deleteById(id);
     }
 
-    @Transactional
-    public Knowledge createFullKnowledge(Knowledge knowledge) {
-        for (Topic topic : knowledge.getTopics()) {
-            for (Quiz quiz : topic.getQuizzes()) {
-                for (Question question : quiz.getQuestions()) {
-                    for (Option option : question.getOptions()) {
-                        Answer savedAnswer = answerRepository.save(option.getAnswer());
-                        option.setAnswerId(savedAnswer.getId());
-                        Option savedOption = optionRepository.save(option);
-                        question.getOptionIds().add(savedOption.getId());
-                    }
-                    Question savedQuestion = questionRepository.save(question);
-                    quiz.getQuestionIds().add(savedQuestion.getId());
-                }
-                Quiz savedQuiz = quizRepository.save(quiz);
-                topic.getQuizIds().add(savedQuiz.getId());
-            }
-            Topic savedTopic = topicRepository.save(topic);
-            knowledge.getTopicIds().add(savedTopic.getId());
-        }
+    public Knowledge findById(String knowledgeId) {
+        return knowledgeRepository.findById(knowledgeId).orElseThrow(
+                () -> new RuntimeException("Knowledge not found"));
+    }
+
+    public Knowledge createFull(Knowledge knowledge) {
+        Assert.notNull(knowledge, "The knowledge cannot be null");
+
+        List<Topic> topics = topicService.create(knowledge.getTopics());
+        knowledge.initializeTopics(topics);
         return knowledgeRepository.save(knowledge);
     }
 
-    @Transactional
-    public Knowledge addTopicsToKnowledge(String knowledgeId, List<Topic> topics) {
-        Knowledge knowledge = knowledgeRepository.findById(knowledgeId).orElseThrow(
-                () -> new RuntimeException("Knowledge not found"));
-        for (Topic topic : topics) {
-            for (Quiz quiz : topic.getQuizzes()) {
-                for (Question question : quiz.getQuestions()) {
-                    for (Option option : question.getOptions()) {
-                        Answer savedAnswer = answerRepository.save(option.getAnswer());
-                        option.setAnswerId(savedAnswer.getId());
-                        Option savedOption = optionRepository.save(option);
-                        question.getOptionIds().add(savedOption.getId());
-                    }
-                    Question savedQuestion = questionRepository.save(question);
-                    quiz.getQuestionIds().add(savedQuestion.getId());
-                }
-                Quiz savedQuiz = quizRepository.save(quiz);
-                topic.getQuizIds().add(savedQuiz.getId());
-            }
-            Topic savedTopic = topicRepository.save(topic);
-            knowledge.getTopicIds().add(savedTopic.getId());
-            if (knowledge.getTopics() == null) {
-                knowledge.setTopics(new ArrayList<>());
-            }
-            knowledge.getTopics().add(topic);
-        }
+    public Knowledge addTransientTopics(String knowledgeId, List<Topic> topics) {
+        Knowledge knowledge = findById(knowledgeId);
+        List<Topic> createdTopics = topicService.create(topics);
+        knowledge.addTopics(createdTopics);
         return knowledgeRepository.save(knowledge);
     }
+
+    public Knowledge addPersistentTopics(Knowledge knowledge, Topic... topics) {
+        knowledge.addTopics(topics);
+        return knowledgeRepository.save(knowledge);
+    }
+
 }

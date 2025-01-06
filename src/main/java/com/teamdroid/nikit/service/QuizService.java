@@ -4,63 +4,61 @@ import com.teamdroid.nikit.entity.*;
 import com.teamdroid.nikit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
+@Transactional
 public class QuizService {
-
-    @Autowired
-    private TopicRepository topicRepository;
 
     @Autowired
     private QuizRepository quizRepository;
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private QuestionService questionService;
 
     @Autowired
-    private OptionRepository optionRepository;
+    private TopicService topicService;
 
-    @Autowired
-    private AnswerRepository answerRepository;
-
-    public Quiz createQuizForTopic(String topicId, Quiz quiz) {
-        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new RuntimeException("Topic not found"));
-
-        for (Question question : quiz.getQuestions()) {
-            for (Option option : question.getOptions()) {
-                Answer savedAnswer = answerRepository.save(option.getAnswer());
-                option.setAnswerId(savedAnswer.getId());
-                Option savedOption = optionRepository.save(option);
-                question.getOptionIds().add(savedOption.getId());
-            }
-            Question savedQuestion = questionRepository.save(question);
-            quiz.addQuestionId(savedQuestion.getId());
-        }
-
-        Quiz savedQuiz = quizRepository.save(quiz);
-        topic.getQuizIds().add(savedQuiz.getId());
-        topicRepository.save(topic);
-
-        return savedQuiz;
+    public Quiz findById(String quizId) {
+        return quizRepository.findById(quizId).orElseThrow(
+                () -> new RuntimeException("Quiz not found"));
     }
 
-    public Quiz addQuestionsToQuiz(String quizId, List<Question> questions) {
-        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new RuntimeException("Quiz not found"));
+    public Quiz create(Quiz quiz) {
+        Assert.notNull(quiz, "The quiz cannot be null");
 
-        for (Question question : questions) {
-            for (Option option : question.getOptions()) {
-                Answer savedAnswer = answerRepository.save(option.getAnswer());
-                option.setAnswerId(savedAnswer.getId());
-                Option savedOption = optionRepository.save(option);
-                question.getOptionIds().add(savedOption.getId());
-            }
-            Question savedQuestion = questionRepository.save(question);
-            quiz.addQuestion(savedQuestion);
-        }
+        List<Question> questions = questionService.create(quiz.getQuestions());
+        quiz.initializeQuestions(questions);
+        return quizRepository.save(quiz);
+    }
 
+    public List<Quiz> create(List<Quiz> quizzes) {
+        Assert.notNull(quizzes, "The list of quizzes cannot be null");
+
+        return quizzes.stream()
+                .map(this::create)
+                .collect(Collectors.toList());
+    }
+
+    public Quiz createFullForTopic(String topicId, Quiz quiz) {
+        Assert.notNull(topicId, "The topic Id cannot be null");
+        Assert.notNull(quiz, "The quiz cannot be null");
+
+        Topic topic = topicService.findById(topicId);
+        Quiz createdQuiz = create(quiz);
+        topicService.addPersistentQuizzes(topic, createdQuiz);
+        return createdQuiz;
+    }
+
+    public Quiz addTransientQuestions(String quizId, List<Question> questions) {
+        Quiz quiz = findById(quizId);
+        List<Question> createdQuestions = questionService.create(questions);
+        quiz.addQuestions(createdQuestions);
         return quizRepository.save(quiz);
     }
 }
