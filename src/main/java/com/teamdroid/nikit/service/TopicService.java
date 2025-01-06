@@ -4,76 +4,65 @@ import com.teamdroid.nikit.entity.*;
 import com.teamdroid.nikit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TopicService {
-
-    @Autowired
-    private KnowledgeRepository knowledgeRepository;
 
     @Autowired
     private TopicRepository topicRepository;
 
     @Autowired
-    private QuestionnaireRepository questionnaireRepository;
+    private QuizService quizService;
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private KnowledgeService knowledgeService;
 
-    @Autowired
-    private OptionRepository optionRepository;
-
-    @Autowired
-    private AnswerRepository answerRepository;
-
-
-    public Topic createTopicForKnowledge(String knowledgeId, Topic topic) {
-        Knowledge knowledge = knowledgeRepository.findById(knowledgeId).orElseThrow(() -> new RuntimeException("Knowledge not found"));
-
-        for (Questionnaire questionnaire : topic.getQuestionnaires()) {
-            for (Question question : questionnaire.getQuestions()) {
-                for (Option option : question.getOptions()) {
-                    Answer savedAnswer = answerRepository.save(option.getAnswer());
-                    option.setAnswerId(savedAnswer.getId());
-                    Option savedOption = optionRepository.save(option);
-                    question.getOptionIds().add(savedOption.getId());
-                }
-                Question savedQuestion = questionRepository.save(question);
-                questionnaire.getQuestionIds().add(savedQuestion.getId());
-            }
-            Questionnaire savedQuestionnaire = questionnaireRepository.save(questionnaire);
-            topic.getQuestionnaireIds().add(savedQuestionnaire.getId());
-        }
-
-        Topic savedTopic = topicRepository.save(topic);
-        knowledge.getTopicIds().add(savedTopic.getId());
-        knowledgeRepository.save(knowledge);
-
-        return savedTopic;
+    public Topic findById(String topicId) {
+        return topicRepository.findById(topicId).orElseThrow(
+                () -> new RuntimeException("Topic not found"));
     }
 
-    public Topic addQuestionnairesToTopic(String topicId, List<Questionnaire> questionnaires) {
-        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new RuntimeException("Topic not found"));
+    public Topic create(Topic topic) {
+        Assert.notNull(topic, "The topic cannot be null");
 
-        for (Questionnaire questionnaire : questionnaires) {
-            for (Question question : questionnaire.getQuestions()) {
-                for (Option option : question.getOptions()) {
-                    Answer savedAnswer = answerRepository.save(option.getAnswer());
-                    option.setAnswerId(savedAnswer.getId());
-                    Option savedOption = optionRepository.save(option);
-                    question.getOptionIds().add(savedOption.getId());
-                }
-                Question savedQuestion = questionRepository.save(question);
-                questionnaire.getQuestionIds().add(savedQuestion.getId());
-            }
-            Questionnaire savedQuestionnaire = questionnaireRepository.save(questionnaire);
-            topic.getQuestionnaireIds().add(savedQuestionnaire.getId());
-        }
+        List<Quiz> quizzes = quizService.create(topic.getQuizzes());
+        topic.initializeQuizzes(quizzes);
+        return topicRepository.save(topic);
+    }
 
+    public List<Topic> create(List<Topic> topics) {
+        Assert.notNull(topics, "The list of topics cannot be null");
+
+        return topics.stream()
+                .map(this::create)
+                .collect(Collectors.toList());
+    }
+
+    public Topic createFullForKnowledge(String knowledgeId, Topic topic) {
+        Assert.notNull(knowledgeId, "The knowledge Id cannot be null");
+        Assert.notNull(topic, "The topic cannot be null");
+
+        Knowledge knowledge = knowledgeService.findById(knowledgeId);
+        Topic createdTopic = create(topic);
+        knowledgeService.addPersistentTopics(knowledge, createdTopic);
+        return createdTopic;
+    }
+
+    public Topic addTransientQuizzes(String topicId, List<Quiz> quizzes) {
+        Topic topic = findById(topicId);
+        List<Quiz> createdQuizzes = quizService.create(quizzes);
+        topic.addQuizzes(createdQuizzes);
+        return topicRepository.save(topic);
+    }
+
+    public Topic addPersistentQuizzes(Topic topic, Quiz... quizzes) {
+        topic.addQuizzes(quizzes);
         return topicRepository.save(topic);
     }
 }

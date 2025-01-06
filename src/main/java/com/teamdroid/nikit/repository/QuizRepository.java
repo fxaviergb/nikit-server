@@ -1,9 +1,9 @@
 package com.teamdroid.nikit.repository;
 
-import com.teamdroid.nikit.entity.Questionnaire;
+import com.teamdroid.nikit.entity.Quiz;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface QuestionnaireRepository extends MongoRepository<Questionnaire, String> {
+public interface QuizRepository extends MongoRepository<Quiz, String> {
 }

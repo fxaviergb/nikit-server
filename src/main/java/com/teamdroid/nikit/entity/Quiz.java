@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,14 +13,13 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "questionnaire")
-public class Questionnaire {
+@Document(collection = "quiz")
+public class Quiz {
 
     @Id
     private String id;
     private List<String> questionIds = new ArrayList<>();
-
-    private List<Question> questions;
+    private List<Question> questions = new ArrayList<>();
 
     public void addQuestionId(String questionId) {
         if (!Objects.isNull(questionId)) {
@@ -34,16 +32,23 @@ public class Questionnaire {
         }
     }
 
-    public void addQuestion(Question question) {
-        if (!Objects.isNull(question)) {
+    public void addQuestions(List<Question> questions) {
+        if (!Objects.isNull(questions)) {
             if (Objects.isNull(this.questions)) {
                 this.questions = new ArrayList<>();
             }
-            if (!this.questions.contains(question)) {
-                this.questions.add(question);
-                addQuestionId(question.getId());
-            }
+            questions.forEach(q -> {
+                if (!this.questions.contains(q)) {
+                    this.questions.add(q);
+                    addQuestionId(q.getId());
+                }
+            });
         }
     }
 
+    public void initializeQuestions(List<Question> questions) {
+        this.questions.clear();
+        this.questionIds.clear();
+        addQuestions(questions);
+    }
 }
