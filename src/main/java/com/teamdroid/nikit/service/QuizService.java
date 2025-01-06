@@ -9,13 +9,13 @@ import java.util.List;
 
 
 @Service
-public class QuestionnaireService {
+public class QuizService {
 
     @Autowired
     private TopicRepository topicRepository;
 
     @Autowired
-    private QuestionnaireRepository questionnaireRepository;
+    private QuizRepository quizRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -26,10 +26,10 @@ public class QuestionnaireService {
     @Autowired
     private AnswerRepository answerRepository;
 
-    public Questionnaire createQuestionnaireForTopic(String topicId, Questionnaire questionnaire) {
+    public Quiz createQuizForTopic(String topicId, Quiz quiz) {
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new RuntimeException("Topic not found"));
 
-        for (Question question : questionnaire.getQuestions()) {
+        for (Question question : quiz.getQuestions()) {
             for (Option option : question.getOptions()) {
                 Answer savedAnswer = answerRepository.save(option.getAnswer());
                 option.setAnswerId(savedAnswer.getId());
@@ -37,18 +37,18 @@ public class QuestionnaireService {
                 question.getOptionIds().add(savedOption.getId());
             }
             Question savedQuestion = questionRepository.save(question);
-            questionnaire.addQuestionId(savedQuestion.getId());
+            quiz.addQuestionId(savedQuestion.getId());
         }
 
-        Questionnaire savedQuestionnaire = questionnaireRepository.save(questionnaire);
-        topic.getQuestionnaireIds().add(savedQuestionnaire.getId());
+        Quiz savedQuiz = quizRepository.save(quiz);
+        topic.getQuizIds().add(savedQuiz.getId());
         topicRepository.save(topic);
 
-        return savedQuestionnaire;
+        return savedQuiz;
     }
 
-    public Questionnaire addQuestionsToQuestionnaire(String questionnaireId, List<Question> questions) {
-        Questionnaire questionnaire = questionnaireRepository.findById(questionnaireId).orElseThrow(() -> new RuntimeException("Questionnaire not found"));
+    public Quiz addQuestionsToQuiz(String quizId, List<Question> questions) {
+        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new RuntimeException("Quiz not found"));
 
         for (Question question : questions) {
             for (Option option : question.getOptions()) {
@@ -58,9 +58,9 @@ public class QuestionnaireService {
                 question.getOptionIds().add(savedOption.getId());
             }
             Question savedQuestion = questionRepository.save(question);
-            questionnaire.addQuestion(savedQuestion);
+            quiz.addQuestion(savedQuestion);
         }
 
-        return questionnaireRepository.save(questionnaire);
+        return quizRepository.save(quiz);
     }
 }

@@ -1,6 +1,6 @@
 package com.teamdroid.nikit.controller;
 
-import com.teamdroid.nikit.entity.Questionnaire;
+import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.service.TopicService;
 import lombok.AllArgsConstructor;
@@ -25,9 +25,9 @@ public class TopicController {
         return ResponseEntity.ok(createdTopic);
     }
 
-    @PostMapping("/{topicId}/questionnaires")
-    public ResponseEntity<Topic> addQuestionnairesToTopic(@PathVariable String topicId, @RequestBody List<Questionnaire> questionnaires) {
-        var topic = topicService.addQuestionnairesToTopic(topicId, questionnaires);
+    @PostMapping("/{topicId}/quizzes")
+    public ResponseEntity<Topic> addQuizzesToTopic(@PathVariable String topicId, @RequestBody List<Quiz> quizzes) {
+        var topic = topicService.addQuizzesToTopic(topicId, quizzes);
         return ResponseEntity.ok(topic);
     }
 }

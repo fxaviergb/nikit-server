@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,8 +13,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "questionnaire")
-public class Questionnaire {
+@Document(collection = "quiz")
+public class Quiz {
 
     @Id
     private String id;

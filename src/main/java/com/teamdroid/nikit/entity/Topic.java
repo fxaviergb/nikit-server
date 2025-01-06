@@ -18,8 +18,8 @@ public class Topic {
     @Id
     private String id;
     private String name;
-    private List<String> questionnaireIds = new ArrayList<>();
+    private List<String> quizIds = new ArrayList<>();
 
-    private List<Questionnaire> questionnaires;
+    private List<Quiz> quizzes;
 
 }

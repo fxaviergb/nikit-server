@@ -4,9 +4,9 @@ import com.teamdroid.nikit.entity.*;
 import com.teamdroid.nikit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ public class KnowledgeService {
     private TopicRepository topicRepository;
 
     @Autowired
-    private QuestionnaireRepository questionnaireRepository;
+    private QuizRepository quizRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -56,10 +56,11 @@ public class KnowledgeService {
         knowledgeRepository.deleteById(id);
     }
 
+    @Transactional
     public Knowledge createFullKnowledge(Knowledge knowledge) {
         for (Topic topic : knowledge.getTopics()) {
-            for (Questionnaire questionnaire : topic.getQuestionnaires()) {
-                for (Question question : questionnaire.getQuestions()) {
+            for (Quiz quiz : topic.getQuizzes()) {
+                for (Question question : quiz.getQuestions()) {
                     for (Option option : question.getOptions()) {
                         Answer savedAnswer = answerRepository.save(option.getAnswer());
                         option.setAnswerId(savedAnswer.getId());
@@ -67,10 +68,10 @@ public class KnowledgeService {
                         question.getOptionIds().add(savedOption.getId());
                     }
                     Question savedQuestion = questionRepository.save(question);
-                    questionnaire.getQuestionIds().add(savedQuestion.getId());
+                    quiz.getQuestionIds().add(savedQuestion.getId());
                 }
-                Questionnaire savedQuestionnaire = questionnaireRepository.save(questionnaire);
-                topic.getQuestionnaireIds().add(savedQuestionnaire.getId());
+                Quiz savedQuiz = quizRepository.save(quiz);
+                topic.getQuizIds().add(savedQuiz.getId());
             }
             Topic savedTopic = topicRepository.save(topic);
             knowledge.getTopicIds().add(savedTopic.getId());
@@ -78,12 +79,13 @@ public class KnowledgeService {
         return knowledgeRepository.save(knowledge);
     }
 
+    @Transactional
     public Knowledge addTopicsToKnowledge(String knowledgeId, List<Topic> topics) {
         Knowledge knowledge = knowledgeRepository.findById(knowledgeId).orElseThrow(
                 () -> new RuntimeException("Knowledge not found"));
         for (Topic topic : topics) {
-            for (Questionnaire questionnaire : topic.getQuestionnaires()) {
-                for (Question question : questionnaire.getQuestions()) {
+            for (Quiz quiz : topic.getQuizzes()) {
+                for (Question question : quiz.getQuestions()) {
                     for (Option option : question.getOptions()) {
                         Answer savedAnswer = answerRepository.save(option.getAnswer());
                         option.setAnswerId(savedAnswer.getId());
@@ -91,10 +93,10 @@ public class KnowledgeService {
                         question.getOptionIds().add(savedOption.getId());
                     }
                     Question savedQuestion = questionRepository.save(question);
-                    questionnaire.getQuestionIds().add(savedQuestion.getId());
+                    quiz.getQuestionIds().add(savedQuestion.getId());
                 }
-                Questionnaire savedQuestionnaire = questionnaireRepository.save(questionnaire);
-                topic.getQuestionnaireIds().add(savedQuestionnaire.getId());
+                Quiz savedQuiz = quizRepository.save(quiz);
+                topic.getQuizIds().add(savedQuiz.getId());
             }
             Topic savedTopic = topicRepository.save(topic);
             knowledge.getTopicIds().add(savedTopic.getId());

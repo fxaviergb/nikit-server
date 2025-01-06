@@ -5,9 +5,7 @@ import com.teamdroid.nikit.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TopicService {
@@ -19,7 +17,7 @@ public class TopicService {
     private TopicRepository topicRepository;
 
     @Autowired
-    private QuestionnaireRepository questionnaireRepository;
+    private QuizRepository quizRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -34,8 +32,8 @@ public class TopicService {
     public Topic createTopicForKnowledge(String knowledgeId, Topic topic) {
         Knowledge knowledge = knowledgeRepository.findById(knowledgeId).orElseThrow(() -> new RuntimeException("Knowledge not found"));
 
-        for (Questionnaire questionnaire : topic.getQuestionnaires()) {
-            for (Question question : questionnaire.getQuestions()) {
+        for (Quiz quiz : topic.getQuizzes()) {
+            for (Question question : quiz.getQuestions()) {
                 for (Option option : question.getOptions()) {
                     Answer savedAnswer = answerRepository.save(option.getAnswer());
                     option.setAnswerId(savedAnswer.getId());
@@ -43,10 +41,10 @@ public class TopicService {
                     question.getOptionIds().add(savedOption.getId());
                 }
                 Question savedQuestion = questionRepository.save(question);
-                questionnaire.getQuestionIds().add(savedQuestion.getId());
+                quiz.getQuestionIds().add(savedQuestion.getId());
             }
-            Questionnaire savedQuestionnaire = questionnaireRepository.save(questionnaire);
-            topic.getQuestionnaireIds().add(savedQuestionnaire.getId());
+            Quiz savedQuiz = quizRepository.save(quiz);
+            topic.getQuizIds().add(savedQuiz.getId());
         }
 
         Topic savedTopic = topicRepository.save(topic);
@@ -56,11 +54,11 @@ public class TopicService {
         return savedTopic;
     }
 
-    public Topic addQuestionnairesToTopic(String topicId, List<Questionnaire> questionnaires) {
+    public Topic addQuizzesToTopic(String topicId, List<Quiz> quizzes) {
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new RuntimeException("Topic not found"));
 
-        for (Questionnaire questionnaire : questionnaires) {
-            for (Question question : questionnaire.getQuestions()) {
+        for (Quiz quiz : quizzes) {
+            for (Question question : quiz.getQuestions()) {
                 for (Option option : question.getOptions()) {
                     Answer savedAnswer = answerRepository.save(option.getAnswer());
                     option.setAnswerId(savedAnswer.getId());
@@ -68,10 +66,10 @@ public class TopicService {
                     question.getOptionIds().add(savedOption.getId());
                 }
                 Question savedQuestion = questionRepository.save(question);
-                questionnaire.getQuestionIds().add(savedQuestion.getId());
+                quiz.getQuestionIds().add(savedQuestion.getId());
             }
-            Questionnaire savedQuestionnaire = questionnaireRepository.save(questionnaire);
-            topic.getQuestionnaireIds().add(savedQuestionnaire.getId());
+            Quiz savedQuiz = quizRepository.save(quiz);
+            topic.getQuizIds().add(savedQuiz.getId());
         }
 
         return topicRepository.save(topic);
