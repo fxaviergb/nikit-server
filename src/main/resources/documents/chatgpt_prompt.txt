@@ -1,0 +1,78 @@
+Resuelve el cuestionario adjunto. La respuesta a todo el cuestionario tienes que entregarla en el formato JSON que te proveo como ejemplo: "{
+    "name": "Example Knowledge",
+    "topics": [
+        {
+            "name": "Topic 1",
+            "quizzes": [
+                {
+                    "name": "Cuestionario 1 topic 1",
+                    "questions": [
+                        {
+                            "question": "Que es X?",
+                            "options": [
+                                {
+                                    "option": "es una letra",
+                                    "answer": {
+                                        "isCorrect": true,
+                                        "justification": "X es una letra del diccionario espaniol",
+                                        "extras": [
+                                            "respuesta encontrada en Wikipedia",
+                                            "https://www.wikipedia.com/letrax"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "option": "es un numero",
+                                    "answer": {
+                                        "isCorrect": false,
+                                        "justification": "X no es un numero",
+                                        "extras": [
+                                            "respuesta encontrada en Wikipedia",
+                                            "https://www.wikipedia.com/letrax"
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Cuestionario 2 topic 1",
+                    "questions": [
+                        {
+                            "question": "Que es 1?",
+                            "options": [
+                                {
+                                    "option": "es una letra",
+                                    "answer": {
+                                        "isCorrect": false,
+                                        "justification": "X no es un numero",
+                                        "extras": [
+                                            "respuesta encontrada en Wikipedia",
+                                            "https://www.wikipedia.com/letrax"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "option": "es un numero",
+                                    "answer": {
+                                        "isCorrect": true,
+                                        "justification": "X es un numero",
+                                        "extras": [
+                                            "respuesta encontrada en Wikipedia",
+                                            "https://www.wikipedia.com/letrax"
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}".
+Para las respuestas  cuyo valor para el campo "isCorrect" es true debes incluir en el campo "extras" 3 links a paginas en internet en donde se profundice la explicación de la opción elegida.
+El campo "justification" debe contener una explicación detallada del por qué la respuesta es incorrecta o correcta.
+Muestra correctamente los signos de puntuación.
+Entrega todas las preguntas y respuestas del cuestionario.
