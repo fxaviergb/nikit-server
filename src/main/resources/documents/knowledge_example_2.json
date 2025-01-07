@@ -1,0 +1,364 @@
+{
+  "name": "Cloud Computing DevOps and DevOps Culture",
+  "topics": [
+    {
+      "name": "Tema 1. Qué es DevOps?",
+      "quizzes": [
+        {
+          "name": "Test 1. Qué es DevOps?",
+          "questions": [
+            {
+              "question": "¿Cuál de las siguientes prácticas se corresponde con las metodologías DevOps?",
+              "options": [
+                {
+                  "option": "Integración continua, entrega continua, gestión de la configuración y monitorización.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Estas prácticas son fundamentales para implementar la cultura y metodología DevOps, ya que promueven la entrega rápida y continua de software con alta calidad.",
+                    "extras": [
+                      "https://aws.amazon.com/devops/what-is-devops/",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/",
+                      "https://www.redhat.com/en/topics/devops/what-is-ci-cd"
+                    ]
+                  }
+                },
+                {
+                  "option": "Atraer y contratar a más trabajadores para contar con una fuerza de trabajo más fuerte y numerosa.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Contratar más trabajadores no está directamente relacionado con las prácticas de DevOps, que se enfocan en optimizar procesos y herramientas."
+                  }
+                },
+                {
+                  "option": "Rediseñar la estrategia de marketing para atraer a una mayor cantidad de clientes.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "El marketing no forma parte de las prácticas DevOps, que están centradas en el desarrollo y entrega de software."
+                  }
+                },
+                {
+                  "option": "Reestablecer los objetivos de negocio para aumentar la facturación y extender las directrices necesarias al resto de la organización para alcanzar esta meta.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque los objetivos de negocio pueden beneficiarse de DevOps, el enfoque principal de esta metodología no es redefinir estrategias comerciales."
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuáles de las siguientes afirmaciones acerca de DevOps son falsas?",
+              "options": [
+                {
+                  "option": "La filosofía, cultura y herramientas DevOps son exclusivas para las start-ups.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "DevOps es aplicable a organizaciones de cualquier tamaño, incluidas grandes empresas y corporaciones."
+                  }
+                },
+                {
+                  "option": "Para la adopción de DevOps, solo es necesario que las áreas de desarrollo y operaciones trabajen en equipo, mientras el resto de la organización persigue sus objetivos individuales.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "DevOps requiere una colaboración transversal en toda la organización para maximizar su impacto."
+                  }
+                },
+                {
+                  "option": "Para la implementación de DevOps es necesario que se haga un push a producción a diario.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque el despliegue frecuente es una buena práctica, no es un requisito obligatorio para implementar DevOps."
+                  }
+                },
+                {
+                  "option": "Todas las anteriores.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Cada afirmación anterior representa una idea errónea sobre DevOps. La metodología no está limitada por tamaño de organización, involucra colaboración integral y no obliga a desplegar diariamente.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Qué objetivos persigue la estrategia DevOps?",
+              "options": [
+                {
+                  "option": "Aumentar la capacidad de una organización para entregar aplicaciones y servicios a alta velocidad.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Este objetivo es fundamental en DevOps, ya que la velocidad y agilidad son pilares de la metodología.",
+                    "extras": [
+                      "https://aws.amazon.com/devops/what-is-devops/",
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://www.atlassian.com/devops"
+                    ]
+                  }
+                },
+                {
+                  "option": "Mejorar sus productos de forma continua a un ritmo más rápido que las organizaciones tradicionales.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La mejora continua es clave para DevOps, permitiendo la entrega de valor constante a los clientes.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/devops/what-is-ci-cd",
+                      "https://www.atlassian.com/devops",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/"
+                    ]
+                  }
+                },
+                {
+                  "option": "Ofrecer un mejor servicio a sus clientes y competir en el mercado de forma más eficiente.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "DevOps permite a las organizaciones responder rápidamente a las demandas del mercado, lo que mejora la experiencia del cliente.",
+                    "extras": [
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/",
+                      "https://www.redhat.com/en/topics/devops"
+                    ]
+                  }
+                },
+                {
+                  "option": "Todas las anteriores.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La estrategia DevOps abarca todos estos objetivos para maximizar la eficiencia y competitividad de la organización.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://www.atlassian.com/devops",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuáles de los siguientes enunciados representan beneficios directos de la implementación de DevOps en una organización?",
+              "options": [
+                {
+                  "option": "Impacto positivo en la cuenta de resultados debido a un aumento de la facturación anual.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque DevOps puede contribuir a mejores resultados financieros, este impacto no es directo ni garantizado."
+                  }
+                },
+                {
+                  "option": "Aumento de la satisfacción laboral.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La colaboración, automatización y enfoque en la mejora continua fomentan un ambiente de trabajo más satisfactorio.",
+                    "extras": [
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/",
+                      "https://www.redhat.com/en/topics/devops"
+                    ]
+                  }
+                },
+                {
+                  "option": "Aceleración de la innovación.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "DevOps permite ciclos de desarrollo más cortos, lo que facilita la implementación de nuevas ideas rápidamente.",
+                    "extras": [
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/",
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/"
+                    ]
+                  }
+                },
+                {
+                  "option": "B y C son correctas.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Ambos beneficios, satisfacción laboral e innovación acelerada, son resultados clave de la implementación de DevOps.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuáles son los principios fundamentales de DevOps?",
+              "options": [
+                {
+                  "option": "La colaboración, mejora continua, responsabilidad equitativa, automatización de procesos, foco en el cliente, equipos multifuncionales y el aprendizaje en base a errores.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Estos principios capturan la esencia de DevOps, promoviendo eficiencia, calidad y adaptabilidad.",
+                    "extras": [
+                      "https://aws.amazon.com/devops/what-is-devops/",
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/"
+                    ]
+                  }
+                },
+                {
+                  "option": "La colaboración y la automatización.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque son elementos clave, no representan la totalidad de los principios fundamentales de DevOps."
+                  }
+                },
+                {
+                  "option": "La gestión de la configuración, la automatización y la colaboración.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Estos son componentes importantes, pero no abarcan todos los principios esenciales."
+                  }
+                },
+                {
+                  "option": "La integración y entrega continuas.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Si bien son prácticas centrales, no resumen los principios fundamentales de DevOps."
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál definición de DevOps es la más acertada?",
+              "options": [
+                {
+                  "option": "DevOps es una combinación de filosofías, prácticas y herramientas culturales que utiliza software ágil para mejorar, gestionar y automatizar sus procesos.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Esta definición abarca los aspectos clave de DevOps al integrar metodologías ágiles, herramientas y cultura para optimizar el ciclo de vida del desarrollo de software.",
+                    "extras": [
+                      "https://aws.amazon.com/devops/what-is-devops/",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/",
+                      "https://www.redhat.com/en/topics/devops"
+                    ]
+                  }
+                },
+                {
+                  "option": "DevOps es una metodología basada en la tecnología.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "DevOps no es exclusivamente una metodología técnica; incluye componentes culturales, organizacionales y tecnológicos."
+                  }
+                },
+                {
+                  "option": "DevOps es un enfoque basado en la metodología en cascada que aboga por la cooperación e interacción entre los miembros de los equipos IT.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "La metodología en cascada es lo opuesto a los principios ágiles y continuos promovidos por DevOps."
+                  }
+                },
+                {
+                  "option": "DevOps es una mejora en la comunicación entre los equipos.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque DevOps mejora la comunicación, esto es solo un aspecto dentro de un marco más amplio."
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Qué impulsa a las empresas hacia la adopción de DevOps?",
+              "options": [
+                {
+                  "option": "La reducción del time-to-market.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Reducir el tiempo desde el desarrollo hasta la entrega es un objetivo principal de DevOps para aumentar la competitividad.",
+                    "extras": [
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/"
+                    ]
+                  }
+                },
+                {
+                  "option": "La mejora de procesos a través de la automatización.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La automatización es un pilar clave para DevOps, ayudando a mejorar la eficiencia y la calidad del desarrollo de software.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://aws.amazon.com/devops/",
+                      "https://www.atlassian.com/devops"
+                    ]
+                  }
+                },
+                {
+                  "option": "La mejora de la comunicación, la interacción y la colaboración entre los equipos.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Un enfoque DevOps fomenta una colaboración más estrecha entre equipos, eliminando barreras tradicionales."
+                  }
+                },
+                {
+                  "option": "Todas las anteriores.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "DevOps aborda todos estos puntos, proporcionando un marco integral para optimizar el desarrollo de software.",
+                    "extras": [
+                      "https://aws.amazon.com/devops/what-is-devops/",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/",
+                      "https://www.redhat.com/en/topics/devops"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál de los siguientes enunciados es correcto?",
+              "options": [
+                {
+                  "option": "Los equipos de operaciones deben identificar y resolver los problemas de forma temprana mediante la monitorización.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La monitorización temprana permite identificar y abordar problemas antes de que afecten al cliente final.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/"
+                    ]
+                  }
+                },
+                {
+                  "option": "La monitorización es opcional para el enfoque DevOps, solo la virtualización es obligatoria y necesaria.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "La monitorización es un componente esencial en DevOps para garantizar la calidad y rendimiento continuo."
+                  }
+                },
+                {
+                  "option": "La virtualización en sí misma es opcional para implementar DevOps, pero reportará enormes beneficios en caso de que se integre.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Aunque no obligatoria, la virtualización ofrece ventajas significativas para la flexibilidad y escalabilidad en entornos DevOps.",
+                    "extras": [
+                      "https://aws.amazon.com/devops/what-is-devops/",
+                      "https://azure.microsoft.com/en-us/overview/what-is-devops/",
+                      "https://www.redhat.com/en/topics/devops"
+                    ]
+                  }
+                },
+                {
+                  "option": "A y C son correctas.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Ambas afirmaciones reflejan aspectos clave del enfoque DevOps: la importancia de la monitorización y los beneficios de la virtualización.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/devops",
+                      "https://www.atlassian.com/devops",
+                      "https://aws.amazon.com/devops/"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
