@@ -3,7 +3,7 @@ package com.teamdroid.nikit.config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.teamdroid.nikit.entity.SessionToken;
-import com.teamdroid.nikit.service.SessionTokenService;
+import com.teamdroid.nikit.service.session.SessionTokenService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;

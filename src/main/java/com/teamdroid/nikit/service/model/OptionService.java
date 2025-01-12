@@ -1,8 +1,8 @@
-package com.teamdroid.nikit.service;
+package com.teamdroid.nikit.service.model;
 
 import com.teamdroid.nikit.entity.Answer;
 import com.teamdroid.nikit.entity.Option;
-import com.teamdroid.nikit.repository.OptionRepository;
+import com.teamdroid.nikit.repository.model.OptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

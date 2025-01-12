@@ -1,4 +1,4 @@
-package com.teamdroid.nikit.repository;
+package com.teamdroid.nikit.repository.model;
 
 import com.teamdroid.nikit.entity.Quiz;
 import org.springframework.data.mongodb.repository.MongoRepository;

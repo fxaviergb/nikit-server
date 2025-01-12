@@ -1,11 +1,11 @@
-package com.teamdroid.nikit.controller;
+package com.teamdroid.nikit.controller.auth;
 
 import com.teamdroid.nikit.config.JwtUtil;
 import com.teamdroid.nikit.dto.LoginRequest;
 import com.teamdroid.nikit.dto.LoginResponse;
 import com.teamdroid.nikit.entity.SessionToken;
 import com.teamdroid.nikit.entity.User;
-import com.teamdroid.nikit.service.UserService;
+import com.teamdroid.nikit.service.session.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

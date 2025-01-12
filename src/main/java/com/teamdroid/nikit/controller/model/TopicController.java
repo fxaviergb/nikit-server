@@ -1,8 +1,8 @@
-package com.teamdroid.nikit.controller;
+package com.teamdroid.nikit.controller.model;
 
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.Topic;
-import com.teamdroid.nikit.service.TopicService;
+import com.teamdroid.nikit.service.model.TopicService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

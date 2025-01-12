@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.teamdroid.nikit.entity.SessionToken;
-import com.teamdroid.nikit.service.SessionTokenService;
+import com.teamdroid.nikit.service.session.SessionTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
