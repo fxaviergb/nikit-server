@@ -1,12 +1,10 @@
-package com.teamdroid.nikit.service;
+package com.teamdroid.nikit.service.model;
 
 import com.teamdroid.nikit.entity.*;
-import com.teamdroid.nikit.repository.*;
+import com.teamdroid.nikit.repository.model.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Service

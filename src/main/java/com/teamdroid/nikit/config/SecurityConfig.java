@@ -39,7 +39,7 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/v1/auth/login", // Public endpoint for login
                                         "/swagger-ui/**", // Swagger UI resources
-                                        "/api-docs/**"    // OpenAPI documentation
+                                        "/model-docs/**"    // OpenAPI documentation
                                 ).permitAll() // Allow public access
                                 .anyRequest().authenticated() // Protect all other endpoints
                 )

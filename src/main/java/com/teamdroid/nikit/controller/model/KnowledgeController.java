@@ -1,11 +1,11 @@
-package com.teamdroid.nikit.controller;
+package com.teamdroid.nikit.controller.model;
 
 import com.teamdroid.nikit.dto.KnowledgeCreateDTO;
 import com.teamdroid.nikit.dto.KnowledgeDTO;
 import com.teamdroid.nikit.entity.Knowledge;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.KnowledgeMapper;
-import com.teamdroid.nikit.service.KnowledgeService;
+import com.teamdroid.nikit.service.model.KnowledgeService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

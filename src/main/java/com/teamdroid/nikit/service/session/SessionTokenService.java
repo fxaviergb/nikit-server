@@ -1,7 +1,7 @@
-package com.teamdroid.nikit.service;
+package com.teamdroid.nikit.service.session;
 
 import com.teamdroid.nikit.entity.SessionToken;
-import com.teamdroid.nikit.repository.SessionTokenRepository;
+import com.teamdroid.nikit.repository.session.SessionTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

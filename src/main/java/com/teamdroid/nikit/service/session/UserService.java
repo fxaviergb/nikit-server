@@ -1,7 +1,7 @@
-package com.teamdroid.nikit.service;
+package com.teamdroid.nikit.service.session;
 
 import com.teamdroid.nikit.entity.User;
-import com.teamdroid.nikit.repository.UserRepository;
+import com.teamdroid.nikit.repository.session.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.teamdroid.nikit.repository;
+package com.teamdroid.nikit.repository.session;
 
 import com.teamdroid.nikit.entity.User;
 import org.springframework.stereotype.Repository;
