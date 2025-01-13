@@ -25,9 +25,16 @@ public class QuizAttemptService {
 
     private final QuizAttemptFromQuizMapper quizAttemptFromQuizMapper;
 
-    public QuizAttempt generate(String quizId) {
+    public QuizAttempt createFromQuizBase(String quizId) {
         Quiz quiz = quizService.findById(quizId);
         Assert.notNull(quiz, "There is not found a Quiz with the specified Id");
-        return quizAttemptFromQuizMapper.toDTO(quiz);
+        QuizAttempt quizAttempt = quizAttemptFromQuizMapper.from(quiz);
+        quizAttempt.setIdBase(quiz.getId());
+        return save(quizAttempt);
+    }
+
+    public QuizAttempt save(QuizAttempt quizAttempt) {
+        Assert.notNull(quizAttempt, "The quiz attempt can not be null");
+        return quizAttemptRepository.save(quizAttempt);
     }
 }

@@ -13,5 +13,5 @@ public interface QuizAttemptFromQuizMapper {
 
     QuizAttemptFromQuizMapper INSTANCE = Mappers.getMapper(QuizAttemptFromQuizMapper.class);
 
-    QuizAttempt toDTO(Quiz quiz);
+    QuizAttempt from(Quiz quiz);
 }
