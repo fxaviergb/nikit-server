@@ -1,4 +1,4 @@
-package com.teamdroid.nikit.entity.execution;
+package com.teamdroid.nikit.entity.evaluation;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "quizzy_attempt_execution")
-public class QuizzyAttemptExecution {
+@Document(collection = "evaluation_attempt")
+public class EvaluationAttempt {
 
     @Id
     private String id;
-    private QuizAttempt quizAttempt;
+    private QuizAttempt quiz;
     private LocalDateTime executionDate;
 
     private LocalDateTime creationDate;
@@ -27,8 +27,8 @@ public class QuizzyAttemptExecution {
 
     private Grade grade;
 
-    public QuizzyAttemptExecution(QuizAttempt quizAttempt) {
-        this.quizAttempt = quizAttempt;
+    public EvaluationAttempt(QuizAttempt quiz) {
+        this.quiz = quiz;
         this.creationDate = LocalDateTime.now();
     }
 

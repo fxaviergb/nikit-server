@@ -1,9 +1,10 @@
-package com.teamdroid.nikit.entity.execution;
+package com.teamdroid.nikit.entity.evaluation;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -11,13 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "answer_attempt")
-public class AnswerAttempt {
+@Document(collection = "quiz_attempt")
+public class QuizAttempt {
 
     @Id
     private String id;
-    private boolean isCorrect;
-    private String justification;
-    private List<String> extras;
+    private String idBase;
+    private List<QuestionAttempt> questions = new ArrayList<>();
 
 }
