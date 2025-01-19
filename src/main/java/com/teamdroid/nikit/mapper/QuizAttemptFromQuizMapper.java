@@ -1,7 +1,7 @@
 package com.teamdroid.nikit.mapper;
 
 import com.teamdroid.nikit.entity.Quiz;
-import com.teamdroid.nikit.entity.execution.QuizAttempt;
+import com.teamdroid.nikit.entity.evaluation.QuizAttempt;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;

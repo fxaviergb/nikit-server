@@ -1,4 +1,4 @@
-package com.teamdroid.nikit.entity.execution;
+package com.teamdroid.nikit.entity.evaluation;
 
 import lombok.*;
 

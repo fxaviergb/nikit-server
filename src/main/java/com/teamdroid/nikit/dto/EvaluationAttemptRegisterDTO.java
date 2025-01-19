@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class QuizzyAttemptRegisterDTO {
+public class EvaluationAttemptRegisterDTO {
 
     private String id;
     private LocalDateTime executionDate;

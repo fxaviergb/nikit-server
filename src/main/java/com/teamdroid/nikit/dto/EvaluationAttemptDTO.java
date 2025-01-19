@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class QuizzyAttemptExecutionDTO {
+public class EvaluationAttemptDTO {
 
     private String id;
-    private QuizAttemptDTO quizAttempt;
+    private QuizAttemptDTO quiz;
 
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;

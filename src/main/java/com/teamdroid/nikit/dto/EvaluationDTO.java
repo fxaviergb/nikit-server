@@ -7,9 +7,9 @@ import java.util.List;
 
 @Data
 @Builder
-public class QuizzyExecutionDTO {
+public class EvaluationDTO {
 
     private String id;
-    private List<QuizzyAttemptExecutionDTO> quizzyAttemptExecutions = new ArrayList<>();
+    private List<EvaluationAttemptDTO> attempts = new ArrayList<>();
 
 }

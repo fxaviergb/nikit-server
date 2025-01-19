@@ -1,9 +1,9 @@
-package com.teamdroid.nikit.service.manager;
+package com.teamdroid.nikit.service.evaluation.manager;
 
 import com.teamdroid.nikit.dto.OptionAttemptRegisterDTO;
 import com.teamdroid.nikit.dto.QuestionAttemptRegisterDTO;
-import com.teamdroid.nikit.dto.QuizzyAttemptRegisterDTO;
-import com.teamdroid.nikit.entity.execution.*;
+import com.teamdroid.nikit.dto.EvaluationAttemptRegisterDTO;
+import com.teamdroid.nikit.entity.evaluation.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class QuizzyManagerService {
+public class EvaluationManagerService {
 
 
-    public void review(QuizzyAttemptExecution quizzyAttempt, QuizzyAttemptRegisterDTO quizzyAttemptRegisterDTO) {
-        List<QuestionAttempt> questions = quizzyAttempt.getQuizAttempt().getQuestions();
+    public void review(EvaluationAttempt quizzyAttempt, EvaluationAttemptRegisterDTO quizzyAttemptRegisterDTO) {
+        List<QuestionAttempt> questions = quizzyAttempt.getQuiz().getQuestions();
         List<QuestionAttemptRegisterDTO> questionDTOs = quizzyAttemptRegisterDTO.getQuestions();
 
         quizzyAttempt.setExecutionDate(quizzyAttemptRegisterDTO.getExecutionDate());
@@ -51,9 +51,9 @@ public class QuizzyManagerService {
         }
     }
 
-    public void evaluate(QuizzyAttemptExecution quizzyAttempt) {
+    public void evaluate(EvaluationAttempt quizzyAttempt) {
         double totalScore = 0;
-        List<QuestionAttempt> questions = quizzyAttempt.getQuizAttempt().getQuestions();
+        List<QuestionAttempt> questions = quizzyAttempt.getQuiz().getQuestions();
 
         for (QuestionAttempt question : questions) {
             double questionScore = calculateScore(question);

@@ -1,7 +1,7 @@
-package com.teamdroid.nikit.service.execution;
+package com.teamdroid.nikit.service.evaluation;
 
 import com.teamdroid.nikit.entity.Quiz;
-import com.teamdroid.nikit.entity.execution.QuizAttempt;
+import com.teamdroid.nikit.entity.evaluation.QuizAttempt;
 import com.teamdroid.nikit.mapper.QuizAttemptFromQuizMapper;
 import com.teamdroid.nikit.repository.execution.QuizAttemptRepository;
 import com.teamdroid.nikit.service.model.QuizService;
