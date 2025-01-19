@@ -16,4 +16,6 @@ public class QuestionAttempt {
     private String question;
     private List<OptionAttempt> options = new ArrayList<>();
 
+    private Grade grade;
+
 }

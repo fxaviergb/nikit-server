@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -35,6 +37,10 @@ public class QuizzyExecutionService {
     public QuizzyExecution save(QuizzyExecution executionQuiz) {
         Assert.notNull(executionQuiz, "The quizzy can not be null");
         return quizzyExecutionRepository.save(executionQuiz);
+    }
+
+    public Optional<QuizzyExecution> getById(String id) {
+        return quizzyExecutionRepository.findById(id);
     }
 
 }
