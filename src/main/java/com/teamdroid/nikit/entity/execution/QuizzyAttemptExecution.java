@@ -18,14 +18,18 @@ public class QuizzyAttemptExecution {
     @Id
     private String id;
     private QuizAttempt quizAttempt;
+    private LocalDateTime executionDate;
 
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
     private String createdBy;
     private String modifiedBy;
 
+    private Grade grade;
+
     public QuizzyAttemptExecution(QuizAttempt quizAttempt) {
         this.quizAttempt = quizAttempt;
         this.creationDate = LocalDateTime.now();
     }
+
 }
