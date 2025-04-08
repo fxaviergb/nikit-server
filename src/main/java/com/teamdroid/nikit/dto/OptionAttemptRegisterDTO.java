@@ -8,6 +8,6 @@ import lombok.Data;
 public class OptionAttemptRegisterDTO {
 
     private String id;
-    private boolean isSelected;
+    private Boolean isSelected;
 
 }
