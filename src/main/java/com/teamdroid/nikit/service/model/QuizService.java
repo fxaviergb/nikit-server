@@ -1,7 +1,10 @@
 package com.teamdroid.nikit.service.model;
 
 import com.teamdroid.nikit.entity.*;
+import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
+import com.teamdroid.nikit.model.view.QuizSummary;
 import com.teamdroid.nikit.repository.model.QuizRepository;
+import com.teamdroid.nikit.service.evaluation.EvaluationAttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,9 @@ public class QuizService {
 
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private EvaluationAttemptService evaluationAttemptService;
 
     public Quiz findById(String quizId) {
         return quizRepository.findById(quizId).orElseThrow(
@@ -60,5 +66,11 @@ public class QuizService {
         List<Question> createdQuestions = questionService.create(questions);
         quiz.addQuestions(createdQuestions);
         return quizRepository.save(quiz);
+    }
+
+    public QuizSummary findSummaryById(String quizId) {
+        Quiz quiz = findById(quizId);
+        List<EvaluationAttempt> evaluationAttempts = evaluationAttemptService.getByQuizIdBase(quizId);
+        return QuizSummary.build(quiz, evaluationAttempts);
     }
 }

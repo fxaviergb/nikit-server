@@ -20,6 +20,7 @@ public class Topic {
     @Id
     private String id;
     private String name;
+    private String description;
     private List<String> quizIds = new ArrayList<>();
     private List<Quiz> quizzes = new ArrayList<>();
 

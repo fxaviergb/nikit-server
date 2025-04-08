@@ -23,6 +23,10 @@ public class TopicService {
     @Autowired
     private KnowledgeService knowledgeService;
 
+    public List<Topic> getAll() {
+        return topicRepository.findAll();
+    }
+
     public Topic findById(String topicId) {
         return topicRepository.findById(topicId).orElseThrow(
                 () -> new RuntimeException("Topic not found"));
