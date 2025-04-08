@@ -59,8 +59,8 @@ public interface EvaluationAttemptMapper {
                 optionDTO.setOption(option.getOption());
 
                 OptionReviewDetailDTO detail = new OptionReviewDetailDTO();
-                detail.setSelected(option.isSelected());
-                detail.setCorrect(option.getAnswer() != null && option.getAnswer().isCorrect());
+                detail.setIsSelected(option.getIsSelected());
+                detail.setIsCorrect(option.getAnswer() != null && option.getAnswer().getIsCorrect());
                 detail.setFeedback(option.getAnswer() != null ? option.getAnswer().getJustification() : "");
                 detail.setPoints("1"); // O calcula si es dinámico
                 optionDTO.setReview(detail);

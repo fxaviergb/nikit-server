@@ -16,7 +16,7 @@ public class AnswerAttempt {
 
     @Id
     private String id;
-    private boolean isCorrect;
+    private Boolean isCorrect;
     private String justification;
     private List<String> extras;
 

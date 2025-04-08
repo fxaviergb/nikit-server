@@ -12,6 +12,6 @@ public class OptionAttempt {
     private String id;
     private String option;
     private AnswerAttempt answer;
-    private boolean isSelected;
+    private Boolean isSelected;
 
 }

@@ -47,7 +47,7 @@ public class EvaluationManagerService {
             if (option == null) {
                 throw new RuntimeException("The option id " + oDTO.getId() + " does not exist");
             }
-            option.setSelected(oDTO.isSelected());
+            option.setIsSelected(oDTO.getIsSelected());
         }
     }
 
@@ -66,10 +66,10 @@ public class EvaluationManagerService {
 
     private double calculateScore(QuestionAttempt question) {
         List<OptionAttempt> selectedOptions = question.getOptions().stream()
-                .filter(OptionAttempt::isSelected)
+                .filter(OptionAttempt::getIsSelected)
                 .toList();
 
-        if (selectedOptions.size() == 1 && selectedOptions.get(0).getAnswer().isCorrect()) {
+        if (selectedOptions.size() == 1 && selectedOptions.get(0).getAnswer().getIsCorrect()) {
             return 1;
         }
         return 0;

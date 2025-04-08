@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class OptionReviewDetailDTO {
 
-    private boolean isSelected;
-    private boolean isCorrect;
+    private Boolean isSelected;
+    private Boolean isCorrect;
     private String feedback;
     private String points;
 

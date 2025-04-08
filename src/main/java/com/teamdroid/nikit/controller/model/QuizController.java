@@ -26,6 +26,12 @@ public class QuizController {
 
     private final QuizSummaryMapper quizSummaryMapper;
 
+    @GetMapping("/{quizId}")
+    public ResponseEntity<Quiz> getQuizById(@PathVariable String quizId) {
+        Quiz quiz = quizService.findById(quizId);
+        return ResponseEntity.ok(quiz);
+    }
+
     @PostMapping("/{topicId}")
     public Quiz createQuizForTopic(@PathVariable String topicId, @RequestBody Quiz quiz) {
         return quizService.createFullForTopic(topicId, quiz);
