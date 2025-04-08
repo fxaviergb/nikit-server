@@ -18,6 +18,8 @@ public class Quiz {
 
     @Id
     private String id;
+    private String name;
+    private String description;
     private List<String> questionIds = new ArrayList<>();
     private List<Question> questions = new ArrayList<>();
 

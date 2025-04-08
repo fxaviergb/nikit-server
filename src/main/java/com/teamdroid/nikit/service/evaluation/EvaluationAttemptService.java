@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -36,6 +38,12 @@ public class EvaluationAttemptService {
         return evaluationAttemptRepository.findById(evaluationAttemptId).orElseThrow(
                 () -> new RuntimeException("Evaluation attempt not found"));
     }
+
+    public List<EvaluationAttempt> getByQuizIdBase(String idBase) {
+        Assert.notNull(idBase, "The quiz idBase cannot be null");
+        return evaluationAttemptRepository.findByQuiz_IdBase(idBase);
+    }
+
 
     public EvaluationAttempt register(String attemptId, EvaluationAttemptRegisterDTO evaluationAttemptRegisterDTO) {
         Assert.notNull(attemptId, "The attempt id cannot be null");
