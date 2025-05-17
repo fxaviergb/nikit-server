@@ -129,4 +129,8 @@ public class JwtUtil {
     public void invalidateToken(String username) {
         tokenService.invalidateToken(username);
     }
+
+    public SessionToken generateGenericToken() {
+        return generateToken("invited");
+    }
 }

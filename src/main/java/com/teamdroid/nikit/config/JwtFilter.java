@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -28,6 +29,9 @@ public class JwtFilter extends OncePerRequestFilter {
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
+    @Value("${api.auth.enabled}")
+    private Boolean isApiAuthEnabled;
+
     @Autowired private JwtUtil jwtUtil;
 
     /**
@@ -46,7 +50,12 @@ public class JwtFilter extends OncePerRequestFilter {
         String authorizationHeader = request.getHeader(AUTH_HEADER);
 
         if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)) {
-            String token = authorizationHeader.substring(BEARER_PREFIX.length());
+            String token;
+            if (isApiAuthEnabled) {
+                token = authorizationHeader.substring(BEARER_PREFIX.length());
+            } else {
+                token = jwtUtil.generateGenericToken().getToken();
+            }
 
             if (jwtUtil.validateToken(token)) {
                 setAuthenticationContext(request, token);
