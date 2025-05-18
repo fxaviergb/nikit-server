@@ -2,20 +2,24 @@ package com.teamdroid.nikit.controller.model;
 
 import com.teamdroid.nikit.dto.KnowledgeCreateDTO;
 import com.teamdroid.nikit.dto.KnowledgeDTO;
+import com.teamdroid.nikit.dto.TopicDTO;
 import com.teamdroid.nikit.entity.Knowledge;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.KnowledgeMapper;
+import com.teamdroid.nikit.mapper.TopicMapper;
 import com.teamdroid.nikit.service.model.KnowledgeService;
+import com.teamdroid.nikit.service.model.TopicService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/v1/api/knowledge")
+@RequestMapping("/api/v1/knowledge")
 @AllArgsConstructor
 public class KnowledgeController {
 
@@ -23,6 +27,8 @@ public class KnowledgeController {
     private KnowledgeService knowledgeService;
 
     private final KnowledgeMapper knowledgeMapper;
+
+    private final TopicMapper topicMapper;
 
     @GetMapping
     public ResponseEntity<List<KnowledgeDTO>> getAllKnowledge() {
@@ -39,6 +45,28 @@ public class KnowledgeController {
                 .map(knowledgeMapper::toDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{knowledgeId}/topics")
+    public ResponseEntity<List<TopicDTO>> getTopicsByKnowledgeId(@PathVariable String knowledgeId) {
+        Optional<Knowledge> knowledgeOpt = knowledgeService.getById(knowledgeId);
+
+        if (knowledgeOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Knowledge knowledge = knowledgeOpt.get();
+
+        List<TopicDTO> topics = knowledge.getTopics()
+                .stream()
+                .map(topicMapper::toDTO)
+                .collect(Collectors.toList());
+
+        if (topics.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(topics);
     }
 
     @PostMapping
