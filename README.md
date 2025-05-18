@@ -31,6 +31,7 @@ NikIT (Now I Know IT) Server is an AI-powered platform that processes content to
 - **`pom.xml`**: Maven dependencies and project configuration.
 - **`README.md`**: General project information.
 - **`.mvn/`**: Maven Wrapper files for environment consistency.
+- **`cicd/`**: Docker and deployment-related configuration (Dockerfile, docker-compose, scripts).
 
 ---
 
@@ -40,17 +41,11 @@ NikIT (Now I Know IT) Server is an AI-powered platform that processes content to
 
 - **Java 17** or higher.
 - **Maven 3.8** or higher (or use the included Maven Wrapper: `mvnw`).
+- **Docker** and **Docker Compose** installed and running.
 
-### **2. Configuration**
+---
 
-- Configure the required properties in `src/main/resources/application.properties` or `application.yml`:
-  - Database credentials.
-  - JWT configuration.
-  - Other necessary deployment parameters.
-
-### **3. Run the Application**
-
-From the project root directory, execute:
+### **2. Run with Maven (Local)**
 
 ```bash
 # Using Maven Wrapper (recommended)
@@ -64,6 +59,63 @@ The server will be available at: `http://localhost:8080`
 
 ---
 
+### **3. Run with Docker**
+
+All Docker-related configuration is inside the `cicd/` folder.
+
+#### 🧱 Build and Run
+
+From the root of the project:
+
+```bash
+./cicd/run.sh
+```
+
+This script will:
+- Compile the project with Maven
+- Build the Docker image
+- Start the application and MongoDB containers using Docker Compose
+
+---
+
+### 👀 View Running Containers
+
+To list all running services:
+
+```bash
+docker ps
+```
+
+Or, using Docker Compose (inside `cicd/`):
+
+```bash
+docker-compose ps
+```
+
+---
+
+### 📜 View Logs
+
+To see logs of the `nikit-server` container in real-time:
+
+```bash
+docker logs -f nikit-server
+```
+
+Or with Compose:
+
+```bash
+docker-compose logs -f nikit-server
+```
+
+To see logs of **all services**:
+
+```bash
+docker-compose logs -f
+```
+
+---
+
 ## 🔗 API Documentation
 
 - **Swagger UI**: `http://localhost:8080/swagger-ui`
@@ -73,7 +125,7 @@ The server will be available at: `http://localhost:8080`
 
 ## 🧪 Testing
 
-To run tests, use:
+To run tests locally:
 
 ```bash
 ./mvnw test
