@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  nikit-server:
+    build:
+      context: ..
+      dockerfile: cicd/Dockerfile
+    container_name: nikit-server
+    ports:
+      - "8080:8080"
+    environment:
+      APP_NAME: knowledge-generator-service
+      SERVER_PORT: 8080
+      MONGODB_HOST: mongo
+      MONGODB_PORT: 27017
+      MONGODB_DATABASE: nikit
+      SPRING_PROFILES_ACTIVE: docker
+      MONGODB_USERNAME: nikit_user
+      MONGODB_PASSWORD: nikit_pass
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
