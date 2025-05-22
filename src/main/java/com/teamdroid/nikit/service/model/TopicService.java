@@ -1,5 +1,6 @@
 package com.teamdroid.nikit.service.model;
 
+import com.teamdroid.nikit.dto.TopicUpdatePartialDTO;
 import com.teamdroid.nikit.entity.*;
 import com.teamdroid.nikit.repository.model.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +70,19 @@ public class TopicService {
         topic.addQuizzes(quizzes);
         return topicRepository.save(topic);
     }
+
+    public Topic updatePartial(String topicId, TopicUpdatePartialDTO dto) {
+        Topic topic = findById(topicId);
+
+        if (dto.getName() != null && !dto.getName().isBlank()) {
+            topic.setName(dto.getName());
+        }
+
+        if (dto.getDescription() != null && !dto.getDescription().isBlank()) {
+            topic.setDescription(dto.getDescription());
+        }
+
+        return topicRepository.save(topic);
+    }
+
 }

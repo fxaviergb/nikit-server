@@ -2,6 +2,7 @@ package com.teamdroid.nikit.controller.model;
 
 import com.teamdroid.nikit.dto.KnowledgeCreateDTO;
 import com.teamdroid.nikit.dto.KnowledgeDTO;
+import com.teamdroid.nikit.dto.KnowledgeUpdatePartialDTO;
 import com.teamdroid.nikit.dto.TopicDTO;
 import com.teamdroid.nikit.entity.Knowledge;
 import com.teamdroid.nikit.entity.Topic;
@@ -99,5 +100,14 @@ public class KnowledgeController {
     public ResponseEntity<Knowledge> addTopicsToKnowledge(@PathVariable String knowledgeId, @RequestBody List<Topic> topics) {
         var knowledge = knowledgeService.addTransientTopics(knowledgeId, topics);
         return ResponseEntity.ok(knowledge);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<KnowledgeDTO> updatePartialKnowledge(
+            @PathVariable String id,
+            @RequestBody KnowledgeUpdatePartialDTO dto
+    ) {
+        var updated = knowledgeService.updatePartial(id, dto);
+        return ResponseEntity.ok(knowledgeMapper.toDTO(updated));
     }
 }

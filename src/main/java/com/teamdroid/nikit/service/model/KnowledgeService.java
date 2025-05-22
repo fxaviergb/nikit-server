@@ -1,5 +1,6 @@
 package com.teamdroid.nikit.service.model;
 
+import com.teamdroid.nikit.dto.KnowledgeUpdatePartialDTO;
 import com.teamdroid.nikit.entity.*;
 import com.teamdroid.nikit.repository.model.KnowledgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,15 @@ public class KnowledgeService {
 
     public Knowledge addPersistentTopics(Knowledge knowledge, Topic... topics) {
         knowledge.addTopics(topics);
+        return knowledgeRepository.save(knowledge);
+    }
+
+    public Knowledge updatePartial(String id, KnowledgeUpdatePartialDTO dto) {
+        Knowledge knowledge = knowledgeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Knowledge not found"));
+        if (dto.getName() != null && !dto.getName().isBlank()) {
+            knowledge.setName(dto.getName());
+        }
         return knowledgeRepository.save(knowledge);
     }
 
