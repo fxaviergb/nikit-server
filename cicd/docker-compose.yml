@@ -9,14 +9,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      APP_NAME: knowledge-generator-service
+      APP_NAME: nikit-server
       SERVER_PORT: 8080
-      MONGODB_HOST: mongo
-      MONGODB_PORT: 27017
-      MONGODB_DATABASE: nikit
       SPRING_PROFILES_ACTIVE: docker
-      MONGODB_USERNAME: nikit_user
-      MONGODB_PASSWORD: nikit_pass
+      MONGODB_URI: mongodb://mongo:27017/nikit
     depends_on:
       - mongo
 
