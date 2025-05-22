@@ -2,6 +2,7 @@ package com.teamdroid.nikit.controller.model;
 
 import com.teamdroid.nikit.dto.TopicDTO;
 import com.teamdroid.nikit.dto.TopicQuizDTO;
+import com.teamdroid.nikit.dto.TopicUpdatePartialDTO;
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.TopicMapper;
@@ -51,4 +52,13 @@ public class TopicController {
         var topic = topicService.addTransientQuizzes(topicId, quizzes);
         return ResponseEntity.ok(topic);
     }
+
+    @PatchMapping("/{topicId}")
+    public ResponseEntity<TopicDTO> updatePartialTopic(@PathVariable String topicId,
+            @RequestBody TopicUpdatePartialDTO dto
+    ) {
+        var updated = topicService.updatePartial(topicId, dto);
+        return ResponseEntity.ok(topicMapper.toDTO(updated));
+    }
+
 }
