@@ -45,7 +45,22 @@ NikIT (Now I Know IT) Server is an AI-powered platform that processes content to
 
 ---
 
-### **2. Run with Maven (Local)**
+### **2. Environment Configuration**
+
+Create a `.env` file in the `cicd/` folder with the following structure:
+
+```env
+APP_NAME=nikit-server
+SERVER_PORT=8080
+SPRING_PROFILES_ACTIVE=docker
+MONGODB_URI=mongodb://localhost:27017/nikit
+```
+
+> Make sure MongoDB is accessible at the URI specified. You can use a local MongoDB installation or the container described below.
+
+---
+
+### **3. Run with Maven (Local)**
 
 ```bash
 # Using Maven Wrapper (recommended)
@@ -59,7 +74,7 @@ The server will be available at: `http://localhost:8080`
 
 ---
 
-### **3. Run with Docker**
+### **4. Run with Docker**
 
 All Docker-related configuration is inside the `cicd/` folder.
 
@@ -68,13 +83,25 @@ All Docker-related configuration is inside the `cicd/` folder.
 From the root of the project:
 
 ```bash
-./cicd/run.sh
+./cicd/start.sh
 ```
 
 This script will:
 - Compile the project with Maven
 - Build the Docker image
-- Start the application and MongoDB containers using Docker Compose
+- Start the application using Docker Compose
+
+---
+
+### 🧪 Optional: Run MongoDB Container for Local Testing
+
+If you don’t have MongoDB installed locally, you can run it using Docker:
+
+```bash
+docker run -d   --name mongo   -p 27017:27017   -e MONGO_INITDB_DATABASE=nikit   mongo:6.0
+```
+
+> Make sure your `.env` file points to: `mongodb://localhost:27017/nikit`
 
 ---
 

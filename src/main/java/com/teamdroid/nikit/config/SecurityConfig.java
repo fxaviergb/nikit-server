@@ -48,6 +48,8 @@ public class SecurityConfig {
                 .cors(cors -> {}) // Habilita CORS usando el bean de abajo
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/actuator",
+                                "/actuator/**",
                                 "/v1/auth/login",
                                 "/swagger-ui/**",
                                 "/model-docs/**"

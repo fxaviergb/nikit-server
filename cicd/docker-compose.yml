@@ -7,22 +7,16 @@ services:
       dockerfile: cicd/Dockerfile
     container_name: nikit-server
     ports:
-      - "8080:8080"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     environment:
-      APP_NAME: nikit-server
-      SERVER_PORT: 8080
-      SPRING_PROFILES_ACTIVE: docker
-      MONGODB_URI: mongodb://mongo:27017/nikit
-    depends_on:
-      - mongo
+      APP_NAME: ${APP_NAME}
+      SERVER_PORT: ${SERVER_PORT}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      MONGODB_URI: ${MONGODB_URI}
+      API_AUTH_ENABLED: ${API_AUTH_ENABLED}
+    networks:
+      - td-network
 
-  mongo:
-    image: mongo:6.0
-    container_name: mongo
-    ports:
-      - "27018:27017"
-    volumes:
-      - mongo_data:/data/db
-
-volumes:
-  mongo_data:
+networks:
+  td-network:
+    external: true
