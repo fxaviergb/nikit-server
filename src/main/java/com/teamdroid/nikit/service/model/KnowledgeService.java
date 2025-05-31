@@ -1,8 +1,12 @@
 package com.teamdroid.nikit.service.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teamdroid.nikit.dto.KnowledgeUpdatePartialDTO;
 import com.teamdroid.nikit.entity.*;
+import com.teamdroid.nikit.logging.TDLogger;
 import com.teamdroid.nikit.repository.model.KnowledgeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +25,26 @@ public class KnowledgeService {
     @Autowired
     private TopicService topicService;
 
+    private static final Logger logger = LoggerFactory.getLogger(KnowledgeService.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
 
     public List<Knowledge> getAll() {
+        TDLogger.log(logger, TDLogger.Level.INFO, "Getting all knowledge groups");
         return knowledgeRepository.findAll();
     }
 
     public Optional<Knowledge> getById(String id) {
+        TDLogger.logF(logger, TDLogger.Level.INFO, "Getting knowledge with ID: {}", id);
         return knowledgeRepository.findById(id);
     }
 
     public Knowledge create(Knowledge knowledge) {
-        return knowledgeRepository.save(knowledge);
+        TDLogger.log(logger, TDLogger.Level.INFO, "Creating knowledge", knowledge);
+        Knowledge saved = knowledgeRepository.save(knowledge);
+        TDLogger.log(logger, TDLogger.Level.INFO, "Creating knowledge", knowledge);
+        TDLogger.logF(logger, TDLogger.Level.INFO, "Knowledge created with ID: {}", saved.getId());
+        return saved;
     }
 
     public Knowledge update(String id, Knowledge knowledge) {
