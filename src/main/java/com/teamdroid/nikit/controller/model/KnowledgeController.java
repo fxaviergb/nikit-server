@@ -10,6 +10,7 @@ import com.teamdroid.nikit.mapper.KnowledgeMapper;
 import com.teamdroid.nikit.mapper.TopicMapper;
 import com.teamdroid.nikit.service.model.KnowledgeService;
 import com.teamdroid.nikit.service.model.TopicService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +72,7 @@ public class KnowledgeController {
     }
 
     @PostMapping
-    public ResponseEntity<KnowledgeDTO> createKnowledge(@RequestBody KnowledgeCreateDTO knowledgeCreateDTO) {
+    public ResponseEntity<KnowledgeDTO> createKnowledge(@Valid @RequestBody KnowledgeCreateDTO knowledgeCreateDTO) {
         var knowledge = knowledgeMapper.toEntityCreation(knowledgeCreateDTO);
         var createdKnowledge = knowledgeService.create(knowledge);
         return ResponseEntity.ok(knowledgeMapper.toDTO(createdKnowledge));
