@@ -11,11 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "answer")
 public class Answer {
 
-    @Id
-    private String id;
     private Boolean isCorrect;
     private String justification;
     private List<String> extras;

@@ -1,7 +1,7 @@
 package com.teamdroid.nikit.mapper;
 
-import com.teamdroid.nikit.dto.TopicQuizDTO;
-import com.teamdroid.nikit.dto.TopicDTO;
+import com.teamdroid.nikit.dto.*;
+import com.teamdroid.nikit.dto.request.TopicRequest;
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.Topic;
 import org.mapstruct.Mapper;
@@ -21,15 +21,29 @@ public interface TopicMapper {
     TopicDTO toDTO(Topic topic);
 
     Topic toEntity(TopicDTO topicDTO);
-
-    default List<TopicQuizDTO> toSimpleQuizDTOList(Topic topic) {
-        if (topic.getQuizzes() == null) return List.of();
-
-        return topic.getQuizzes().stream().map(this::toSimpleQuizDTO).collect(Collectors.toList());
-    }
+    Topic toEntity(TopicCreateDTO topicCreateDTO);
+    Topic toEntity(TopicRequest topicRequest);
 
     default TopicQuizDTO toSimpleQuizDTO(Quiz quiz) {
         TopicQuizDTO dto = new TopicQuizDTO();
+        dto.setId(quiz.getId());
+        dto.setName(quiz.getName());
+        dto.setDescription(quiz.getDescription());
+        return dto;
+    }
+
+    default TopicWithQuizzesDTO toTopicWithQuizzesDTO(Topic topic, List<Quiz> quizzes) {
+        TopicWithQuizzesDTO dto = new TopicWithQuizzesDTO();
+        dto.setId(topic.getId());
+        dto.setName(topic.getName());
+        dto.setDescription(topic.getDescription());
+        dto.setKnowledgeId(topic.getKnowledgeId());
+        dto.setQuizzes(quizzes.stream().map(this::toQuizDTO).toList());
+        return dto;
+    }
+
+    default QuizDTO toQuizDTO(Quiz quiz) {
+        QuizDTO dto = new QuizDTO();
         dto.setId(quiz.getId());
         dto.setName(quiz.getName());
         dto.setDescription(quiz.getDescription());

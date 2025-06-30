@@ -1,16 +1,26 @@
 package com.teamdroid.nikit.service.model;
 
+import com.teamdroid.nikit.dto.TopicCreateDTO;
+import com.teamdroid.nikit.dto.TopicDTO;
 import com.teamdroid.nikit.dto.TopicUpdatePartialDTO;
+import com.teamdroid.nikit.dto.request.QuizRequest;
+import com.teamdroid.nikit.dto.request.TopicRequest;
 import com.teamdroid.nikit.entity.*;
+import com.teamdroid.nikit.mapper.TopicMapper;
 import com.teamdroid.nikit.repository.model.TopicRepository;
+import com.teamdroid.nikit.shared.audit.AuditFactory;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
 @Transactional
 public class TopicService {
@@ -21,8 +31,40 @@ public class TopicService {
     @Autowired
     private QuizService quizService;
 
-    @Autowired
-    private KnowledgeService knowledgeService;
+    private final TopicMapper topicMapper;
+
+
+    public Topic createTopicWithChildren(TopicRequest request, String knowledgeId, String userId, Audit audit) {
+        Topic topic = topicMapper.toEntity(request);
+        topic.setKnowledgeId(knowledgeId);
+        topic.setUserId(userId);
+        topic.setAudit(audit);
+        topic = topicRepository.save(topic);
+
+        if (request.getQuizzes() != null && !request.getQuizzes().isEmpty()) {
+            for (QuizRequest quizReq : request.getQuizzes()) {
+                quizService.createQuizWithChildren(quizReq, topic.getId(), userId, audit);
+            }
+        }
+
+        return topic;
+    }
+
+    public List<Topic> findByKnowledgeId(String knowledgeId) {
+        return topicRepository.findByKnowledgeId(knowledgeId);
+    }
+
+    public List<TopicDTO> createTopicsForKnowledge(String knowledgeId, List<TopicCreateDTO> topicCreateDTOs) {
+        List<TopicDTO> created = new ArrayList<>();
+        for (TopicCreateDTO dto : topicCreateDTOs) {
+            Topic topic = topicMapper.toEntity(dto);
+            topic.setKnowledgeId(knowledgeId);
+            //topic.setAudit(AuditFactory.create()); // TODO
+            Topic saved = topicRepository.save(topic);
+            created.add(topicMapper.toDTO(saved));
+        }
+        return created;
+    }
 
     public List<Topic> getAll() {
         return topicRepository.findAll();
@@ -31,44 +73,6 @@ public class TopicService {
     public Topic findById(String topicId) {
         return topicRepository.findById(topicId).orElseThrow(
                 () -> new RuntimeException("Topic not found"));
-    }
-
-    public Topic create(Topic topic) {
-        Assert.notNull(topic, "The topic cannot be null");
-
-        List<Quiz> quizzes = quizService.create(topic.getQuizzes());
-        topic.initializeQuizzes(quizzes);
-        return topicRepository.save(topic);
-    }
-
-    public List<Topic> create(List<Topic> topics) {
-        Assert.notNull(topics, "The list of topics cannot be null");
-
-        return topics.stream()
-                .map(this::create)
-                .collect(Collectors.toList());
-    }
-
-    public Topic createFullForKnowledge(String knowledgeId, Topic topic) {
-        Assert.notNull(knowledgeId, "The knowledge Id cannot be null");
-        Assert.notNull(topic, "The topic cannot be null");
-
-        Knowledge knowledge = knowledgeService.findById(knowledgeId);
-        Topic createdTopic = create(topic);
-        knowledgeService.addPersistentTopics(knowledge, createdTopic);
-        return createdTopic;
-    }
-
-    public Topic addTransientQuizzes(String topicId, List<Quiz> quizzes) {
-        Topic topic = findById(topicId);
-        List<Quiz> createdQuizzes = quizService.create(quizzes);
-        topic.addQuizzes(createdQuizzes);
-        return topicRepository.save(topic);
-    }
-
-    public Topic addPersistentQuizzes(Topic topic, Quiz... quizzes) {
-        topic.addQuizzes(quizzes);
-        return topicRepository.save(topic);
     }
 
     public Topic updatePartial(String topicId, TopicUpdatePartialDTO dto) {

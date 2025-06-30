@@ -2,6 +2,7 @@ package com.teamdroid.nikit.mapper;
 
 import com.teamdroid.nikit.dto.KnowledgeCreateDTO;
 import com.teamdroid.nikit.dto.KnowledgeDTO;
+import com.teamdroid.nikit.dto.request.KnowledgeRequest;
 import com.teamdroid.nikit.entity.Knowledge;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -19,4 +20,5 @@ public interface KnowledgeMapper {
     Knowledge toEntityCreation(KnowledgeCreateDTO knowledgeCreateDTO);
 
     Knowledge toEntity(KnowledgeDTO knowledgeDTO);
+    Knowledge toEntity(KnowledgeRequest knowledgeRequest);
 }

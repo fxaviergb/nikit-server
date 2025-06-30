@@ -1,8 +1,13 @@
 package com.teamdroid.nikit.service.model;
 
+import com.teamdroid.nikit.dto.request.OptionRequest;
+import com.teamdroid.nikit.dto.request.QuestionRequest;
+import com.teamdroid.nikit.entity.Audit;
 import com.teamdroid.nikit.entity.Option;
 import com.teamdroid.nikit.entity.Question;
+import com.teamdroid.nikit.mapper.QuestionMapper;
 import com.teamdroid.nikit.repository.model.QuestionRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 @Transactional
 public class QuestionService {
 
@@ -21,19 +27,23 @@ public class QuestionService {
     @Autowired
     private OptionService optionService;
 
-    public Question create(Question question) {
-        Assert.notNull(question, "The question cannot be null");
+    private final QuestionMapper questionMapper;
 
-        List<Option> options = optionService.create(question.getOptions());
-        question.initializeOptions(options);
-        return questionRepository.save(question);
+    public void createQuestionWithOptions(QuestionRequest request, String quizId, String userId, Audit audit) {
+        // Convertimos el request en entidad
+        Question question = questionMapper.toEntity(request);
+        question.setQuizId(quizId);
+        question.setQuestionVersion(1);
+        question.setUserId(userId);
+        question.setAudit(audit);
+
+        // Guardamos la pregunta primero
+        question = questionRepository.save(question);
+
+        // Creamos cada opción asociándola a la pregunta creada
+        for (OptionRequest optionReq : request.getOptions()) {
+            optionService.createOption(optionReq, question.getId(), userId, audit);
+        }
     }
 
-    public List<Question> create(List<Question> questions) {
-        Assert.notNull(questions, "The list of questions cannot be null");
-
-        return questions.stream()
-                .map(this::create)
-                .collect(Collectors.toList());
-    }
 }

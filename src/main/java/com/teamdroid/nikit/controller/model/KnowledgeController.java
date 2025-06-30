@@ -1,9 +1,7 @@
 package com.teamdroid.nikit.controller.model;
 
-import com.teamdroid.nikit.dto.KnowledgeCreateDTO;
-import com.teamdroid.nikit.dto.KnowledgeDTO;
-import com.teamdroid.nikit.dto.KnowledgeUpdatePartialDTO;
-import com.teamdroid.nikit.dto.TopicDTO;
+import com.teamdroid.nikit.dto.*;
+import com.teamdroid.nikit.dto.request.KnowledgeRequest;
 import com.teamdroid.nikit.entity.Knowledge;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.KnowledgeMapper;
@@ -13,6 +11,7 @@ import com.teamdroid.nikit.service.model.TopicService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +27,20 @@ public class KnowledgeController {
     @Autowired
     private KnowledgeService knowledgeService;
 
+    @Autowired
+    private TopicService topicService;
+
     private final KnowledgeMapper knowledgeMapper;
 
     private final TopicMapper topicMapper;
+
+    @PostMapping("/full")
+    public ResponseEntity<KnowledgeDTO> createFull(@RequestBody KnowledgeRequest request,
+                                             @RequestHeader(value = "X-User-Id", required = false) String userId) {
+        String effectiveUserId = Optional.ofNullable(userId).orElse("system-user");
+        Knowledge knowledge = knowledgeService.createFullStructure(request, effectiveUserId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(knowledgeMapper.toDTO(knowledge));
+    }
 
     @GetMapping
     public ResponseEntity<List<KnowledgeDTO>> getAllKnowledge() {
@@ -57,18 +67,17 @@ public class KnowledgeController {
             return ResponseEntity.notFound().build();
         }
 
-        Knowledge knowledge = knowledgeOpt.get();
-
-        List<TopicDTO> topics = knowledge.getTopics()
-                .stream()
-                .map(topicMapper::toDTO)
-                .collect(Collectors.toList());
+        List<Topic> topics = topicService.findByKnowledgeId(knowledgeId);
 
         if (topics.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(topics);
+        List<TopicDTO> topicDTOs = topics.stream()
+                .map(topicMapper::toDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(topicDTOs);
     }
 
     @PostMapping
@@ -91,16 +100,18 @@ public class KnowledgeController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/full")
-    public ResponseEntity<Knowledge> createFullKnowledge(@RequestBody Knowledge knowledge) {
-        var createdKnowledge = knowledgeService.createFull(knowledge);
-        return ResponseEntity.ok(createdKnowledge);
-    }
-
     @PostMapping("/{knowledgeId}/topics")
-    public ResponseEntity<Knowledge> addTopicsToKnowledge(@PathVariable String knowledgeId, @RequestBody List<Topic> topics) {
-        var knowledge = knowledgeService.addTransientTopics(knowledgeId, topics);
-        return ResponseEntity.ok(knowledge);
+    public ResponseEntity<List<TopicDTO>> addTopicsToKnowledge(
+            @PathVariable String knowledgeId,
+            @RequestBody List<TopicCreateDTO> topicCreateDTOs) {
+
+        Optional<Knowledge> knowledgeOpt = knowledgeService.getById(knowledgeId);
+        if (knowledgeOpt.isEmpty()) {
+            return ResponseEntity.notFound().build(); // TODO Mostrar Knowledge not found
+        }
+
+        List<TopicDTO> createdTopics = topicService.createTopicsForKnowledge(knowledgeId, topicCreateDTOs);
+        return ResponseEntity.ok(createdTopics);
     }
 
     @PatchMapping("/{id}")

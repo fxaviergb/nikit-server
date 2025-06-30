@@ -35,7 +35,7 @@ public interface QuizSummaryMapper {
 
     private QuizSummaryMetadataDTO buildMetadata(Quiz quiz) {
         QuizSummaryMetadataDTO metadata = new QuizSummaryMetadataDTO();
-        metadata.setQuestions(Optional.ofNullable(quiz.getQuestions()).map(List::size).orElse(0));
+        //metadata.setQuestions(Optional.ofNullable(quiz.getQuestions()).map(List::size).orElse(0)); TODO
         return metadata;
     }
 
