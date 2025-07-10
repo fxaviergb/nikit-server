@@ -1,0 +1,38 @@
+Tengo un archivo PDF con un cuestionario resuelto. Necesito que extraigas absolutamente todas las preguntas del cuestionario, incluyendo sus opciones de respuesta, la opción correcta y la justificación o feedback proporcionado para cada una.
+Si encuentras alguna pregunta del tipo "Relaciona columnas", "Relaciona conceptos con definiciones", "Empareja elementos", o similar, conviértela a una pregunta de opción múltiple forzada. En este caso:
+Toda la columna de emparejamientos correctos debe consolidarse como una única opción correcta. Genera otras 3 opciones incorrectas inventadas, pero plausibles, manteniendo el mismo formato visual. El texto de la pregunta debe incluir la etiqueta (forzada) al final.
+Luego, convierte todo ese contenido a un archivo JSON con la siguiente estructura:
+{
+  "name": "Nombre del cuestionario",
+  "description": "Descripción general del cuestionario",
+  "questions": [
+    {
+      "question": "Texto de la pregunta",
+      "options": [
+        {
+          "option": "Texto de la opción A",
+          "answer": {
+            "isCorrect": true,
+            "justification": "Explicación detallada de por qué esta opción es correcta",
+            "extras": ["https://enlace1.com", "https://enlace2.com", "https://enlace3.com"]
+          }
+        },
+        {
+          "option": "Texto de la opción B",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Explicación de por qué esta opción es incorrecta"
+          }
+        }
+      ]
+    }
+  ]
+}
+En ningun texto de opciones debes incluir caracteres de salto de linea o tabuladores.
+El campo "name" tomara un valor como el siguiente "Test Tema 1. Nombre del tema", los valores para formar el nombre debes inferirlos a partir del nombre del documento adjunto.
+El campo "description" debe ser un texto corto que explique con un poco mas de detalle el contenido del cuestionario a partir del nombre del cuestionario.
+Incluye todas las preguntas del documento sin omitir ninguna.
+Para cada respuesta correcta (isCorrect: true) incluye exactamente 3 enlaces de referencia en extras.
+Asegúrate de usar puntuación correcta y un lenguaje técnico y claro.
+Guarda todo el contenido final en un solo archivo .json para descarga.
+Agrega todas las preguntas en una sola entrega, no hagas una entrega parcial para luego pedirme que te confirme si quiero incluir las demas preguntas, incluye todo en una sola entrega.
