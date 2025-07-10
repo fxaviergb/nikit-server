@@ -1,6 +1,6 @@
-# 📚 WiseDroid-Server
+# 📚 nikit-server
 
-WiseDroid-Server is an AI-powered platform that processes content to create quizzes, flashcards, and personalized learning tools, optimizing study sessions and improving knowledge retention.
+NikIT (Now I Know IT) Server is an AI-powered platform that processes content to create quizzes, flashcards, and personalized learning tools, optimizing study sessions and improving knowledge retention.
 
 ---
 
@@ -31,6 +31,7 @@ WiseDroid-Server is an AI-powered platform that processes content to create quiz
 - **`pom.xml`**: Maven dependencies and project configuration.
 - **`README.md`**: General project information.
 - **`.mvn/`**: Maven Wrapper files for environment consistency.
+- **`cicd/`**: Docker and deployment-related configuration (Dockerfile, docker-compose, scripts).
 
 ---
 
@@ -40,17 +41,26 @@ WiseDroid-Server is an AI-powered platform that processes content to create quiz
 
 - **Java 17** or higher.
 - **Maven 3.8** or higher (or use the included Maven Wrapper: `mvnw`).
+- **Docker** and **Docker Compose** installed and running.
 
-### **2. Configuration**
+---
 
-- Configure the required properties in `src/main/resources/application.properties` or `application.yml`:
-  - Database credentials.
-  - JWT configuration.
-  - Other necessary deployment parameters.
+### **2. Environment Configuration**
 
-### **3. Run the Application**
+Create a `.env` file in the `cicd/` folder with the following structure:
 
-From the project root directory, execute:
+```env
+APP_NAME=nikit-server
+SERVER_PORT=8080
+SPRING_PROFILES_ACTIVE=docker
+MONGODB_URI=mongodb://localhost:27017/nikit
+```
+
+> Make sure MongoDB is accessible at the URI specified. You can use a local MongoDB installation or the container described below.
+
+---
+
+### **3. Run with Maven (Local)**
 
 ```bash
 # Using Maven Wrapper (recommended)
@@ -64,6 +74,75 @@ The server will be available at: `http://localhost:8080`
 
 ---
 
+### **4. Run with Docker**
+
+All Docker-related configuration is inside the `cicd/` folder.
+
+#### 🧱 Build and Run
+
+From the root of the project:
+
+```bash
+./cicd/start.sh
+```
+
+This script will:
+- Compile the project with Maven
+- Build the Docker image
+- Start the application using Docker Compose
+
+---
+
+### 🧪 Optional: Run MongoDB Container for Local Testing
+
+If you don’t have MongoDB installed locally, you can run it using Docker:
+
+```bash
+docker run -d   --name mongo   -p 27017:27017   -e MONGO_INITDB_DATABASE=nikit   mongo:6.0
+```
+
+> Make sure your `.env` file points to: `mongodb://localhost:27017/nikit`
+
+---
+
+### 👀 View Running Containers
+
+To list all running services:
+
+```bash
+docker ps
+```
+
+Or, using Docker Compose (inside `cicd/`):
+
+```bash
+docker-compose ps
+```
+
+---
+
+### 📜 View Logs
+
+To see logs of the `nikit-server` container in real-time:
+
+```bash
+docker logs -f nikit-server
+```
+
+Or with Compose:
+
+```bash
+docker-compose logs -f nikit-server
+```
+
+To see logs of **all services**:
+
+```bash
+docker-compose logs -f
+```
+
+---
+
 ## 🔗 API Documentation
 
 - **Swagger UI**: `http://localhost:8080/swagger-ui`
@@ -73,7 +152,7 @@ The server will be available at: `http://localhost:8080`
 
 ## 🧪 Testing
 
-To run tests, use:
+To run tests locally:
 
 ```bash
 ./mvnw test
@@ -102,6 +181,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 🛡️ Author
 
-**WiseDroid-Server** is maintained by the **TeamDroid** team.
+**NikIT-Server** is maintained by the **TeamDroid** team.
 
 ---

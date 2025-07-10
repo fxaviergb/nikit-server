@@ -1,0 +1,384 @@
+{
+  "name": "Administración de Sistemas de la Cloud",
+  "topics": [
+    {
+      "name": "Tema 1. Introducción",
+      "quizzes": [
+        {
+          "name": "Test 1. Introducción",
+          "questions": [
+            {
+              "question": "¿Qué significa administrar un entorno en la nube?",
+              "options": [
+                {
+                  "option": "Mantener todos los sistemas funcionando.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Administrar un entorno en la nube incluye más tareas además de mantener los sistemas funcionando.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Crear un nuevo servidor.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Crear un nuevo servidor es solo una parte de la administración en la nube.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Asegurar el funcionamiento de todos los sistemas, además de vigilar el coste del entorno.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Administrar un entorno en la nube implica tanto asegurar el funcionamiento de los sistemas como gestionar el coste.",
+                    "extras": [
+                      "https://aws.amazon.com/es/cloud-administration/",
+                      "https://www.redhat.com/es/topics/cloud-computing/what-is-cloud-management",
+                      "https://www.ibm.com/cloud/learn/cloud-management"
+                    ]
+                  }
+                },
+                {
+                  "option": "Comprobar que la compañía no dispone de ningún recurso físico en propiedad.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Tener o no recursos físicos no es un indicador directo de administrar un entorno en la nube.",
+                    "extras": []
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál de los siguientes enunciados es correcto?",
+              "options": [
+                {
+                  "option": "Los proveedores son los responsables de asegurar el acceso físico al hardware y, por tanto, los asuntos relativos a la seguridad recaen en ellos.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque los proveedores aseguran el hardware, la seguridad lógica sigue siendo responsabilidad compartida.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "La organización debe proteger la red y sus recursos, y sus equipos deben estar familiarizados con el modelo de seguridad de su proveedor de nube.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Es responsabilidad de la organización proteger su red y comprender el modelo de seguridad del proveedor.",
+                    "extras": [
+                      "https://azure.microsoft.com/es-es/resources/shared-responsibility-in-the-cloud/",
+                      "https://www.cloudflare.com/learning/cloud/what-is-cloud-security/",
+                      "https://aws.amazon.com/es/compliance/shared-responsibility-model/"
+                    ]
+                  }
+                },
+                {
+                  "option": "Los proveedores no ofrecen opciones adecuadas para restringir los accesos y permisos de usuarios y la organización tiene esta responsabilidad.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Los proveedores generalmente ofrecen herramientas para gestionar accesos y permisos.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Los DevOps no necesitan preocuparse por la seguridad en la nube, ya que es una tarea de los administradores de seguridad.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "La seguridad en la nube es una responsabilidad compartida y los DevOps deben colaborar en su implementación.",
+                    "extras": []
+                  }
+                }
+              ]
+            },
+            {
+              "question": "Al hablar de entornos, un ingeniero DevOps debe:",
+              "options": [
+                {
+                  "option": "Saber cómo configurar recursos de computación para establecer y mantener una conexión entre los diferentes entornos.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque es importante, no es la respuesta más completa.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Colaborar con su equipo dentro de la organización, pero no es necesario que los recursos de red sean automatizados y, por tanto, un ingeniero DevOps no necesariamente debe estar familiarizado con ellos y sus protocolos.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Los recursos de red son cruciales en los entornos DevOps.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Combinar sus conocimientos de desarrollo y administración con conocimientos de red, para establecer las conexiones adecuadas.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Un ingeniero DevOps debe tener una comprensión completa que abarque administración, desarrollo y redes.",
+                    "extras": [
+                      "https://www.redhat.com/es/topics/devops/what-is-devops",
+                      "https://aws.amazon.com/es/devops/what-is-devops/",
+                      "https://www.atlassian.com/es/devops"
+                    ]
+                  }
+                },
+                {
+                  "option": "Ninguna de las anteriores.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Una de las respuestas es correcta.",
+                    "extras": []
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál de los siguientes enunciados es correcto al hablar de disponibilidad?",
+              "options": [
+                {
+                  "option": "Se espera que un DevOps trabaje 24/7 para garantizar el tiempo de actividad.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "La disponibilidad se gestiona a través de automatización y monitorización, no trabajo humano continuo.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Las aplicaciones de escalado funcionan independientemente de la automatización.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "El escalado generalmente está relacionado con procesos automatizados en la nube.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Es necesario asegurar que ningún servidor se apaga nunca, incluso actualizando a mano las aplicaciones y paquetes del sistema operativo.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Esto no es práctico y contradice los principios de administración moderna en la nube.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Hoy por hoy existen métricas para detectar eventos que pueden activar tareas de autoescalado y notificaciones, como mensajes de correo electrónico y mensajes de texto.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "El uso de métricas para activar autoescalado y notificaciones es una práctica común en la nube.",
+                    "extras": [
+                      "https://aws.amazon.com/es/cloudwatch/",
+                      "https://docs.microsoft.com/es-es/azure/azure-monitor/",
+                      "https://www.ibm.com/cloud/learn/monitoring"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál de las siguientes afirmaciones es correcta?",
+              "options": [
+                {
+                  "option": "Permitir o bloquear el acceso a la red ahora resulta mucho más sencillo, gracias a la nube.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Si bien hay herramientas avanzadas, gestionar el acceso requiere conocimientos y planificación.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "La automatización siempre facilita la eliminación de errores y la restricción de accesos a los elementos que realmente son necesarios.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La automatización es clave para reducir errores y restringir accesos innecesarios.",
+                    "extras": [
+                      "https://aws.amazon.com/es/iam/",
+                      "https://docs.microsoft.com/es-es/azure/active-directory/",
+                      "https://cloud.google.com/iam/"
+                    ]
+                  }
+                },
+                {
+                  "option": "Los costes de hardware han reemplazado al pago por uso y licencias.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "El modelo de pago por uso sigue siendo un estándar en la nube.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Los DevOps necesitan aprender nuevas herramientas, exclusivas de la nube, que no estaban presentes en entornos tradicionales.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque hay herramientas específicas, los conceptos básicos siguen aplicándose en la nube.",
+                    "extras": []
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Qué sistema operativo es mejor: Linux o Windows?",
+              "options": [
+                {
+                  "option": "Depende de la tarea que vaya a cumplir.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La elección del sistema operativo depende de los requisitos específicos de la tarea.",
+                    "extras": [
+                      "https://www.redhat.com/en/topics/linux",
+                      "https://docs.microsoft.com/en-us/windows-server/",
+                      "https://aws.amazon.com/es/marketplace/solutions/operating-systems/"
+                    ]
+                  }
+                },
+                {
+                  "option": "Linux, ya que es gratis.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque Linux es gratuito, su uso depende de las necesidades específicas.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Windows, ya que el sistema de ventanas es mucho más fácil de usar.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "La facilidad de uso depende de la experiencia del usuario.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Linux, ya que es lo que usan los informáticos más avanzados.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "La experiencia de los usuarios avanzados no determina la mejor elección.",
+                    "extras": []
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Cuál es la mejor manera de afrontar una migración de una aplicación de un despliegue tradicional onsite a un despliegue en la nube?",
+              "options": [
+                {
+                  "option": "Cambiar el modelo de despliegue para usar herramientas diferentes, como contenedores o grupos de autodespliegue.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Esta puede ser una opción, pero no es adecuada para todas las aplicaciones.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Hacer una copia de seguridad de la aplicación, copiarla a la nube y recrear la aplicación a partir de la copia.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Esto no siempre garantiza que la aplicación funcione correctamente en la nube.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Crear una réplica de los discos duros en la nube que esté sincronizada con cada escritura en los discos onsite. Apagar la aplicación onsite y arrancarla con los discos en la nube.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Esta opción es válida solo para ciertos escenarios específicos.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Todas las opciones son válidas, la mejor depende del tipo de aplicación, la capacidad de tener caída de servicio y el tipo y cantidad de recursos disponibles.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "La estrategia de migración adecuada depende de los requisitos específicos del proyecto.",
+                    "extras": [
+                      "https://www.redhat.com/es/topics/cloud/migration",
+                      "https://aws.amazon.com/es/cloud-migration/",
+                      "https://azure.microsoft.com/es-es/migration/"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "question": "En el modelo mascotas vs. ganado (pets vs. cattle), ¿qué es cada concepto?",
+              "options": [
+                {
+                  "option": "Pet se refiere a un servidor que nunca se apaga, que se actualiza con parches de seguridad y cuyo estado es muy difícil de recuperar si el servidor deja de ser accesible. Cattle se refiere a servidores de usar y tirar: si un servidor deja de funcionar, se cambia por otro; una actualización se aplica cambiando un servidor por otro.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "El modelo pets vs. cattle describe diferentes enfoques para la gestión de infraestructura.",
+                    "extras": [
+                      "https://martinfowler.com/bliki/PetsVsCattle.html",
+                      "https://cloud.google.com/blog/topics/developers-practitioners/pets-vs-cattle",
+                      "https://www.redhat.com/en/blog/pets-vs-cattle-or-how-conquer-your-infrastructure"
+                    ]
+                  }
+                },
+                {
+                  "option": "Un servidor «mascota» tiene un nombre familiar y un servidor «ganado» tiene un nombre genérico.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Esta definición no refleja los principios del modelo.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Un servidor «mascota» es siempre físico y un servidor «ganado» es siempre virtual.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "El modelo no está relacionado con el tipo de servidor.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Un servidor «mascota» es siempre Windows y un servidor «ganado» es siempre Linux.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "El modelo no depende del sistema operativo.",
+                    "extras": []
+                  }
+                }
+              ]
+            },
+            {
+              "question": "¿Qué se entiende por entorno híbrido?",
+              "options": [
+                {
+                  "option": "Aquel en el que todos los recursos están en la nube.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Esto describe un entorno completamente basado en la nube, no híbrido.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Aquel en el que todos los recursos son físicos.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Esto describe un entorno tradicional, no híbrido.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Aquel en el que hay recursos físicos y virtuales.",
+                  "answer": {
+                    "isCorrect": false,
+                    "justification": "Aunque es correcto, no captura completamente el concepto de híbrido.",
+                    "extras": []
+                  }
+                },
+                {
+                  "option": "Aquel en el que parte de los recursos están en las ubicaciones de la compañía y parte residen en la nube.",
+                  "answer": {
+                    "isCorrect": true,
+                    "justification": "Un entorno híbrido combina recursos locales y en la nube.",
+                    "extras": [
+                      "https://azure.microsoft.com/es-es/overview/what-is-hybrid-cloud/",
+                      "https://www.redhat.com/es/topics/cloud-computing/what-is-hybrid-cloud",
+                      "https://aws.amazon.com/es/hybrid-cloud/"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

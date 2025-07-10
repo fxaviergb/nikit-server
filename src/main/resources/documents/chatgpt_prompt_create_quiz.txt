@@ -1,0 +1,391 @@
+Genera un cuestionario relacionado a "Paises y sus capitales". La respuesta a todo el cuestionario tienes que entregarla en el formato JSON que te proveo como ejemplo: "
+{
+"name": "Capitales y Países",
+"description": "Las capitales de los países",
+"questions": [
+ {
+     "question": "¿Cuál es la capital de Francia?",
+     "options": [
+         {
+             "option": "París",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "París es la capital de Francia desde el año 508 y es el centro político, económico y cultural del país.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Par%C3%ADs",
+                     "https://www.britannica.com/place/Paris",
+                     "https://www.lonelyplanet.com/france/paris"
+                 ]
+             }
+         },
+         {
+             "option": "Marsella",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Marsella es una ciudad importante de Francia, pero no es la capital; cumple funciones portuarias y comerciales."
+             }
+         },
+         {
+             "option": "Lyon",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Lyon es una gran ciudad francesa, conocida por su gastronomía, pero no es la capital del país."
+             }
+         },
+         {
+             "option": "Niza",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Niza es una ciudad costera en Francia, pero no es la capital."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Japón?",
+     "options": [
+         {
+             "option": "Tokio",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Tokio es la capital oficial de Japón y el centro de gobierno y residencia del emperador.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Tokio",
+                     "https://www.japan.travel/es/destinations/kanto/tokyo/",
+                     "https://www.britannica.com/place/Tokyo"
+                 ]
+             }
+         },
+         {
+             "option": "Kioto",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Kioto fue la antigua capital de Japón, pero actualmente es una ciudad histórica sin funciones capitalinas."
+             }
+         },
+         {
+             "option": "Osaka",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Osaka es una gran ciudad industrial y comercial, pero no es la capital de Japón."
+             }
+         },
+         {
+             "option": "Hiroshima",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Hiroshima es una ciudad conocida por su historia bélica, pero no es la capital de Japón."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Canadá?",
+     "options": [
+         {
+             "option": "Ottawa",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Ottawa es la capital de Canadá desde 1857, elegida por la Reina Victoria por su ubicación estratégica.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Ottawa",
+                     "https://www.britannica.com/place/Ottawa",
+                     "https://www.canada.ca/en/canadian-heritage/services/capital-canada.html"
+                 ]
+             }
+         },
+         {
+             "option": "Toronto",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Toronto es la ciudad más grande de Canadá, pero la capital es Ottawa."
+             }
+         },
+         {
+             "option": "Montreal",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Montreal es una gran ciudad en Quebec, pero no es la capital del país."
+             }
+         },
+         {
+             "option": "Vancouver",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Vancouver es una ciudad del oeste canadiense, muy importante, pero no es la capital."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Australia?",
+     "options": [
+         {
+             "option": "Canberra",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Canberra fue elegida como capital de Australia en 1908 como un compromiso entre Sídney y Melbourne.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Canberra",
+                     "https://www.britannica.com/place/Canberra",
+                     "https://www.australia.com/es-mx/places/canberra.html"
+                 ]
+             }
+         },
+         {
+             "option": "Sídney",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Sídney es la ciudad más poblada de Australia, pero no es la capital política."
+             }
+         },
+         {
+             "option": "Melbourne",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Melbourne fue capital temporal, pero Canberra es la actual capital oficial de Australia."
+             }
+         },
+         {
+             "option": "Brisbane",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Brisbane es una ciudad importante, pero no la capital de Australia."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Brasil?",
+     "options": [
+         {
+             "option": "Brasilia",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Brasilia fue fundada en 1960 para ser la capital de Brasil, reemplazando a Río de Janeiro.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Brasilia",
+                     "https://www.britannica.com/place/Brasilia",
+                     "https://www.brazil.org.za/brasilia.html"
+                 ]
+             }
+         },
+         {
+             "option": "Río de Janeiro",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Río de Janeiro fue capital hasta 1960, pero ahora lo es Brasilia."
+             }
+         },
+         {
+             "option": "São Paulo",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "São Paulo es el motor económico del país, pero no es la capital."
+             }
+         },
+         {
+             "option": "Salvador de Bahía",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Salvador fue la primera capital del Brasil colonial, pero no es la capital actual."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Egipto?",
+     "options": [
+         {
+             "option": "El Cairo",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "El Cairo es la capital de Egipto, centro político y cultural del país desde hace siglos.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/El_Cairo",
+                     "https://www.britannica.com/place/Cairo",
+                     "https://egypt.travel/en/regions/cairo"
+                 ]
+             }
+         },
+         {
+             "option": "Alejandría",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Alejandría es una ciudad histórica, pero El Cairo es la capital actual."
+             }
+         },
+         {
+             "option": "Giza",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Giza es parte del área metropolitana de El Cairo, pero no es capital en sí misma."
+             }
+         },
+         {
+             "option": "Luxor",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Luxor es famosa por sus templos, pero no es la capital de Egipto."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Rusia?",
+     "options": [
+         {
+             "option": "Moscú",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Moscú es la capital de Rusia, sede del gobierno y residencia del presidente.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Mosc%C3%BA",
+                     "https://www.britannica.com/place/Moscow",
+                     "https://www.russia.travel/cities-and-regions/moscow/moscow/"
+                 ]
+             }
+         },
+         {
+             "option": "San Petersburgo",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "San Petersburgo fue capital imperial, pero Moscú es la actual capital."
+             }
+         },
+         {
+             "option": "Kazan",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Kazan es una ciudad importante en Tartaristán, pero no la capital del país."
+             }
+         },
+         {
+             "option": "Novosibirsk",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Novosibirsk es relevante en Siberia, pero no es capital nacional."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Alemania?",
+     "options": [
+         {
+             "option": "Berlín",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Berlín es la capital de Alemania desde la reunificación en 1990.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Berl%C3%ADn",
+                     "https://www.britannica.com/place/Berlin",
+                     "https://www.germany.travel/en/cities-culture/berlin.html"
+                 ]
+             }
+         },
+         {
+             "option": "Fráncfort",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Fráncfort es centro financiero, pero la capital política es Berlín."
+             }
+         },
+         {
+             "option": "Múnich",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Múnich es capital de Baviera, pero no de Alemania."
+             }
+         },
+         {
+             "option": "Hamburgo",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Hamburgo es ciudad-estado alemana, pero no capital del país."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Argentina?",
+     "options": [
+         {
+             "option": "Buenos Aires",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Buenos Aires es la capital de Argentina, sede del gobierno y la vida política del país.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Buenos_Aires",
+                     "https://www.britannica.com/place/Buenos-Aires",
+                     "https://turismo.buenosaires.gob.ar/es"
+                 ]
+             }
+         },
+         {
+             "option": "Córdoba",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Córdoba es una ciudad importante, pero no es la capital del país."
+             }
+         },
+         {
+             "option": "Rosario",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Rosario es una ciudad industrial clave, pero no capital nacional."
+             }
+         },
+         {
+             "option": "Mendoza",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Mendoza es conocida por sus viñedos, pero no es capital del país."
+             }
+         }
+     ]
+ },
+ {
+     "question": "¿Cuál es la capital de Sudáfrica?",
+     "options": [
+         {
+             "option": "Pretoria",
+             "answer": {
+                 "isCorrect": true,
+                 "justification": "Pretoria es la capital administrativa de Sudáfrica, donde reside el poder ejecutivo.",
+                 "extras": [
+                     "https://es.wikipedia.org/wiki/Pretoria",
+                     "https://www.britannica.com/place/Pretoria",
+                     "https://www.sahistory.org.za/place/pretoria"
+                 ]
+             }
+         },
+         {
+             "option": "Ciudad del Cabo",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Ciudad del Cabo es sede del Parlamento, pero no capital administrativa."
+             }
+         },
+         {
+             "option": "Johannesburgo",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Johannesburgo es la ciudad más grande, pero no es capital."
+             }
+         },
+         {
+             "option": "Durban",
+             "answer": {
+                 "isCorrect": false,
+                 "justification": "Durban es un importante puerto, pero no es una de las capitales del país."
+             }
+         }
+     ]
+ }
+]
+}".
+Para las respuestas  cuyo valor para el campo "isCorrect" es true debes incluir en el campo "extras" 3 links a paginas en internet en donde se profundice la explicación de la opción elegida.
+El campo "justification" debe contener una explicación detallada del por qué la respuesta es incorrecta o correcta.
+Muestra correctamente los signos de puntuación.
+Entrega todas las preguntas y respuestas del cuestionario.

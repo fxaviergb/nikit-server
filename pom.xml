@@ -5,26 +5,23 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.teamdroid</groupId>
-	<artifactId>WiseDroid-Server</artifactId>
+	<artifactId>nikit-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>WiseDroid-Server</name>
-	<description>Wise Droid Server - Knowledge Generator</description>
+	<name>nikit-server</name>
+	<description>NikIT Server - Knowledge Generator</description>
 
 	<properties>
-		<!-- Versión de dependencias -->
 		<java.version>17</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<lombok.version>1.18.30</lombok.version>
 		<lombok-mapstruck-bindings.version>0.2.0</lombok-mapstruck-bindings.version>
-
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- MapStruct -->
 			<dependency>
 				<groupId>org.mapstruct</groupId>
 				<artifactId>mapstruct</artifactId>
@@ -65,12 +62,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- Metrics -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
 		<!-- OpenAPI Documentation (Swagger UI) -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.1.0</version> <!-- Versión adecuada para Spring Boot 3.x -->
+			<version>2.1.0</version>
 		</dependency>
 
 		<!-- Jakarta Validation API -->
@@ -91,14 +107,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-
-		<!-- H2 Database -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>2.2.224</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- MapStruct -->
@@ -147,15 +155,22 @@
 			<version>5.5.0</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- ELK Dependencies -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>7.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>nikit-server</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- Plugin de compilación para procesadores de anotaciones -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -164,19 +179,16 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<annotationProcessorPaths>
-						<!-- Procesador de MapStruct -->
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${mapstruct.version}</version>
 						</path>
-						<!-- Procesador de Lombok -->
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 							<version>${lombok.version}</version>
 						</path>
-						<!-- Lombok MapStruct Binding -->
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok-mapstruct-binding</artifactId>
