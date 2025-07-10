@@ -1,4 +1,5 @@
-Genera un cuestionario relacionado a "Paises y sus capitales". La respuesta a todo el cuestionario tienes que entregarla en el formato JSON que te proveo como ejemplo: "{
+Genera un cuestionario relacionado a "Paises y sus capitales". La respuesta a todo el cuestionario tienes que entregarla en el formato JSON que te proveo como ejemplo: "
+{
 "name": "Capitales y Países",
 "description": "Las capitales de los países",
 "questions": [
