@@ -17,9 +17,9 @@ public class UserRepository {
 
     public UserRepository() {
         // Usuarios precargados en la "base de datos"
-        userDatabase.put("admin", "password");
-        userDatabase.put("user1", "pass123");
-        userDatabase.put("user2", "mypassword");
+        userDatabase.put("admin", "password1234*");
+        userDatabase.put("user1", "abc123..*");
+        userDatabase.put("user2", "abc123..*");
     }
 
     public Optional<User> findByUsername(String username) {
