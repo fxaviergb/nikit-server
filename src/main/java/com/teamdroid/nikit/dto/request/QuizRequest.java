@@ -9,4 +9,5 @@ import java.util.List;
 public class QuizRequest {
     private String name;
     private String description;
-    private List<QuestionRequest> questions;}
+    private List<QuestionRequest> questions;
+}
