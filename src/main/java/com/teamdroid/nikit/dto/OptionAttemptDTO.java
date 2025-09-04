@@ -8,5 +8,6 @@ public class OptionAttemptDTO {
 
     private String id;
     private String option;
+    private AnswerAttemptDTO answer;
 
 }
