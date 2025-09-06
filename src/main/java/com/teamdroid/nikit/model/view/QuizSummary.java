@@ -2,6 +2,7 @@ package com.teamdroid.nikit.model.view;
 
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
+import com.teamdroid.nikit.service.model.QuestionService;
 import lombok.*;
 
 import java.util.ArrayList;

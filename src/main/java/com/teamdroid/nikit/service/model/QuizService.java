@@ -12,10 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -68,8 +66,14 @@ public class QuizService {
                 () -> new RuntimeException("Quiz not found"));
     }
 
-    public QuizSummary findSummaryById(String quizId) {
+    public Quiz findByIdFull(String quizId) {
         Quiz quiz = findById(quizId);
+        quiz.setQuestions(questionService.findByQuizIdFull(quizId));
+        return quiz;
+    }
+
+    public QuizSummary findSummaryById(String quizId) {
+        Quiz quiz = findByIdFull(quizId);
         List<EvaluationAttempt> evaluationAttempts = evaluationAttemptService.getByQuizIdBase(quizId);
         return QuizSummary.build(quiz, evaluationAttempts);
     }

@@ -26,7 +26,7 @@ public class QuizAttemptService {
     private final QuizAttemptFromQuizMapper quizAttemptFromQuizMapper;
 
     public QuizAttempt createFromQuizBase(String quizId) {
-        Quiz quiz = quizService.findById(quizId);
+        Quiz quiz = quizService.findByIdFull(quizId);
         Assert.notNull(quiz, "There is not found a Quiz with the specified Id");
         QuizAttempt quizAttempt = quizAttemptFromQuizMapper.from(quiz);
         quizAttempt.setIdBase(quiz.getId());

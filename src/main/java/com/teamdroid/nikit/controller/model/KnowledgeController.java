@@ -2,12 +2,15 @@ package com.teamdroid.nikit.controller.model;
 
 import com.teamdroid.nikit.dto.*;
 import com.teamdroid.nikit.dto.request.KnowledgeRequest;
+import com.teamdroid.nikit.dto.request.TopicRequest;
+import com.teamdroid.nikit.entity.Audit;
 import com.teamdroid.nikit.entity.Knowledge;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.KnowledgeMapper;
 import com.teamdroid.nikit.mapper.TopicMapper;
 import com.teamdroid.nikit.service.model.KnowledgeService;
 import com.teamdroid.nikit.service.model.TopicService;
+import com.teamdroid.nikit.shared.audit.AuditFactory;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,14 +106,16 @@ public class KnowledgeController {
     @PostMapping("/{knowledgeId}/topics")
     public ResponseEntity<List<TopicDTO>> addTopicsToKnowledge(
             @PathVariable String knowledgeId,
-            @RequestBody List<TopicCreateDTO> topicCreateDTOs) {
+            @RequestBody List<TopicRequest> topicRequests) {
 
         Optional<Knowledge> knowledgeOpt = knowledgeService.getById(knowledgeId);
         if (knowledgeOpt.isEmpty()) {
             return ResponseEntity.notFound().build(); // TODO Mostrar Knowledge not found
         }
 
-        List<TopicDTO> createdTopics = topicService.createTopicsForKnowledge(knowledgeId, topicCreateDTOs);
+        String userId =  "system"; // TODO obtener de JWT
+        Audit audit = AuditFactory.create(userId);
+        List<TopicDTO> createdTopics = topicService.createTopicsForKnowledge(knowledgeId, topicRequests, userId, audit);
         return ResponseEntity.ok(createdTopics);
     }
 

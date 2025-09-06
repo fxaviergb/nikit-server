@@ -2,6 +2,7 @@ package com.teamdroid.nikit.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -27,5 +28,8 @@ public class Question {
     private String userId;
 
     private Audit audit;
+
+    @Transient
+    private List<Option> options;
 
 }

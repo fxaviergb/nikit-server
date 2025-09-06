@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 @Builder
 public class AnswerRequest {
-    private boolean isCorrect;
+    private Boolean isCorrect;
     private String justification;
     private List<String> extras;
 }

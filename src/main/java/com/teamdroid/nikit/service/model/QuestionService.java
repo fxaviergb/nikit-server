@@ -5,6 +5,7 @@ import com.teamdroid.nikit.dto.request.QuestionRequest;
 import com.teamdroid.nikit.entity.Audit;
 import com.teamdroid.nikit.entity.Option;
 import com.teamdroid.nikit.entity.Question;
+import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.mapper.QuestionMapper;
 import com.teamdroid.nikit.repository.model.QuestionRepository;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,18 @@ public class QuestionService {
         for (OptionRequest optionReq : request.getOptions()) {
             optionService.createOption(optionReq, question.getId(), userId, audit);
         }
+    }
+
+    public List<Question> findByQuizId(String quizId) {
+        return questionRepository.findByQuizId(quizId);
+    }
+
+    public List<Question> findByQuizIdFull(String quizId) {
+        List<Question> questions = findByQuizId(quizId);
+        for(Question q : questions) {
+            q.setOptions(optionService.findByQuestionId(q.getId()));
+        }
+        return questions;
     }
 
 }

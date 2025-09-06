@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class Answer {
 
-    private boolean isCorrect;
+    private Boolean isCorrect;
     private String justification;
     private List<String> extras;
 

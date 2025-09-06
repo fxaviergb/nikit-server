@@ -74,7 +74,7 @@ public class TopicController {
             @PathVariable String topicId,
             @RequestBody List<QuizRequest> quizzes
     ) {
-        Topic topic = topicService.findById(topicId); // Validación de existencia
+        Topic topic = topicService.findById(topicId);
         String userId =  "system"; // TODO obtener de JWT
         for (QuizRequest quizRequest : quizzes) {
             quizService.createQuizWithChildren(quizRequest, topicId, userId, AuditFactory.create(userId));

@@ -54,14 +54,11 @@ public class TopicService {
         return topicRepository.findByKnowledgeId(knowledgeId);
     }
 
-    public List<TopicDTO> createTopicsForKnowledge(String knowledgeId, List<TopicCreateDTO> topicCreateDTOs) {
+    public List<TopicDTO> createTopicsForKnowledge(String knowledgeId, List<TopicRequest> topicRequests, String userId, Audit audit) {
         List<TopicDTO> created = new ArrayList<>();
-        for (TopicCreateDTO dto : topicCreateDTOs) {
-            Topic topic = topicMapper.toEntity(dto);
-            topic.setKnowledgeId(knowledgeId);
-            //topic.setAudit(AuditFactory.create()); // TODO
-            Topic saved = topicRepository.save(topic);
-            created.add(topicMapper.toDTO(saved));
+        for (TopicRequest r : topicRequests) {
+            Topic topic = this.createTopicWithChildren(r, knowledgeId, userId, audit);
+            created.add(topicMapper.toDTO(topic));
         }
         return created;
     }
