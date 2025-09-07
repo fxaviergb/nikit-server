@@ -22,9 +22,9 @@ public class QuizAttemptService {
     private QuizService quizService;
 
 
-    public QuizAttempt createFromQuizBase(String quizId) {
+    public QuizAttempt createFromQuizBase(String quizId, Integer questionCount) {
         Assert.notNull(quizId, "There is not found a Quiz with the specified Id");
-        Quiz quiz = quizService.findByIdFull(quizId);
+        Quiz quiz = quizService.getForEvaluation(quizId, questionCount);
         return quizAttemptFromQuizMapper.from(quiz);
     }
 

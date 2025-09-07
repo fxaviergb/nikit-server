@@ -29,12 +29,13 @@ public class EvaluationService {
     private QuizAttemptService quizAttemptService;
 
 
-    public Evaluation create(String quizId, String userId, Audit audit) {
+    public Evaluation create(String quizId, String userId, Integer questionCount) {
         Assert.notNull(quizId, "The quiz Id cannot be null");
-        QuizAttempt quizAttempt = quizAttemptService.createFromQuizBase(quizId);
+        QuizAttempt quizAttempt = quizAttemptService.createFromQuizBase(quizId, questionCount);
         Evaluation evaluation = save(new Evaluation(quizAttempt, userId));
         EvaluationAttempt evaluationAttempt = evaluationAttemptService.create(evaluation, quizAttempt);
         evaluation.addQuizzyAttemptExecution(evaluationAttempt);
+
         return save(evaluation);
     }
 

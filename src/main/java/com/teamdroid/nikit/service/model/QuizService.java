@@ -47,17 +47,6 @@ public class QuizService {
         }
     }
 
-    public Quiz createQuestions(String quizId, List<QuestionRequest> questions, String userId) {
-        Quiz quiz = findById(quizId); // Lanza excepción si no existe
-
-        for (QuestionRequest questionReq : questions) {
-            questionService.createQuestionWithOptions(questionReq, quizId, userId);
-        }
-
-        // Opcional: recargar quiz si deseas ver cambios reflejados
-        return findById(quizId);
-    }
-
     public List<Quiz> findByTopicId(String topicId) {
         return quizRepository.findByTopicIdsContaining(topicId);
     }
@@ -77,5 +66,11 @@ public class QuizService {
         Quiz quiz = findByIdFull(quizId);
         List<EvaluationAttempt> evaluationAttempts = evaluationAttemptService.getByQuizId(quizId);
         return QuizSummary.build(quiz, evaluationAttempts);
+    }
+
+    public Quiz getForEvaluation(String quizId, Integer questionCount) {
+        Quiz quiz = findById(quizId);
+        quiz.setQuestions(questionService.getQuestionsForQuizEvaluation(quizId, questionCount));
+        return quiz;
     }
 }

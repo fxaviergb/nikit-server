@@ -47,10 +47,11 @@ public class EvaluationController {
     }
 
     @GetMapping("/create/{quizId}")
-    public ResponseEntity<EvaluationDTO> createForQuiz(@PathVariable String quizId) {
+    public ResponseEntity<EvaluationDTO> createForQuiz(
+            @PathVariable String quizId,
+            @RequestParam(name = "questionCount", required = false) Integer questionCount) {
         String userId = authenticatedUserService.getUserId();
-        Audit audit = AuditFactory.create(userId);
-        Evaluation quizzyExecution = evaluationService.create(quizId, userId, audit);
+        Evaluation quizzyExecution = evaluationService.create(quizId, userId, questionCount);
         return ResponseEntity.ok(evaluationMapper.toDTO(quizzyExecution));
     }
 

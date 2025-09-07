@@ -18,6 +18,7 @@ public class UserRepository {
     public UserRepository() {
         // Usuarios precargados en la "base de datos"
         userDatabase.put("admin", "password1234*");
+        userDatabase.put("fxaviergb@gmail.com", "password1234*");
         userDatabase.put("user1", "abc123..*");
         userDatabase.put("user2", "abc123..*");
     }

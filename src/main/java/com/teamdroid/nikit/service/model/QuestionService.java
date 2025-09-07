@@ -3,9 +3,7 @@ package com.teamdroid.nikit.service.model;
 import com.teamdroid.nikit.dto.request.OptionRequest;
 import com.teamdroid.nikit.dto.request.QuestionRequest;
 import com.teamdroid.nikit.entity.Audit;
-import com.teamdroid.nikit.entity.Option;
 import com.teamdroid.nikit.entity.Question;
-import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.mapper.QuestionMapper;
 import com.teamdroid.nikit.repository.model.QuestionRepository;
 import com.teamdroid.nikit.shared.audit.AuditFactory;
@@ -13,10 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -54,6 +50,19 @@ public class QuestionService {
 
     public List<Question> findByQuizIdFull(String quizId) {
         List<Question> questions = findByQuizId(quizId);
+        return completeOptions(questions);
+    }
+
+    public List<Question> getQuestionsForQuizEvaluation(String quizId, Integer questionCount) {
+        List<Question> questions = getRandomQuestions(quizId, questionCount);
+        return completeOptions(questions);
+    }
+
+    public List<Question> getRandomQuestions(String quizId, Integer questionCount) {
+        return questionRepository.findRandomByQuizId(quizId, questionCount);
+    }
+
+    public List<Question> completeOptions(List<Question> questions) {
         for(Question q : questions) {
             q.setOptions(optionService.findByQuestionId(q.getId()));
         }
