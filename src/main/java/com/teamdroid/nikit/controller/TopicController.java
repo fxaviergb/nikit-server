@@ -12,7 +12,7 @@ import com.teamdroid.nikit.mapper.QuizMapper;
 import com.teamdroid.nikit.mapper.TopicMapper;
 import com.teamdroid.nikit.service.model.QuizService;
 import com.teamdroid.nikit.service.model.TopicService;
-import com.teamdroid.nikit.shared.audit.AuditFactory;
+import com.teamdroid.nikit.service.security.AuthenticatedUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +31,9 @@ public class TopicController {
 
     @Autowired
     private QuizService quizService;
+
+    @Autowired
+    private final AuthenticatedUserService authenticatedUserService;
 
     private final TopicMapper topicMapper;
 
@@ -64,7 +67,7 @@ public class TopicController {
             @PathVariable String knowledgeId,
             @RequestBody TopicRequest topicRequest
     ) {
-        String userId = "system"; // TODO obtener de JWT
+        String userId = authenticatedUserService.getUserId();
         Topic topic = topicService.createTopicWithChildren(topicRequest, knowledgeId, userId);
         return ResponseEntity.ok(topicMapper.toDTO(topic));
     }
@@ -75,7 +78,7 @@ public class TopicController {
             @RequestBody List<QuizRequest> quizzes
     ) {
         Topic topic = topicService.findById(topicId);
-        String userId =  "system"; // TODO obtener de JWT
+        String userId = authenticatedUserService.getUserId();
         for (QuizRequest quizRequest : quizzes) {
             quizService.createQuizWithChildren(quizRequest, topicId, userId);
         }

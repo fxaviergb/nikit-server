@@ -3,14 +3,13 @@ package com.teamdroid.nikit.controller;
 import com.teamdroid.nikit.dto.QuizSummaryDTO;
 import com.teamdroid.nikit.dto.request.QuestionRequest;
 import com.teamdroid.nikit.dto.request.QuizRequest;
-import com.teamdroid.nikit.entity.Audit;
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.mapper.QuizSummaryMapper;
 import com.teamdroid.nikit.model.view.QuizSummary;
 import com.teamdroid.nikit.service.model.QuestionService;
 import com.teamdroid.nikit.service.model.QuizService;
 import com.teamdroid.nikit.service.model.TopicService;
-import com.teamdroid.nikit.shared.audit.AuditFactory;
+import com.teamdroid.nikit.service.security.AuthenticatedUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +31,9 @@ public class QuizController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private final AuthenticatedUserService authenticatedUserService;
+
     private final QuizSummaryMapper quizSummaryMapper;
 
     @GetMapping("/{quizId}")
@@ -46,7 +48,7 @@ public class QuizController {
             @RequestBody QuizRequest quizRequest
     ) {
         topicService.findById(topicId); // Lanza NotFoundException si no existe
-        String userId = "system"; // TODO Obtener de JWT
+        String userId = authenticatedUserService.getUserId();
         quizService.createQuizWithChildren(quizRequest, topicId, userId);
         return ResponseEntity.ok().build();
     }
@@ -57,7 +59,7 @@ public class QuizController {
             @RequestBody List<QuestionRequest> questions
     ) {
         Quiz quiz = quizService.findById(quizId); // lanza excepción si no existe
-        String userId = "system"; // TODO Obtener de JWT
+        String userId = authenticatedUserService.getUserId();
         for (QuestionRequest questionReq : questions) {
             questionService.createQuestionWithOptions(questionReq, quiz.getId(), userId);
         }

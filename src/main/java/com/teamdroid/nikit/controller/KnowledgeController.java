@@ -3,14 +3,13 @@ package com.teamdroid.nikit.controller;
 import com.teamdroid.nikit.dto.*;
 import com.teamdroid.nikit.dto.request.KnowledgeRequest;
 import com.teamdroid.nikit.dto.request.TopicRequest;
-import com.teamdroid.nikit.entity.Audit;
 import com.teamdroid.nikit.entity.Knowledge;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.KnowledgeMapper;
 import com.teamdroid.nikit.mapper.TopicMapper;
 import com.teamdroid.nikit.service.model.KnowledgeService;
 import com.teamdroid.nikit.service.model.TopicService;
-import com.teamdroid.nikit.shared.audit.AuditFactory;
+import com.teamdroid.nikit.service.security.AuthenticatedUserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +32,18 @@ public class KnowledgeController {
     @Autowired
     private TopicService topicService;
 
+    @Autowired
+    private final AuthenticatedUserService authenticatedUserService;
+
+
     private final KnowledgeMapper knowledgeMapper;
 
     private final TopicMapper topicMapper;
 
     @PostMapping("/full")
-    public ResponseEntity<KnowledgeDTO> createFull(@RequestBody KnowledgeRequest request,
-                                             @RequestHeader(value = "X-User-Id", required = false) String userId) {
-        String effectiveUserId = Optional.ofNullable(userId).orElse("system-user");
-        Knowledge knowledge = knowledgeService.createFullStructure(request, effectiveUserId);
+    public ResponseEntity<KnowledgeDTO> createFull(@RequestBody KnowledgeRequest request) {
+        String userId = authenticatedUserService.getUserId();
+        Knowledge knowledge = knowledgeService.createFullStructure(request, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(knowledgeMapper.toDTO(knowledge));
     }
 
@@ -85,7 +87,7 @@ public class KnowledgeController {
 
     @PostMapping
     public ResponseEntity<KnowledgeDTO> createKnowledge(@Valid @RequestBody KnowledgeCreateDTO knowledgeCreateDTO) {
-        String userId =  "system"; // TODO obtener de JWT
+        String userId = authenticatedUserService.getUserId();
         var knowledge = knowledgeMapper.toEntityCreation(knowledgeCreateDTO);
         var createdKnowledge = knowledgeService.create(knowledge, userId);
         return ResponseEntity.ok(knowledgeMapper.toDTO(createdKnowledge));
@@ -114,7 +116,7 @@ public class KnowledgeController {
             return ResponseEntity.notFound().build(); // TODO Mostrar Knowledge not found
         }
 
-        String userId =  "system"; // TODO obtener de JWT
+        String userId = authenticatedUserService.getUserId();
         List<TopicDTO> createdTopics = topicService.createTopicsForKnowledge(knowledgeId, topicRequests, userId);
         return ResponseEntity.ok(createdTopics);
     }

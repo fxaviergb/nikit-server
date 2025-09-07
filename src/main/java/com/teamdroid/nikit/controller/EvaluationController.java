@@ -11,6 +11,7 @@ import com.teamdroid.nikit.mapper.EvaluationAttemptMapper;
 import com.teamdroid.nikit.mapper.EvaluationMapper;
 import com.teamdroid.nikit.service.evaluation.EvaluationAttemptService;
 import com.teamdroid.nikit.service.evaluation.EvaluationService;
+import com.teamdroid.nikit.service.security.AuthenticatedUserService;
 import com.teamdroid.nikit.shared.audit.AuditFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,13 @@ public class EvaluationController {
     @Autowired
     private EvaluationAttemptService evaluationAttemptService;
 
+    @Autowired
+    private final AuthenticatedUserService authenticatedUserService;
+
     private final EvaluationMapper evaluationMapper;
 
     private final EvaluationAttemptMapper evaluationAttemptMapper;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<EvaluationDTO> getById(@PathVariable String id) {
@@ -43,7 +48,7 @@ public class EvaluationController {
 
     @GetMapping("/create/{quizId}")
     public ResponseEntity<EvaluationDTO> createForQuiz(@PathVariable String quizId) {
-        String userId =  "system"; // TODO obtener de JWT
+        String userId = authenticatedUserService.getUserId();
         Audit audit = AuditFactory.create(userId);
         Evaluation quizzyExecution = evaluationService.create(quizId, userId, audit);
         return ResponseEntity.ok(evaluationMapper.toDTO(quizzyExecution));
