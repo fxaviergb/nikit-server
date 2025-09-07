@@ -1,14 +1,10 @@
-package com.teamdroid.nikit.controller.model;
+package com.teamdroid.nikit.controller;
 
 import com.teamdroid.nikit.dto.QuizSummaryDTO;
-import com.teamdroid.nikit.dto.TopicQuizDTO;
 import com.teamdroid.nikit.dto.request.QuestionRequest;
 import com.teamdroid.nikit.dto.request.QuizRequest;
 import com.teamdroid.nikit.entity.Audit;
-import com.teamdroid.nikit.entity.Question;
 import com.teamdroid.nikit.entity.Quiz;
-import com.teamdroid.nikit.entity.Topic;
-import com.teamdroid.nikit.entity.evaluation.Evaluation;
 import com.teamdroid.nikit.mapper.QuizSummaryMapper;
 import com.teamdroid.nikit.model.view.QuizSummary;
 import com.teamdroid.nikit.service.model.QuestionService;
@@ -51,8 +47,7 @@ public class QuizController {
     ) {
         topicService.findById(topicId); // Lanza NotFoundException si no existe
         String userId = "system"; // TODO Obtener de JWT
-        Audit audit = AuditFactory.create(userId);
-        quizService.createQuizWithChildren(quizRequest, topicId, userId, audit);
+        quizService.createQuizWithChildren(quizRequest, topicId, userId);
         return ResponseEntity.ok().build();
     }
 
@@ -63,9 +58,8 @@ public class QuizController {
     ) {
         Quiz quiz = quizService.findById(quizId); // lanza excepción si no existe
         String userId = "system"; // TODO Obtener de JWT
-        Audit audit = AuditFactory.create(userId);
         for (QuestionRequest questionReq : questions) {
-            questionService.createQuestionWithOptions(questionReq, quiz.getId(), userId, audit);
+            questionService.createQuestionWithOptions(questionReq, quiz.getId(), userId);
         }
         Quiz updatedQuiz = quizService.findById(quizId);
         return ResponseEntity.ok(updatedQuiz);

@@ -1,9 +1,12 @@
 package com.teamdroid.nikit.service.evaluation;
 
+import com.teamdroid.nikit.entity.Audit;
+import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.evaluation.Evaluation;
 import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
 import com.teamdroid.nikit.entity.evaluation.QuizAttempt;
 import com.teamdroid.nikit.repository.execution.EvaluationRepository;
+import com.teamdroid.nikit.service.model.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,12 +29,13 @@ public class EvaluationService {
     private QuizAttemptService quizAttemptService;
 
 
-    public Evaluation create(String quizId) {
+    public Evaluation create(String quizId, String userId, Audit audit) {
         Assert.notNull(quizId, "The quiz Id cannot be null");
         QuizAttempt quizAttempt = quizAttemptService.createFromQuizBase(quizId);
-        EvaluationAttempt quizAttemptExecution = evaluationAttemptService.create(quizAttempt);
-        Evaluation quizzyExecution = Evaluation.build(quizAttemptExecution);
-        return save(quizzyExecution);
+        Evaluation evaluation = save(new Evaluation(quizAttempt, userId));
+        EvaluationAttempt evaluationAttempt = evaluationAttemptService.create(evaluation, quizAttempt);
+        evaluation.addQuizzyAttemptExecution(evaluationAttempt);
+        return save(evaluation);
     }
 
     public Evaluation save(Evaluation evaluation) {

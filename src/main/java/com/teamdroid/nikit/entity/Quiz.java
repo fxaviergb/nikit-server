@@ -26,8 +26,6 @@ public class Quiz {
 
     // Relations
     private List<String> topicIds;
-    private String userId;
-
     private Audit audit;
 
     @Transient

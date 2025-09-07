@@ -22,7 +22,6 @@ public class Knowledge {
     private String id;
     private String name;
     private String description;
-    private String userId;
     private Audit audit;
 
 }

@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface EvaluationAttemptRepository extends MongoRepository<EvaluationAttempt, String> {
 
-    List<EvaluationAttempt> findByQuiz_IdBase(String idBase);
+    List<EvaluationAttempt> findByQuiz_Id(String id);
 
 }

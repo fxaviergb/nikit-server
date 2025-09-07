@@ -34,16 +34,16 @@ public class TopicService {
     private final TopicMapper topicMapper;
 
 
-    public Topic createTopicWithChildren(TopicRequest request, String knowledgeId, String userId, Audit audit) {
+    public Topic createTopicWithChildren(TopicRequest request, String knowledgeId, String userId) {
+        Audit audit = AuditFactory.create(userId);
         Topic topic = topicMapper.toEntity(request);
         topic.setKnowledgeId(knowledgeId);
-        topic.setUserId(userId);
         topic.setAudit(audit);
         topic = topicRepository.save(topic);
 
         if (request.getQuizzes() != null && !request.getQuizzes().isEmpty()) {
             for (QuizRequest quizReq : request.getQuizzes()) {
-                quizService.createQuizWithChildren(quizReq, topic.getId(), userId, audit);
+                quizService.createQuizWithChildren(quizReq, topic.getId(), userId);
             }
         }
 
@@ -54,10 +54,10 @@ public class TopicService {
         return topicRepository.findByKnowledgeId(knowledgeId);
     }
 
-    public List<TopicDTO> createTopicsForKnowledge(String knowledgeId, List<TopicRequest> topicRequests, String userId, Audit audit) {
+    public List<TopicDTO> createTopicsForKnowledge(String knowledgeId, List<TopicRequest> topicRequests, String userId) {
         List<TopicDTO> created = new ArrayList<>();
         for (TopicRequest r : topicRequests) {
-            Topic topic = this.createTopicWithChildren(r, knowledgeId, userId, audit);
+            Topic topic = this.createTopicWithChildren(r, knowledgeId, userId);
             created.add(topicMapper.toDTO(topic));
         }
         return created;

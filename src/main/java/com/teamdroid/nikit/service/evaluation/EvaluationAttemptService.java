@@ -23,9 +23,9 @@ public class EvaluationAttemptService {
     EvaluationManagerService evaluationManagerService;
 
 
-    public EvaluationAttempt create(QuizAttempt quizAttempt) {
+    public EvaluationAttempt create(Evaluation evaluation, QuizAttempt quizAttempt) {
         Assert.notNull(quizAttempt, "The quiz attempt cannot be null");
-        EvaluationAttempt executionQuizAttempt = new EvaluationAttempt(quizAttempt);
+        EvaluationAttempt executionQuizAttempt = new EvaluationAttempt(evaluation, quizAttempt);
         return save(executionQuizAttempt);
     }
 
@@ -39,9 +39,9 @@ public class EvaluationAttemptService {
                 () -> new RuntimeException("Evaluation attempt not found"));
     }
 
-    public List<EvaluationAttempt> getByQuizIdBase(String idBase) {
-        Assert.notNull(idBase, "The quiz idBase cannot be null");
-        return evaluationAttemptRepository.findByQuiz_IdBase(idBase);
+    public List<EvaluationAttempt> getByQuizId(String quizId) {
+        Assert.notNull(quizId, "The quizId cannot be null");
+        return evaluationAttemptRepository.findByQuiz_Id(quizId);
     }
 
 

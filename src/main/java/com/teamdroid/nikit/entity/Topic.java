@@ -3,12 +3,8 @@ package com.teamdroid.nikit.entity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -24,7 +20,6 @@ public class Topic {
     private String description;
 
     // Relations
-    private String userId;
     private String knowledgeId;
     private List<String> quizIds;
 

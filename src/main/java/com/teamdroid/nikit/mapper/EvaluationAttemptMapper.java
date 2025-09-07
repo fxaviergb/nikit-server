@@ -34,7 +34,7 @@ public interface EvaluationAttemptMapper {
 
         EvaluationAttemptReviewDTO dto = new EvaluationAttemptReviewDTO();
         dto.setAttemptId(attempt.getId());
-        dto.setQuizId(attempt.getQuiz().getIdBase());
+        dto.setQuizId(attempt.getQuiz().getId());
 
         // Mapeo de calificación general
         Grade grade = attempt.getGrade();

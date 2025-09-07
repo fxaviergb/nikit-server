@@ -17,7 +17,6 @@ public class Option {
     private String option;
     private String questionId;
     private Answer answer;
-    private String userId;
     private Audit audit;
 
 }

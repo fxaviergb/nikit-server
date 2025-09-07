@@ -37,14 +37,12 @@ public class KnowledgeService {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public Knowledge createFullStructure(KnowledgeRequest request, String userId) {
-        Audit audit = AuditFactory.create(userId);
         Knowledge knowledge = knowledgeMapper.toEntity(request);
-        knowledge.setUserId(userId);
-        knowledge.setAudit(audit);
+        knowledge.setAudit(AuditFactory.create(userId));
         knowledge = knowledgeRepository.save(knowledge);
 
         for (TopicRequest topicReq : request.getTopics()) {
-            topicService.createTopicWithChildren(topicReq, knowledge.getId(), userId, audit);
+            topicService.createTopicWithChildren(topicReq, knowledge.getId(), userId);
         }
 
         return knowledge;
@@ -60,7 +58,8 @@ public class KnowledgeService {
         return knowledgeRepository.findById(id);
     }
 
-    public Knowledge create(Knowledge knowledge) {
+    public Knowledge create(Knowledge knowledge, String userId) {
+        knowledge.setAudit(AuditFactory.create(userId));
         TDLogger.log(logger, TDLogger.Level.INFO, "Creating knowledge", knowledge);
         Knowledge saved = knowledgeRepository.save(knowledge);
         TDLogger.log(logger, TDLogger.Level.INFO, "Creating knowledge", knowledge);

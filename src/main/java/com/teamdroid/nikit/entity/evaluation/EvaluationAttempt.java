@@ -1,5 +1,7 @@
 package com.teamdroid.nikit.entity.evaluation;
 
+import com.teamdroid.nikit.entity.Audit;
+import com.teamdroid.nikit.shared.audit.AuditFactory;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,17 +21,15 @@ public class EvaluationAttempt {
     private String id;
     private QuizAttempt quiz;
     private LocalDateTime executionDate;
-
-    private LocalDateTime creationDate;
-    private LocalDateTime modificationDate;
-    private String createdBy;
-    private String modifiedBy;
+    private String evaluationId;
+    private Audit audit;
 
     private Grade grade;
 
-    public EvaluationAttempt(QuizAttempt quiz) {
+    public EvaluationAttempt(Evaluation evaluation, QuizAttempt quiz) {
+        this.evaluationId = evaluation.getId();
         this.quiz = quiz;
-        this.creationDate = LocalDateTime.now();
+        this.audit = evaluation.getAudit();
     }
 
 }

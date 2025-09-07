@@ -8,6 +8,7 @@ import com.teamdroid.nikit.mapper.QuizMapper;
 import com.teamdroid.nikit.model.view.QuizSummary;
 import com.teamdroid.nikit.repository.model.QuizRepository;
 import com.teamdroid.nikit.service.evaluation.EvaluationAttemptService;
+import com.teamdroid.nikit.shared.audit.AuditFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,24 +34,24 @@ public class QuizService {
     private final QuizMapper quizMapper;
 
 
-    public void createQuizWithChildren(QuizRequest request, String topicId, String userId, Audit audit) {
+    public void createQuizWithChildren(QuizRequest request, String topicId, String userId) {
+        Audit audit = AuditFactory.create(userId);
         Quiz quiz = quizMapper.toEntity(request);
         quiz.setTopicIds(List.of(topicId));
-        quiz.setUserId(userId);
         quiz.setVersion(1);
         quiz.setAudit(audit);
         quiz = quizRepository.save(quiz);
 
         for (QuestionRequest q : request.getQuestions()) {
-            questionService.createQuestionWithOptions(q, quiz.getId(), userId, audit);
+            questionService.createQuestionWithOptions(q, quiz.getId(), userId);
         }
     }
 
-    public Quiz createQuestions(String quizId, List<QuestionRequest> questions, String userId, Audit audit) {
+    public Quiz createQuestions(String quizId, List<QuestionRequest> questions, String userId) {
         Quiz quiz = findById(quizId); // Lanza excepción si no existe
 
         for (QuestionRequest questionReq : questions) {
-            questionService.createQuestionWithOptions(questionReq, quizId, userId, audit);
+            questionService.createQuestionWithOptions(questionReq, quizId, userId);
         }
 
         // Opcional: recargar quiz si deseas ver cambios reflejados
@@ -74,7 +75,7 @@ public class QuizService {
 
     public QuizSummary findSummaryById(String quizId) {
         Quiz quiz = findByIdFull(quizId);
-        List<EvaluationAttempt> evaluationAttempts = evaluationAttemptService.getByQuizIdBase(quizId);
+        List<EvaluationAttempt> evaluationAttempts = evaluationAttemptService.getByQuizId(quizId);
         return QuizSummary.build(quiz, evaluationAttempts);
     }
 }

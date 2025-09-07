@@ -1,0 +1,196 @@
+{
+  "name": "Patrones de Diseño de Software",
+  "description": "Cuestionario sobre conceptos y aplicaciones de los patrones de diseño de software",
+  "questions": [
+    {
+      "question": "¿Cuál es el propósito del patrón Singleton?",
+      "options": [
+        {
+          "option": "Asegurar que una clase tenga una única instancia global y proporcionar un punto de acceso a ella",
+          "answer": {
+            "isCorrect": true,
+            "justification": "El patrón Singleton garantiza que solo exista una instancia de una clase en todo el sistema y que esta sea accesible de manera global. Se utiliza cuando se requiere un único punto de control, como en configuraciones o manejadores de logs.",
+            "extras": [
+              "https://refactoring.guru/es/design-patterns/singleton",
+              "https://www.geeksforgeeks.org/singleton-design-pattern/",
+              "https://sourcemaking.com/design_patterns/singleton"
+            ]
+          }
+        },
+        {
+          "option": "Permitir que un objeto cambie su comportamiento cuando su estado interno cambia",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Esa definición corresponde al patrón State, no al Singleton."
+          }
+        },
+        {
+          "option": "Proveer una interfaz simplificada a un subsistema complejo",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Esa es la descripción del patrón Facade, no del Singleton."
+          }
+        },
+        {
+          "option": "Separar la construcción de un objeto de su representación final",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Ese es el objetivo del patrón Builder, no del Singleton."
+          }
+        }
+      ]
+    },
+    {
+      "question": "¿Qué patrón se utiliza para crear familias de objetos relacionados sin especificar sus clases concretas?",
+      "options": [
+        {
+          "option": "Abstract Factory",
+          "answer": {
+            "isCorrect": true,
+            "justification": "El patrón Abstract Factory proporciona una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. Facilita la consistencia entre objetos de la misma familia.",
+            "extras": [
+              "https://refactoring.guru/es/design-patterns/abstract-factory",
+              "https://www.tutorialspoint.com/design_pattern/abstract_factory_pattern.htm",
+              "https://sourcemaking.com/design_patterns/abstract_factory"
+            ]
+          }
+        },
+        {
+          "option": "Factory Method",
+          "answer": {
+            "isCorrect": false,
+            "justification": "El Factory Method define un método para crear objetos, pero no trabaja con familias de objetos relacionados como el Abstract Factory."
+          }
+        },
+        {
+          "option": "Builder",
+          "answer": {
+            "isCorrect": false,
+            "justification": "El patrón Builder se enfoca en la construcción paso a paso de un objeto complejo, no en la creación de familias de objetos."
+          }
+        },
+        {
+          "option": "Prototype",
+          "answer": {
+            "isCorrect": false,
+            "justification": "El patrón Prototype crea nuevos objetos mediante la clonación de instancias existentes, no por la creación de familias completas."
+          }
+        }
+      ]
+    },
+    {
+      "question": "¿Cuál es el propósito principal del patrón Observer?",
+      "options": [
+        {
+          "option": "Definir una dependencia de uno a muchos entre objetos, de manera que cuando uno cambie de estado, todos sus dependientes sean notificados",
+          "answer": {
+            "isCorrect": true,
+            "justification": "El patrón Observer permite que múltiples objetos se suscriban a cambios de estado de otro objeto. Cuando el sujeto cambia, todos los observadores son notificados automáticamente. Se usa en sistemas de eventos y en interfaces gráficas.",
+            "extras": [
+              "https://refactoring.guru/es/design-patterns/observer",
+              "https://sourcemaking.com/design_patterns/observer",
+              "https://www.geeksforgeeks.org/observer-pattern-set-1-introduction/"
+            ]
+          }
+        },
+        {
+          "option": "Permitir que un objeto tenga múltiples representaciones en tiempo de ejecución",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Esa definición describe el patrón State, no el Observer."
+          }
+        },
+        {
+          "option": "Encapsular una solicitud como un objeto",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Eso corresponde al patrón Command, no al Observer."
+          }
+        },
+        {
+          "option": "Proporcionar una interfaz única a un conjunto de interfaces en un subsistema",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Esto describe el patrón Facade, no el Observer."
+          }
+        }
+      ]
+    },
+    {
+      "question": "¿Qué patrón se emplea para separar la abstracción de su implementación, permitiendo que ambas evolucionen independientemente?",
+      "options": [
+        {
+          "option": "Bridge",
+          "answer": {
+            "isCorrect": true,
+            "justification": "El patrón Bridge separa la abstracción de su implementación, permitiendo que ambas cambien y evolucionen sin afectar una a la otra. Se utiliza para evitar un crecimiento exponencial de clases cuando hay múltiples dimensiones de variación.",
+            "extras": [
+              "https://refactoring.guru/es/design-patterns/bridge",
+              "https://sourcemaking.com/design_patterns/bridge",
+              "https://www.geeksforgeeks.org/bridge-design-pattern/"
+            ]
+          }
+        },
+        {
+          "option": "Adapter",
+          "answer": {
+            "isCorrect": false,
+            "justification": "El Adapter convierte una interfaz existente en otra esperada, pero no separa abstracción de implementación."
+          }
+        },
+        {
+          "option": "Decorator",
+          "answer": {
+            "isCorrect": false,
+            "justification": "El Decorator añade responsabilidades a un objeto dinámicamente, no separa abstracción e implementación."
+          }
+        },
+        {
+          "option": "Composite",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Composite permite tratar objetos individuales y compuestos de manera uniforme, no está enfocado en separar implementación de abstracción."
+          }
+        }
+      ]
+    },
+    {
+      "question": "¿Cuál es la finalidad del patrón Strategy?",
+      "options": [
+        {
+          "option": "Definir una familia de algoritmos, encapsularlos y hacerlos intercambiables en tiempo de ejecución",
+          "answer": {
+            "isCorrect": true,
+            "justification": "El patrón Strategy permite definir un conjunto de algoritmos, encapsular cada uno y hacerlos intercambiables. El cliente puede elegir o cambiar el algoritmo en tiempo de ejecución sin modificar su código.",
+            "extras": [
+              "https://refactoring.guru/es/design-patterns/strategy",
+              "https://sourcemaking.com/design_patterns/strategy",
+              "https://www.geeksforgeeks.org/strategy-pattern-set-1/"
+            ]
+          }
+        },
+        {
+          "option": "Reducir la complejidad al representar relaciones jerárquicas de objetos",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Eso corresponde al patrón Composite, no al Strategy."
+          }
+        },
+        {
+          "option": "Convertir la interfaz de una clase en otra que el cliente espera",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Esa es la definición del patrón Adapter, no del Strategy."
+          }
+        },
+        {
+          "option": "Permitir que un objeto cambie su comportamiento dependiendo de su estado",
+          "answer": {
+            "isCorrect": false,
+            "justification": "Esa definición corresponde al patrón State, no al Strategy."
+          }
+        }
+      ]
+    }
+  ]
+}

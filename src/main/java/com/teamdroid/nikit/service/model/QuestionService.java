@@ -8,6 +8,7 @@ import com.teamdroid.nikit.entity.Question;
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.mapper.QuestionMapper;
 import com.teamdroid.nikit.repository.model.QuestionRepository;
+import com.teamdroid.nikit.shared.audit.AuditFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,12 @@ public class QuestionService {
 
     private final QuestionMapper questionMapper;
 
-    public void createQuestionWithOptions(QuestionRequest request, String quizId, String userId, Audit audit) {
+    public void createQuestionWithOptions(QuestionRequest request, String quizId, String userId) {
         // Convertimos el request en entidad
+        Audit audit = AuditFactory.create(userId);
         Question question = questionMapper.toEntity(request);
         question.setQuizId(quizId);
         question.setQuestionVersion(1);
-        question.setUserId(userId);
         question.setAudit(audit);
 
         // Guardamos la pregunta primero
@@ -43,7 +44,7 @@ public class QuestionService {
 
         // Creamos cada opción asociándola a la pregunta creada
         for (OptionRequest optionReq : request.getOptions()) {
-            optionService.createOption(optionReq, question.getId(), userId, audit);
+            optionService.createOption(optionReq, question.getId(), userId);
         }
     }
 

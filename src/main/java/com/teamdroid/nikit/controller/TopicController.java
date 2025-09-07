@@ -1,4 +1,4 @@
-package com.teamdroid.nikit.controller.model;
+package com.teamdroid.nikit.controller;
 
 import com.teamdroid.nikit.dto.TopicDTO;
 import com.teamdroid.nikit.dto.TopicQuizDTO;
@@ -64,8 +64,8 @@ public class TopicController {
             @PathVariable String knowledgeId,
             @RequestBody TopicRequest topicRequest
     ) {
-        String userId = topicRequest.getUserId() != null ? topicRequest.getUserId() : "system"; // TODO obtener de JWT
-        Topic topic = topicService.createTopicWithChildren(topicRequest, knowledgeId, userId, AuditFactory.create(userId));
+        String userId = "system"; // TODO obtener de JWT
+        Topic topic = topicService.createTopicWithChildren(topicRequest, knowledgeId, userId);
         return ResponseEntity.ok(topicMapper.toDTO(topic));
     }
 
@@ -77,7 +77,7 @@ public class TopicController {
         Topic topic = topicService.findById(topicId);
         String userId =  "system"; // TODO obtener de JWT
         for (QuizRequest quizRequest : quizzes) {
-            quizService.createQuizWithChildren(quizRequest, topicId, userId, AuditFactory.create(userId));
+            quizService.createQuizWithChildren(quizRequest, topicId, userId);
         }
         List<Quiz> quizzesCreated = quizService.findByTopicId(topicId);
         TopicWithQuizzesDTO response = topicMapper.toTopicWithQuizzesDTO(topic, quizzesCreated);

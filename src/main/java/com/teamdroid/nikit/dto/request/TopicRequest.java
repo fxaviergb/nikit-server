@@ -13,6 +13,5 @@ public class TopicRequest {
     @Size(max = 150, message = "El nombre del tópico no debe exceder los 150 caracteres")
     private String name;
     private String description;
-    private String userId;
     private List<QuizRequest> quizzes;
 }

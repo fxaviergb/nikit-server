@@ -1,4 +1,4 @@
-package com.teamdroid.nikit.controller.model;
+package com.teamdroid.nikit.controller;
 
 import com.teamdroid.nikit.dto.*;
 import com.teamdroid.nikit.dto.request.KnowledgeRequest;
@@ -85,8 +85,9 @@ public class KnowledgeController {
 
     @PostMapping
     public ResponseEntity<KnowledgeDTO> createKnowledge(@Valid @RequestBody KnowledgeCreateDTO knowledgeCreateDTO) {
+        String userId =  "system"; // TODO obtener de JWT
         var knowledge = knowledgeMapper.toEntityCreation(knowledgeCreateDTO);
-        var createdKnowledge = knowledgeService.create(knowledge);
+        var createdKnowledge = knowledgeService.create(knowledge, userId);
         return ResponseEntity.ok(knowledgeMapper.toDTO(createdKnowledge));
     }
 
@@ -114,8 +115,7 @@ public class KnowledgeController {
         }
 
         String userId =  "system"; // TODO obtener de JWT
-        Audit audit = AuditFactory.create(userId);
-        List<TopicDTO> createdTopics = topicService.createTopicsForKnowledge(knowledgeId, topicRequests, userId, audit);
+        List<TopicDTO> createdTopics = topicService.createTopicsForKnowledge(knowledgeId, topicRequests, userId);
         return ResponseEntity.ok(createdTopics);
     }
 
