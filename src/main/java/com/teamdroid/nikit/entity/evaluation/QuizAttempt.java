@@ -12,12 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "quiz_attempt")
 public class QuizAttempt {
 
-    @Id
     private String id;
-    private String idBase;
+    private String name;
+    private String description;
+    private Integer version;
     private List<QuestionAttempt> questions = new ArrayList<>();
 
 }

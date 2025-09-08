@@ -1,7 +1,10 @@
 package com.teamdroid.nikit.entity.evaluation;
 
+import com.teamdroid.nikit.entity.Audit;
+import com.teamdroid.nikit.shared.audit.AuditFactory;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -19,13 +22,14 @@ public class Evaluation {
     @Id
     private String id;
     private QuizAttempt quiz;
+    private Audit audit;
+
+    @Transient
     private List<EvaluationAttempt> attempts = new ArrayList<>();
 
-    public static Evaluation build(EvaluationAttempt attempt) {
-        Evaluation executionQuiz = new Evaluation();
-        executionQuiz.addQuizzyAttemptExecution(attempt);
-        executionQuiz.setQuiz(attempt.getQuiz());
-        return executionQuiz;
+    public Evaluation(QuizAttempt quizAttempt, String userId) {
+        this.quiz = quizAttempt;
+        this.audit = AuditFactory.create(userId);
     }
 
     public void addQuizzyAttemptExecution(EvaluationAttempt quizzyAttemptExecution) {

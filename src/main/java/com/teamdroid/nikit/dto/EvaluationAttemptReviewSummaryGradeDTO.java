@@ -10,6 +10,7 @@ public class EvaluationAttemptReviewSummaryGradeDTO {
 
     private Double qualification;
     private Double maxQualification;
+    private Double efficiencyPercentage;
     private LocalDateTime reviewDate;
 
 }

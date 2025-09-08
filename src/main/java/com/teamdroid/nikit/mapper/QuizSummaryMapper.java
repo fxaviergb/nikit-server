@@ -55,6 +55,7 @@ public interface QuizSummaryMapper {
             dto.setGrade(grade.getScore());
             dto.setMaxGrade(grade.getMaximumScore());
             dto.setDate(grade.getCreatedDate());
+            dto.setEfficiencyPercentage(grade.getEfficiencyPercentage());
         });
 
         return dto;

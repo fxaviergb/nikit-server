@@ -8,4 +8,5 @@ import lombok.Data;
 public class KnowledgeCreateDTO {
     @NotBlank(message = "El nombre es obligatorio")
     private String name;
+    private String description;
 }

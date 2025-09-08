@@ -1,6 +1,5 @@
 <configuration>
 
-    <!-- Enviar a Logstash via TCP -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>logstash:5000</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
@@ -8,7 +7,7 @@
         <reconnectionDelay>10000</reconnectionDelay>
     </appender>
 
-    <!-- Consola local -->
+
     <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
@@ -17,4 +16,5 @@
         <appender-ref ref="JSON_CONSOLE"/>
         <appender-ref ref="LOGSTASH"/>
     </root>
+
 </configuration>

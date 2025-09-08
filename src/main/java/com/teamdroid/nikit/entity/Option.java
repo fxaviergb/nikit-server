@@ -15,12 +15,8 @@ public class Option {
     @Id
     private String id;
     private String option;
-    private String answerId;
+    private String questionId;
     private Answer answer;
-
-    public void initializeAnswer(Answer answer) {
-        this.answer = answer;
-        this.answerId = answer.getId();
-    }
+    private Audit audit;
 
 }
