@@ -26,6 +26,7 @@ public interface EvaluationAttemptMapper {
         dto.setQualification(grade.getScore());
         dto.setMaxQualification(grade.getMaximumScore());
         dto.setReviewDate(grade.getCreatedDate());
+        dto.setEfficiencyPercentage(grade.getEfficiencyPercentage());
         return dto;
     }
 
@@ -43,6 +44,7 @@ public interface EvaluationAttemptMapper {
             gradeDTO.setQualification(String.valueOf(grade.getScore()));
             gradeDTO.setMaxQualification(String.valueOf(grade.getMaximumScore()));
             gradeDTO.setReviewDate(grade.getCreatedDate());
+            gradeDTO.setEfficiencyPercentage(grade.getEfficiencyPercentage());
             dto.setGrade(gradeDTO);
         }
 
