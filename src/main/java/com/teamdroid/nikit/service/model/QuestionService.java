@@ -12,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -67,6 +71,50 @@ public class QuestionService {
             q.setOptions(optionService.findByQuestionId(q.getId()));
         }
         return questions;
+    }
+
+    public void syncQuestionsForQuiz(String quizId, List<QuestionRequest> questionDtos, String userId) {
+        List<Question> existingQuestions = questionRepository.findByQuizId(quizId);
+        Map<String, Question> questionMap = existingQuestions.stream()
+                .collect(Collectors.toMap(Question::getId, q -> q));
+
+        Set<String> retainedQuestionIds = new HashSet<>();
+
+        for (QuestionRequest questionDto : questionDtos) {
+            boolean isNew = questionDto.getId() == null || questionDto.getId().isBlank();
+
+            if (isNew) {
+                // Crear nueva pregunta
+                createQuestionWithOptions(questionDto, quizId, userId);
+            } else {
+                // Actualizar pregunta existente
+                Question existing = questionMap.get(questionDto.getId());
+                if (existing == null) continue;
+
+                existing.setQuestion(questionDto.getQuestion());
+
+                // Incrementar versión
+                Integer currentVersion = existing.getQuestionVersion();
+                existing.setQuestionVersion(currentVersion == null ? 1 : currentVersion + 1);
+
+                existing.setAudit(AuditFactory.update(existing.getAudit(), userId));
+                questionRepository.save(existing);
+
+                optionService.syncOptions(existing.getId(), questionDto.getOptions(), userId);
+                retainedQuestionIds.add(existing.getId());
+            }
+        }
+
+        // Eliminar preguntas obsoletas
+        List<String> toDelete = existingQuestions.stream()
+                .map(Question::getId)
+                .filter(id -> !retainedQuestionIds.contains(id))
+                .toList();
+
+        for (String questionId : toDelete) {
+            optionService.deleteByQuestionId(questionId);
+            questionRepository.deleteById(questionId);
+        }
     }
 
 }

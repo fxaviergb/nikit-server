@@ -73,4 +73,22 @@ public class QuizService {
         quiz.setQuestions(questionService.getQuestionsForQuizEvaluation(quizId, questionCount));
         return quiz;
     }
+
+    public Quiz updateQuizWithChildren(String quizId, QuizRequest dto, String userId) {
+        Quiz quiz = findById(quizId);
+
+        quiz.setName(dto.getName());
+        quiz.setDescription(dto.getDescription());
+        quiz.setAudit(AuditFactory.update(quiz.getAudit(), userId));
+
+        // Incrementar versión del cuestionario
+        Integer currentVersion = quiz.getVersion();
+        quiz.setVersion(currentVersion == null ? 1 : currentVersion + 1);
+
+        quizRepository.save(quiz);
+        questionService.syncQuestionsForQuiz(quizId, dto.getQuestions(), userId);
+
+        return findByIdFull(quizId);
+    }
+
 }

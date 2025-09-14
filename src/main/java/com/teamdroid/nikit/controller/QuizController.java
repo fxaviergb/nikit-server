@@ -38,7 +38,7 @@ public class QuizController {
 
     @GetMapping("/{quizId}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable String quizId) {
-        Quiz quiz = quizService.findById(quizId);
+        Quiz quiz = quizService.findByIdFull(quizId);
         return ResponseEntity.ok(quiz);
     }
 
@@ -72,5 +72,14 @@ public class QuizController {
         QuizSummary quizSummary = quizService.findSummaryById(quizId);
         QuizSummaryDTO quizSummaryDTO = quizSummaryMapper.toQuizSummaryDTO(quizSummary);
         return ResponseEntity.ok(quizSummaryDTO);
+    }
+
+    @PutMapping("/{quizId}")
+    public ResponseEntity<Quiz> updateQuiz(
+            @PathVariable String quizId,
+            @RequestBody QuizRequest quizRequest
+    ) {
+        Quiz quiz = quizService.updateQuizWithChildren(quizId, quizRequest, authenticatedUserService.getUserId());
+        return ResponseEntity.ok(quiz);
     }
 }

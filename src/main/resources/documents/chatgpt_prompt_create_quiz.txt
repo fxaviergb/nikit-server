@@ -1,4 +1,4 @@
-Genera un cuestionario relacionado a "Paises y sus capitales". La respuesta a todo el cuestionario tienes que entregarla en el formato JSON que te proveo como ejemplo: "
+Genera un cuestionario relacionado a "Patrones de diseño para desarrollo de software". La respuesta a todo el cuestionario tienes que entregarla en el formato JSON que te proveo como ejemplo: "
 {
 "name": "Capitales y Países",
 "description": "Las capitales de los países",
@@ -388,4 +388,6 @@ Genera un cuestionario relacionado a "Paises y sus capitales". La respuesta a to
 Para las respuestas  cuyo valor para el campo "isCorrect" es true debes incluir en el campo "extras" 3 links a paginas en internet en donde se profundice la explicación de la opción elegida.
 El campo "justification" debe contener una explicación detallada del por qué la respuesta es incorrecta o correcta.
 Muestra correctamente los signos de puntuación.
-Entrega todas las preguntas y respuestas del cuestionario.
+Debes entregar 30 preguntas.
+Entrega todas las preguntas y respuestas del cuestionario en un archivo .json descargable.
+No lo entregues por partes, todas deben entregarse de inmediato, no por partes

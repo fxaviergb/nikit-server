@@ -1,11 +1,9 @@
 package com.teamdroid.nikit.controller;
 
-import com.teamdroid.nikit.dto.TopicDTO;
-import com.teamdroid.nikit.dto.TopicQuizDTO;
-import com.teamdroid.nikit.dto.TopicUpdatePartialDTO;
-import com.teamdroid.nikit.dto.TopicWithQuizzesDTO;
+import com.teamdroid.nikit.dto.*;
 import com.teamdroid.nikit.dto.request.QuizRequest;
 import com.teamdroid.nikit.dto.request.TopicRequest;
+import com.teamdroid.nikit.entity.Knowledge;
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.Topic;
 import com.teamdroid.nikit.mapper.QuizMapper;
@@ -19,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
