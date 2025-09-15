@@ -1,9 +1,6 @@
 package com.teamdroid.nikit.controller;
 
-import com.teamdroid.nikit.dto.TopicDTO;
-import com.teamdroid.nikit.dto.TopicQuizDTO;
-import com.teamdroid.nikit.dto.TopicUpdatePartialDTO;
-import com.teamdroid.nikit.dto.TopicWithQuizzesDTO;
+import com.teamdroid.nikit.dto.*;
 import com.teamdroid.nikit.dto.request.QuizRequest;
 import com.teamdroid.nikit.dto.request.TopicRequest;
 import com.teamdroid.nikit.entity.Quiz;
@@ -80,7 +77,7 @@ public class TopicController {
         Topic topic = topicService.findById(topicId);
         String userId = authenticatedUserService.getUserId();
         for (QuizRequest quizRequest : quizzes) {
-            quizService.createQuizWithChildren(quizRequest, topicId, userId);
+            quizService.createQuizWithRelations(quizRequest, topicId, userId);
         }
         List<Quiz> quizzesCreated = quizService.findByTopicId(topicId);
         TopicWithQuizzesDTO response = topicMapper.toTopicWithQuizzesDTO(topic, quizzesCreated);
