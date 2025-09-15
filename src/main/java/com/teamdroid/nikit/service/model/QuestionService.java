@@ -31,7 +31,7 @@ public class QuestionService {
 
     private final QuestionMapper questionMapper;
 
-    public void createQuestionWithOptions(QuestionRequest request, String quizId, String userId) {
+    public void createQuestionWithRelations(QuestionRequest request, String quizId, String userId) {
         // Convertimos el request en entidad
         Audit audit = AuditFactory.create(userId);
         Question question = questionMapper.toEntity(request);
@@ -73,7 +73,7 @@ public class QuestionService {
         return questions;
     }
 
-    public void syncQuestionsForQuiz(String quizId, List<QuestionRequest> questionDtos, String userId) {
+    public void updateQuestionsWithRelations(String quizId, List<QuestionRequest> questionDtos, String userId) {
         List<Question> existingQuestions = questionRepository.findByQuizId(quizId);
         Map<String, Question> questionMap = existingQuestions.stream()
                 .collect(Collectors.toMap(Question::getId, q -> q));
@@ -85,7 +85,7 @@ public class QuestionService {
 
             if (isNew) {
                 // Crear nueva pregunta
-                createQuestionWithOptions(questionDto, quizId, userId);
+                createQuestionWithRelations(questionDto, quizId, userId);
             } else {
                 // Actualizar pregunta existente
                 Question existing = questionMap.get(questionDto.getId());
@@ -100,7 +100,7 @@ public class QuestionService {
                 existing.setAudit(AuditFactory.update(existing.getAudit(), userId));
                 questionRepository.save(existing);
 
-                optionService.syncOptions(existing.getId(), questionDto.getOptions(), userId);
+                optionService.updateOptions(existing.getId(), questionDto.getOptions(), userId);
                 retainedQuestionIds.add(existing.getId());
             }
         }

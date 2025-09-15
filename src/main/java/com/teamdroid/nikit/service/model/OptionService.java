@@ -31,13 +31,6 @@ public class OptionService {
         optionRepository.save(option);
     }
 
-    public void updateOption(Option existing, OptionRequest request, String userId) {
-        existing.setOption(request.getOption());
-        existing.setAnswer(optionMapper.toAnswer(request.getAnswer()));
-        existing.setAudit(AuditFactory.update(existing.getAudit(), userId));
-        optionRepository.save(existing);
-    }
-
     public List<Option> findByQuestionId(String questionId) {
         return optionRepository.findByQuestionId(questionId);
     }
@@ -47,7 +40,14 @@ public class OptionService {
         optionRepository.deleteAll(options);
     }
 
-    public void syncOptions(String questionId, List<OptionRequest> incomingOptions, String userId) {
+    public void updateOption(Option existing, OptionRequest request, String userId) {
+        existing.setOption(request.getOption());
+        existing.setAnswer(optionMapper.toAnswer(request.getAnswer()));
+        existing.setAudit(AuditFactory.update(existing.getAudit(), userId));
+        optionRepository.save(existing);
+    }
+
+    public void updateOptions(String questionId, List<OptionRequest> incomingOptions, String userId) {
         List<Option> existingOptions = findByQuestionId(questionId);
         Map<String, Option> existingMap = existingOptions.stream()
                 .collect(Collectors.toMap(Option::getId, o -> o));

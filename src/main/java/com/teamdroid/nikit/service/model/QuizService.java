@@ -34,7 +34,7 @@ public class QuizService {
     private final QuizMapper quizMapper;
 
 
-    public void createQuizWithChildren(QuizRequest request, String topicId, String userId) {
+    public void createQuizWithRelations(QuizRequest request, String topicId, String userId) {
         Audit audit = AuditFactory.create(userId);
         Quiz quiz = quizMapper.toEntity(request);
         quiz.setTopicIds(List.of(topicId));
@@ -43,7 +43,7 @@ public class QuizService {
         quiz = quizRepository.save(quiz);
 
         for (QuestionRequest q : request.getQuestions()) {
-            questionService.createQuestionWithOptions(q, quiz.getId(), userId);
+            questionService.createQuestionWithRelations(q, quiz.getId(), userId);
         }
     }
 
@@ -74,7 +74,7 @@ public class QuizService {
         return quiz;
     }
 
-    public Quiz updateQuizWithChildren(String quizId, QuizRequest dto, String userId) {
+    public Quiz updateQuizWithRelations(String quizId, QuizRequest dto, String userId) {
         Quiz quiz = findById(quizId);
 
         quiz.setName(dto.getName());
@@ -86,7 +86,7 @@ public class QuizService {
         quiz.setVersion(currentVersion == null ? 1 : currentVersion + 1);
 
         quizRepository.save(quiz);
-        questionService.syncQuestionsForQuiz(quizId, dto.getQuestions(), userId);
+        questionService.updateQuestionsWithRelations(quizId, dto.getQuestions(), userId);
 
         return findByIdFull(quizId);
     }

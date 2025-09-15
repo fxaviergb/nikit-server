@@ -49,7 +49,7 @@ public class QuizController {
     ) {
         topicService.findById(topicId); // Lanza NotFoundException si no existe
         String userId = authenticatedUserService.getUserId();
-        quizService.createQuizWithChildren(quizRequest, topicId, userId);
+        quizService.createQuizWithRelations(quizRequest, topicId, userId);
         return ResponseEntity.ok().build();
     }
 
@@ -61,7 +61,7 @@ public class QuizController {
         Quiz quiz = quizService.findById(quizId); // lanza excepción si no existe
         String userId = authenticatedUserService.getUserId();
         for (QuestionRequest questionReq : questions) {
-            questionService.createQuestionWithOptions(questionReq, quiz.getId(), userId);
+            questionService.createQuestionWithRelations(questionReq, quiz.getId(), userId);
         }
         Quiz updatedQuiz = quizService.findById(quizId);
         return ResponseEntity.ok(updatedQuiz);
@@ -79,7 +79,7 @@ public class QuizController {
             @PathVariable String quizId,
             @RequestBody QuizRequest quizRequest
     ) {
-        Quiz quiz = quizService.updateQuizWithChildren(quizId, quizRequest, authenticatedUserService.getUserId());
+        Quiz quiz = quizService.updateQuizWithRelations(quizId, quizRequest, authenticatedUserService.getUserId());
         return ResponseEntity.ok(quiz);
     }
 }

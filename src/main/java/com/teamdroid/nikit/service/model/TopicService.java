@@ -44,7 +44,7 @@ public class TopicService {
 
         if (request.getQuizzes() != null && !request.getQuizzes().isEmpty()) {
             for (QuizRequest quizReq : request.getQuizzes()) {
-                quizService.createQuizWithChildren(quizReq, topic.getId(), userId);
+                quizService.createQuizWithRelations(quizReq, topic.getId(), userId);
             }
         }
 
