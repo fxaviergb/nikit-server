@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EvaluationAttemptMapper {
@@ -37,16 +39,15 @@ public interface EvaluationAttemptMapper {
         dto.setAttemptId(attempt.getId());
         dto.setQuizId(attempt.getQuiz().getId());
 
-        // Mapeo de calificación general
-        Grade grade = attempt.getGrade();
-        if (grade != null) {
+        // Calificación general
+        Optional.ofNullable(attempt.getGrade()).ifPresent(grade -> {
             EvaluationAttemptReviewGradeDTO gradeDTO = new EvaluationAttemptReviewGradeDTO();
             gradeDTO.setQualification(String.valueOf(grade.getScore()));
             gradeDTO.setMaxQualification(String.valueOf(grade.getMaximumScore()));
             gradeDTO.setReviewDate(grade.getCreatedDate());
             gradeDTO.setEfficiencyPercentage(grade.getEfficiencyPercentage());
             dto.setGrade(gradeDTO);
-        }
+        });
 
         // Mapeo de preguntas
         List<QuestionReviewDTO> questions = attempt.getQuiz().getQuestions().stream().map(question -> {
@@ -54,17 +55,19 @@ public interface EvaluationAttemptMapper {
             questionDTO.setId(question.getId());
             questionDTO.setQuestion(question.getQuestion());
 
-            // Opciones
+            // Mapeo de opciones
             List<OptionReviewDTO> options = question.getOptions().stream().map(option -> {
                 OptionReviewDTO optionDTO = new OptionReviewDTO();
                 optionDTO.setId(option.getId());
                 optionDTO.setOption(option.getOption());
 
+                var answer = option.getAnswer();
                 OptionReviewDetailDTO detail = new OptionReviewDetailDTO();
                 detail.setIsSelected(option.getIsSelected());
-                detail.setIsCorrect(option.getAnswer() != null && option.getAnswer().getIsCorrect());
-                detail.setFeedback(option.getAnswer() != null ? option.getAnswer().getJustification() : "");
-                detail.setPoints("1"); // O calcula si es dinámico
+                detail.setIsCorrect(answer != null && Boolean.TRUE.equals(answer.getIsCorrect()));
+                detail.setFeedback(answer != null ? answer.getJustification() : "");
+                detail.setExtras(answer != null ? answer.getExtras() : null);
+                detail.setPoints("1"); // Personaliza si es dinámico
                 optionDTO.setReview(detail);
 
                 return optionDTO;
@@ -72,22 +75,38 @@ public interface EvaluationAttemptMapper {
 
             questionDTO.setOptions(options);
 
-            // Resumen de pregunta
-            QuestionReviewSummaryDTO summary = new QuestionReviewSummaryDTO();
-            summary.setStatus(question.getGrade() != null && question.getGrade().getScore() > 0 ? "CORRECT" : "INCORRECT");
-            summary.setFeedback(options.stream()
-                    .map(o -> o.getReview().getFeedback())
-                    .filter(f -> f != null && !f.isEmpty())
+            // Opción correcta (si existe)
+            OptionReviewDTO correctOption = options.stream()
+                    .filter(o -> o.getReview() != null && Boolean.TRUE.equals(o.getReview().getIsCorrect()))
                     .findFirst()
-                    .orElse(""));
-            summary.setPoints("1"); // O de question.getGrade().getScore()
+                    .orElse(null);
+
+            // Resumen de la pregunta
+            Grade questionGrade = question.getGrade();
+            QuestionReviewSummaryDTO summary = new QuestionReviewSummaryDTO();
+            summary.setStatus(questionGrade != null && questionGrade.getScore() > 0 ? "CORRECT" : "INCORRECT");
+            summary.setFeedback(
+                    Optional.ofNullable(correctOption)
+                            .map(OptionReviewDTO::getReview)
+                            .map(OptionReviewDetailDTO::getFeedback)
+                            .filter(f -> !f.isEmpty())
+                            .orElse("")
+            );
+            summary.setExtras(
+                    Optional.ofNullable(correctOption)
+                            .map(OptionReviewDTO::getReview)
+                            .map(OptionReviewDetailDTO::getExtras)
+                            .orElse(Collections.emptyList())
+            );
+            summary.setPoints("1"); // Personaliza si quieres usar questionGrade.getScore()
             questionDTO.setReview(summary);
 
             return questionDTO;
         }).toList();
 
         dto.setReview(questions);
-
         return dto;
     }
+
+
 }
