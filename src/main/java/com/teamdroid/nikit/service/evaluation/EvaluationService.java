@@ -1,12 +1,7 @@
 package com.teamdroid.nikit.service.evaluation;
 
-import com.teamdroid.nikit.entity.Audit;
-import com.teamdroid.nikit.entity.Quiz;
-import com.teamdroid.nikit.entity.evaluation.Evaluation;
-import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
-import com.teamdroid.nikit.entity.evaluation.QuizAttempt;
+import com.teamdroid.nikit.entity.evaluation.*;
 import com.teamdroid.nikit.repository.execution.EvaluationRepository;
-import com.teamdroid.nikit.service.model.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +31,14 @@ public class EvaluationService {
         EvaluationAttempt evaluationAttempt = evaluationAttemptService.create(evaluation, quizAttempt);
         evaluation.addQuizzyAttemptExecution(evaluationAttempt);
 
+        return save(evaluation);
+    }
+
+    public Evaluation createMixed(QuizAttemptRequestSource source, QuizAttemptRequestParams params, String userId) {
+        QuizAttempt quizAttempt = quizAttemptService.createMixedFromSources(source, params);
+        Evaluation evaluation = save(new Evaluation(quizAttempt, userId));
+        EvaluationAttempt evaluationAttempt = evaluationAttemptService.create(evaluation, quizAttempt);
+        evaluation.addQuizzyAttemptExecution(evaluationAttempt);
         return save(evaluation);
     }
 

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TopicRepository extends MongoRepository<Topic, String> {
     List<Topic> findByKnowledgeId(String knowledgeId);
+    List<Topic> findByKnowledgeIdIn(List<String> knowledgeIds);
 }

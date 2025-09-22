@@ -38,6 +38,8 @@ public interface EvaluationAttemptMapper {
         EvaluationAttemptReviewDTO dto = new EvaluationAttemptReviewDTO();
         dto.setAttemptId(attempt.getId());
         dto.setQuizId(attempt.getQuiz().getId());
+        dto.setQuizType(attempt.getQuiz().getType());
+        dto.setRequestSource(attempt.getQuiz().getRequestSource());
 
         // Calificación general
         Optional.ofNullable(attempt.getGrade()).ifPresent(grade -> {

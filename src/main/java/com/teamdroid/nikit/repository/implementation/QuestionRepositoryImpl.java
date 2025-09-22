@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.aggregation.SampleOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
@@ -24,9 +26,23 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
 
     @Override
     public List<Question> findRandomByQuizId(String quizId, Integer questionCount) {
-        int safeCount = (questionCount == null || questionCount < 1) ? 10 : questionCount;
+        if (quizId == null || quizId.isBlank()) return Collections.emptyList();
+        return findRandomQuestions(Criteria.where("quizId").is(quizId), questionCount);
+    }
 
-        MatchOperation matchStage = Aggregation.match(Criteria.where("quizId").is(quizId));
+    @Override
+    public List<Question> findRandomByQuizIds(Set<String> quizIds, Integer questionCount) {
+        if (quizIds == null || quizIds.isEmpty()) return Collections.emptyList();
+        return findRandomQuestions(Criteria.where("quizId").in(quizIds), questionCount);
+    }
+
+    /**
+     * Método para ejecutar un $match + $sample sobre la colección "question".
+     */
+    private List<Question> findRandomQuestions(Criteria matchCriteria, Integer count) {
+        int safeCount = (count == null || count < 1) ? 10 : count;
+
+        MatchOperation matchStage = Aggregation.match(matchCriteria);
         SampleOperation sampleStage = Aggregation.sample(safeCount);
 
         Aggregation aggregation = Aggregation.newAggregation(matchStage, sampleStage);
@@ -34,4 +50,3 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
         return mongoTemplate.aggregate(aggregation, "question", Question.class).getMappedResults();
     }
 }
-
