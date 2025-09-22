@@ -51,9 +51,17 @@ public class QuizService {
         return quizRepository.findByTopicIdsContaining(topicId);
     }
 
+    public List<Quiz> findByTopicIds(List<String> topicIds) {
+        return quizRepository.findByTopicIdsIn(topicIds);
+    }
+
     public Quiz findById(String quizId) {
         return quizRepository.findById(quizId).orElseThrow(
                 () -> new RuntimeException("Quiz not found"));
+    }
+
+    public List<Quiz> findByIds(List<String> quizIds) {
+        return quizRepository.findByIdIn(quizIds);
     }
 
     public Quiz findByIdFull(String quizId) {

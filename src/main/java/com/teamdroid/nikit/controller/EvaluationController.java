@@ -1,22 +1,23 @@
 package com.teamdroid.nikit.controller;
 
-import com.teamdroid.nikit.dto.EvaluationAttemptRegisterDTO;
-import com.teamdroid.nikit.dto.EvaluationAttemptReviewDTO;
-import com.teamdroid.nikit.dto.EvaluationAttemptReviewSummaryDTO;
-import com.teamdroid.nikit.dto.EvaluationDTO;
-import com.teamdroid.nikit.entity.Audit;
+import com.teamdroid.nikit.dto.*;
+import com.teamdroid.nikit.dto.request.EvaluationAttemptSearchRequestDTO;
+import com.teamdroid.nikit.dto.request.EvaluationMixedCreationRequestDTO;
 import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
 import com.teamdroid.nikit.entity.evaluation.Evaluation;
+import com.teamdroid.nikit.mapper.AttemptSummaryMapper;
 import com.teamdroid.nikit.mapper.EvaluationAttemptMapper;
 import com.teamdroid.nikit.mapper.EvaluationMapper;
+import com.teamdroid.nikit.mapper.QuizSummaryAttemptMapper;
 import com.teamdroid.nikit.service.evaluation.EvaluationAttemptService;
 import com.teamdroid.nikit.service.evaluation.EvaluationService;
 import com.teamdroid.nikit.service.security.AuthenticatedUserService;
-import com.teamdroid.nikit.shared.audit.AuditFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -32,6 +33,12 @@ public class EvaluationController {
 
     @Autowired
     private final AuthenticatedUserService authenticatedUserService;
+
+    @Autowired
+    private QuizSummaryAttemptMapper quizSummaryAttemptMapper;
+
+    @Autowired
+    private AttemptSummaryMapper attemptSummaryMapper;
 
     private final EvaluationMapper evaluationMapper;
 
@@ -51,8 +58,19 @@ public class EvaluationController {
             @PathVariable String quizId,
             @RequestParam(name = "questionCount", required = false) Integer questionCount) {
         String userId = authenticatedUserService.getUserId();
-        Evaluation quizzyExecution = evaluationService.create(quizId, userId, questionCount);
-        return ResponseEntity.ok(evaluationMapper.toDTO(quizzyExecution));
+        Evaluation evaluation = evaluationService.create(quizId, userId, questionCount);
+        return ResponseEntity.ok(evaluationMapper.toDTO(evaluation));
+    }
+
+    @PostMapping("/create/mixed")
+    public ResponseEntity<EvaluationDTO> createMixedEvaluation(@RequestBody EvaluationMixedCreationRequestDTO request) {
+        String userId = authenticatedUserService.getUserId();
+        Evaluation evaluation = evaluationService.createMixed(
+                request.getSource(),
+                request.getParams(),
+                userId
+        );
+        return ResponseEntity.ok(evaluationMapper.toDTO(evaluation));
     }
 
     @GetMapping("/attempt/{attemptId}")
@@ -75,4 +93,39 @@ public class EvaluationController {
         EvaluationAttempt quizzyAttemptExecution = evaluationAttemptService.evaluate(attemptId);
         return ResponseEntity.ok(quizzyAttemptExecution);
     }
+
+    @PostMapping("/attempt/search")
+    public ResponseEntity<List<EvaluationAttemptReviewDTO>> searchAttemptsBySource(
+            @RequestBody EvaluationAttemptSearchRequestDTO request) {
+        //String userId = authenticatedUserService.getUserId();
+        String userId = null; // TODO Get all users for now
+        List<EvaluationAttempt> attempts = evaluationAttemptService.searchBySource(
+                request.getQueryType(),
+                request.getSource(),
+                userId
+        );
+        List<EvaluationAttemptReviewDTO> response = attempts.stream()
+                .map(evaluationAttemptMapper::toDetailedReviewDto)
+                .toList();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/attempt/search/summary")
+    public ResponseEntity<AttemptSummaryDTO> searchSummaryAttemptsBySource(
+            @RequestBody EvaluationAttemptSearchRequestDTO request) {
+        //String userId = authenticatedUserService.getUserId();
+        String userId = null; // TODO: traer usuario real más adelante
+        List<EvaluationAttempt> attempts = evaluationAttemptService.searchBySource(
+                request.getQueryType(),
+                request.getSource(),
+                userId
+        );
+        List<QuizSummaryAttemptDTO> attemptDTOs = attempts.stream()
+                .map(quizSummaryAttemptMapper::toDTO)
+                .toList();
+        AttemptSummaryDTO summary = attemptSummaryMapper.toSummary(attemptDTOs);
+        return ResponseEntity.ok(summary);
+    }
+
+
 }

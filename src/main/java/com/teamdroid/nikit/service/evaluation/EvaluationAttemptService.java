@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -21,6 +22,9 @@ public class EvaluationAttemptService {
 
     @Autowired
     EvaluationManagerService evaluationManagerService;
+
+    @Autowired
+    private QuizAttemptService quizAttemptService;
 
 
     public EvaluationAttempt create(Evaluation evaluation, QuizAttempt quizAttempt) {
@@ -51,7 +55,6 @@ public class EvaluationAttemptService {
 
         EvaluationAttempt evaluationAttempt = getById(attemptId);
         evaluationManagerService.review(evaluationAttempt, evaluationAttemptRegisterDTO);
-
         return evaluationAttemptRepository.save(evaluationAttempt);
     }
 
@@ -60,8 +63,17 @@ public class EvaluationAttemptService {
 
         EvaluationAttempt evaluationAttempt = getById(attemptId);
         evaluationManagerService.evaluate(evaluationAttempt);
-
         return evaluationAttemptRepository.save(evaluationAttempt);
     }
+
+    public List<EvaluationAttempt> searchBySource(String queryType, QuizAttemptRequestSource source, String userId) {
+        Set<String> allQuizIds = quizAttemptService.findQuizIdsFromAttemptSources(
+                source.getKnowledges(),
+                source.getTopics(),
+                source.getQuizzes()
+        );
+        return evaluationAttemptRepository.searchAttemptsBySource(allQuizIds, queryType, userId);
+    }
+
 
 }

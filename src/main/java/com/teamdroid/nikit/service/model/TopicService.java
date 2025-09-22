@@ -55,6 +55,10 @@ public class TopicService {
         return topicRepository.findByKnowledgeId(knowledgeId);
     }
 
+    public List<Topic> findByKnowledgeIds(List<String> knowledgeIds) {
+        return topicRepository.findByKnowledgeIdIn(knowledgeIds);
+    }
+
     public List<TopicDTO> createTopicsForKnowledge(String knowledgeId, List<TopicRequest> topicRequests, String userId) {
         List<TopicDTO> created = new ArrayList<>();
         for (TopicRequest r : topicRequests) {

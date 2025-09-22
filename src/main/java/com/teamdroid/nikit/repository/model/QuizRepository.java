@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface QuizRepository extends MongoRepository<Quiz, String> {
+    List<Quiz> findByIdIn(List<String> quizIds);
     List<Quiz> findByTopicIdsContaining(String topicId);
+    List<Quiz> findByTopicIdsIn(List<String> topicIds);
 }

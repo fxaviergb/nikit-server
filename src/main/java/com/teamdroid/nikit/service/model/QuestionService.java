@@ -58,13 +58,19 @@ public class QuestionService {
     }
 
     public List<Question> getQuestionsForQuizEvaluation(String quizId, Integer questionCount) {
-        List<Question> questions = getRandomQuestions(quizId, questionCount);
+        List<Question> questions = getRandomQuestionsByQuizId(quizId, questionCount);
         return completeOptions(questions);
     }
 
-    public List<Question> getRandomQuestions(String quizId, Integer questionCount) {
+    public List<Question> getRandomQuestionsByQuizId(String quizId, Integer questionCount) {
         return questionRepository.findRandomByQuizId(quizId, questionCount);
     }
+
+    public List<Question> getRandomQuestionsByQuizIds(Set<String> quizIds, Integer questionCount) {
+        List<Question> randomQuestions = questionRepository.findRandomByQuizIds(quizIds, questionCount);
+        return completeOptions(randomQuestions);
+    }
+
 
     public List<Question> completeOptions(List<Question> questions) {
         for(Question q : questions) {
