@@ -3,6 +3,7 @@ package com.teamdroid.nikit.repository.implementation;
 import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
 import com.teamdroid.nikit.repository.model.EvaluationAttemptRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -22,6 +23,9 @@ public class EvaluationAttemptRepositoryImpl implements EvaluationAttemptReposit
         this.mongoTemplate = mongoTemplate;
     }
 
+    /**
+     * Búsqueda de intentos de evaluación con filtros dinámicos y ordenamiento personalizado.
+     */
     @Override
     public List<EvaluationAttempt> searchAttemptsBySource(Set<String> quizIds, String queryType, String userId) {
         List<Criteria> criteriaList = new ArrayList<>();
@@ -45,6 +49,9 @@ public class EvaluationAttemptRepositoryImpl implements EvaluationAttemptReposit
 
         Criteria finalCriteria = new Criteria().andOperator(criteriaList.toArray(new Criteria[0]));
         Query query = new Query(finalCriteria);
+
+        // Orden Desc por defecto
+        query.with(Sort.by(Sort.Direction.DESC, "executionDate"));
 
         return mongoTemplate.find(query, EvaluationAttempt.class, "evaluation_attempt");
     }
