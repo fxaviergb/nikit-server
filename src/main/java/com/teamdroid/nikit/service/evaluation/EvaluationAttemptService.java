@@ -5,6 +5,7 @@ import com.teamdroid.nikit.entity.evaluation.*;
 import com.teamdroid.nikit.repository.execution.EvaluationAttemptRepository;
 import com.teamdroid.nikit.service.evaluation.manager.EvaluationManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -45,7 +46,8 @@ public class EvaluationAttemptService {
 
     public List<EvaluationAttempt> getByQuizId(String quizId) {
         Assert.notNull(quizId, "The quizId cannot be null");
-        return evaluationAttemptRepository.findByQuiz_Id(quizId);
+        return evaluationAttemptRepository.findByQuiz_Id(
+                quizId, Sort.by(Sort.Direction.DESC, "executionDate"));
     }
 
 

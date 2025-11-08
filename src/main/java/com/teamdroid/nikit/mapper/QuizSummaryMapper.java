@@ -4,6 +4,7 @@ import com.teamdroid.nikit.dto.*;
 import com.teamdroid.nikit.entity.Quiz;
 import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
 import com.teamdroid.nikit.model.view.QuizSummary;
+import com.teamdroid.nikit.shared.utils.SummaryQuizzesUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
@@ -28,7 +29,10 @@ public interface QuizSummaryMapper {
         dto.setDescription(quiz.getDescription());
 
         dto.setMetadata(buildMetadata(quiz));
-        dto.setAttempts(buildAttemptDTOs(evaluationAttempts));
+
+        List<QuizSummaryAttemptDTO> attempts = buildAttemptDTOs(evaluationAttempts);
+        dto.setAttempts(attempts);
+        dto.setEfficiencyPercentage(SummaryQuizzesUtils.calculateEfficiencyPercentage(attempts));
 
         return dto;
     }

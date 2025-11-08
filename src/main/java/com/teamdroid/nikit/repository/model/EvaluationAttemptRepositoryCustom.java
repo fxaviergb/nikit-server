@@ -1,6 +1,7 @@
 package com.teamdroid.nikit.repository.model;
 
 import com.teamdroid.nikit.entity.evaluation.EvaluationAttempt;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Set;
