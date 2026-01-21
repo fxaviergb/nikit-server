@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: nikit-server
+    env: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: JAVA_TOOL_OPTIONS
+        value: "-Xmx512m -Xms256m"
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
